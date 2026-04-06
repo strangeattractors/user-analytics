@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>YouSquared — Revenue Analytics (iOS Mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+:root{
+  --accent:#FF8370;
+  --accent-dark:#E07A5F;
+  --accent-surface:#FF8370;
+  --primary-text:#2D2A26;
+  --secondary-text:#6B6560;
+  --tertiary-text:#9E9893;
+  --bg:#FFFFFF;
+  --bg-warm:#F5F2EF;
+  --surface-light:#FBF9F7;
+  --surface-dark:#F8F6F4;
+  --surface-darken:#F0EDEA;
+  --surface-black:#2D2A26;
+  --border:#E8E4E0;
+  --input-bg:#F5F2EF;
+  --input-stroke:#D8D4D0;
+  --error:#E53935;
+  --success:#43A047;
+  --warning:#F57C00;
+  --info:#42A5F5;
+  --gold:#FFB300;
+}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body{margin:0;padding:0;background:#1a1a1a;font-family:'Inter',-apple-system,system-ui,sans-serif;color:#eee;min-height:100vh}
+body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60px}
+.serif{font-family:'Lora',Georgia,serif}
+
+/* Screen navigator */
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;justify-content:center;max-width:880px}
+.nav button{font:inherit;font-size:13px;font-weight:500;padding:9px 16px;border-radius:30px;border:1px solid #333;background:#222;color:#ccc;cursor:pointer;transition:all .2s}
+.nav button:hover{border-color:var(--accent);color:#fff}
+.nav button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.label{font-size:12px;color:#888;margin-bottom:14px;text-align:center;max-width:560px;line-height:1.5}
+
+/* Phone frame */
+.phone{
+  width:393px;height:852px;
+  background:var(--bg);
+  border-radius:44px;
+  border:10px solid #0a0a0a;
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 10px 30px rgba(0,0,0,.4);
+  position:relative;overflow:hidden;
+  color:var(--primary-text);
+}
+.statusbar{height:54px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 8px;font-size:15px;font-weight:600;color:var(--primary-text);position:relative;z-index:5}
+.statusbar .notch{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:20px}
+.statusbar .icons{display:flex;gap:5px;align-items:center}
+.statusbar .icons svg{display:block}
+
+/* Screen container */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 130px}
+.body::-webkit-scrollbar{width:0}
+
+/* Header */
+.header{display:flex;align-items:center;justify-content:space-between;padding:8px 20px 14px}
+.h-title{font-size:28px;font-weight:600;color:var(--primary-text);font-family:'Lora',serif}
+.share-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 14px 7px 11px;border-radius:30px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:inherit;box-shadow:0 2px 8px rgba(255,131,112,.25)}
+.share-pill svg{display:block}
+
+/* Hero card — dark gradient like Safer Pharmacy hero */
+.hero{
+  margin:6px 16px 18px;
+  background:linear-gradient(145deg,#2D2A26 0%,#433F3A 55%,#3A3632 100%);
+  border-radius:22px;
+  padding:22px 22px 20px;
+  color:#fff;
+  position:relative;overflow:hidden;
+}
+.hero::before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.35) 0%,rgba(255,131,112,0) 70%);top:-90px;right:-90px;pointer-events:none}
+.hero::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.18) 0%,rgba(255,131,112,0) 70%);bottom:-70px;left:-50px;pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#FFB7A6;position:relative}
+.hero-num{font-family:'Lora',serif;font-size:48px;font-weight:600;line-height:1.05;margin:6px 0 4px;letter-spacing:-1px;position:relative}
+.hero-sub{font-size:13px;color:#D8D2CB;position:relative;margin-bottom:14px}
+.hero-trend{display:flex;align-items:center;gap:10px;position:relative;font-size:12px;color:#D8D2CB}
+.hero-trend .delta{display:inline-flex;align-items:center;gap:4px;background:rgba(67,160,71,.18);color:#7BD789;padding:3px 9px;border-radius:30px;font-weight:600;font-size:11px}
+.spark{position:relative;width:100%;height:42px;margin-top:14px}
+
+/* Milestone progress */
+.section{margin:0 16px 18px}
+.section-title{font-size:13px;font-weight:600;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.8px;margin:6px 4px 10px;display:flex;justify-content:space-between;align-items:center}
+.section-title .more{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:0;text-transform:none;cursor:pointer}
+
+.card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:18px;padding:18px}
+.card-tight{padding:14px 16px}
+
+.milestone-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px}
+.milestone-now{font-family:'Lora',serif;font-size:24px;font-weight:600;color:var(--primary-text)}
+.milestone-target{font-size:12px;color:var(--secondary-text);font-weight:500}
+.milestone-bar{height:10px;background:var(--surface-darken);border-radius:30px;overflow:hidden;position:relative}
+.milestone-fill{height:100%;background:linear-gradient(90deg,#FFB7A6 0%,var(--accent) 100%);border-radius:30px;position:relative}
+.milestone-fill::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(255,131,112,.25)}
+.milestone-tiers{display:flex;justify-content:space-between;margin-top:14px;gap:6px}
+.tier{flex:1;text-align:center;font-size:10px;color:var(--tertiary-text);font-weight:500}
+.tier .dot{width:8px;height:8px;border-radius:50%;background:var(--surface-darken);margin:0 auto 4px}
+.tier.passed .dot{background:var(--accent)}
+.tier.passed{color:var(--secondary-text)}
+.tier.next .dot{background:var(--accent);box-shadow:0 0 0 3px rgba(255,131,112,.2)}
+
+/* Banner — milestone celebration */
+.banner{margin:0 16px 16px;background:linear-gradient(135deg,#FFE8E0 0%,#FFD4C4 100%);border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;border:0.5px solid #FFC2AE;position:relative}
+.banner-emoji{font-size:24px}
+.banner-body{flex:1}
+.banner-title{font-size:14px;font-weight:700;color:var(--primary-text);line-height:1.25}
+.banner-sub{font-size:12px;color:var(--secondary-text);margin-top:2px}
+.banner-cta{font-size:12px;font-weight:600;color:#fff;background:var(--accent);padding:7px 12px;border-radius:30px;border:none;font-family:inherit;cursor:pointer;white-space:nowrap}
+
+/* Funnel */
+.funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.funnel-row:last-child{margin-bottom:0}
+.funnel-label{font-size:12px;color:var(--secondary-text);width:108px;flex-shrink:0;font-weight:500}
+.funnel-bar{flex:1;height:26px;background:var(--surface-darken);border-radius:8px;position:relative;overflow:hidden}
+.funnel-fill{position:absolute;inset:0;background:linear-gradient(90deg,var(--accent-dark),var(--accent));border-radius:8px;display:flex;align-items:center;padding:0 10px;color:#fff;font-size:12px;font-weight:600}
+.funnel-fill.muted{background:linear-gradient(90deg,#C8A095,#D8B4A8)}
+
+/* Lead list */
+.lead-row{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;margin-bottom:8px;cursor:pointer}
+.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0}
+.lead-info{flex:1;min-width:0}
+.lead-name{font-size:14px;font-weight:600;color:var(--primary-text);display:flex;align-items:center;gap:6px}
+.lead-sub{font-size:12px;color:var(--secondary-text);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead-value{font-family:'Lora',serif;font-size:16px;font-weight:600;color:var(--accent-dark);flex-shrink:0}
+.lead-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+
+/* Captured/Missed donut */
+.split{display:flex;gap:12px;align-items:center}
+.donut{position:relative;width:96px;height:96px;flex-shrink:0}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut-pct{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--primary-text);line-height:1}
+.donut-label{font-size:9px;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.split-stats{flex:1;display:flex;flex-direction:column;gap:8px}
+.split-stat{display:flex;align-items:center;gap:8px;font-size:12px}
+.split-dot{width:10px;height:10px;border-radius:3px}
+.split-stat .v{margin-left:auto;font-weight:600;color:var(--primary-text);font-family:'Lora',serif;font-size:14px}
+
+/* Monthly trend */
+.trend-grid{display:flex;align-items:flex-end;justify-content:space-between;height:120px;gap:8px;padding:6px 0 0}
+.trend-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.trend-bar{width:100%;background:linear-gradient(180deg,var(--accent),var(--accent-dark));border-radius:6px 6px 2px 2px;min-height:4px}
+.trend-bar.dim{background:var(--surface-darken);border:0.5px solid var(--border)}
+.trend-month{font-size:10px;color:var(--secondary-text);font-weight:500}
+
+/* Floating tab bar */
+.tabbar-wrap{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;align-items:center;padding:0 16px;gap:14px;z-index:10}
+.tabbar{display:flex;align-items:center;height:56px;background:var(--surface-darken);border-radius:30px;padding:0 4px;flex:1;max-width:268px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.tab{flex:0 0 auto;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:30px;color:var(--primary-text)}
+.tab.selected{background:var(--surface-black);color:#fff;padding:0 16px 0 14px;width:auto;gap:8px;height:48px}
+.tab.selected .tab-label{font-size:14px;font-weight:600}
+.tab svg{display:block}
+.assistant{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FFB7A6,#FF8370 60%,#E07A5F);box-shadow:0 6px 20px rgba(255,131,112,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-family:'Lora',serif;font-size:22px;flex-shrink:0}
+
+/* Inbox screen */
+.inbox-row{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:0.5px solid var(--border)}
+.inbox-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:600;font-size:13px}
+.inbox-body{flex:1;min-width:0}
+.inbox-title-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap}
+.inbox-name{font-size:15px;font-weight:600;color:var(--primary-text)}
+.inbox-date{font-size:12px;color:var(--tertiary-text);margin-left:auto;flex-shrink:0;font-weight:500}
+.inbox-preview{font-size:13px;color:var(--secondary-text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.todo-pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:5px;background:rgba(255,131,112,.15);color:var(--accent-dark);font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+.lead-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:5px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 1px 3px rgba(255,131,112,.4)}
+
+/* Push notif preview */
+.push{
+  margin:14px 16px 16px;
+  background:rgba(245,242,239,.92);
+  backdrop-filter:blur(10px);
+  border-radius:18px;
+  padding:12px 14px;
+  display:flex;align-items:flex-start;gap:11px;
+  border:0.5px solid rgba(0,0,0,.06);
+  box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+.push-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#FFB7A6,#FF8370);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;font-family:'Lora',serif;flex-shrink:0}
+.push-body{flex:1;min-width:0}
+.push-title-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.push-app{font-size:12px;font-weight:700;color:var(--primary-text)}
+.push-time{font-size:11px;color:var(--tertiary-text)}
+.push-headline{font-size:13px;font-weight:600;color:var(--primary-text);margin:1px 0 1px;display:flex;align-items:center;gap:6px}
+.push-text{font-size:13px;color:var(--secondary-text);line-height:1.3}
+
+/* Share sheet */
+.share-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;flex-direction:column;justify-content:flex-end;z-index:20}
+.share-sheet{background:var(--bg);border-radius:28px 28px 0 0;padding:14px 0 36px;animation:slideUp .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.handle{width:36px;height:5px;background:#D8D4D0;border-radius:30px;margin:0 auto 12px}
+.share-header{padding:6px 22px 14px;display:flex;align-items:center;justify-content:space-between}
+.share-h-title{font-size:18px;font-weight:700;color:var(--primary-text)}
+.share-h-sub{font-size:12px;color:var(--secondary-text);margin-top:2px}
+.share-close{width:32px;height:32px;border-radius:50%;background:var(--surface-darken);display:flex;align-items:center;justify-content:center;color:var(--secondary-text);font-size:16px;font-weight:600;cursor:pointer;border:none}
+.share-section-h{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--secondary-text);padding:8px 22px 6px}
+.boss-row{display:flex;align-items:center;gap:12px;padding:12px 22px;cursor:pointer}
+.boss-row:hover{background:var(--surface-dark)}
+.boss-info{flex:1}
+.boss-name{font-size:15px;font-weight:600;color:var(--primary-text)}
+.boss-role{font-size:12px;color:var(--secondary-text);margin-top:1px}
+.boss-cta{font-size:12px;font-weight:600;color:var(--accent);padding:7px 14px;border-radius:30px;background:rgba(255,131,112,.12);border:none}
+.preview-card{margin:14px 22px 0;padding:14px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px}
+.preview-msg{font-size:13px;color:var(--primary-text);line-height:1.45;margin-bottom:10px}
+.preview-img{height:88px;background:linear-gradient(135deg,#2D2A26,#433F3A);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#FFB7A6;font-family:'Lora',serif;font-size:18px;font-weight:600;position:relative;overflow:hidden}
+.preview-img::before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.25),transparent 70%);top:-60px;right:-40px}
+
+/* Milestone celebration screen */
+.celebrate{position:absolute;inset:0;background:linear-gradient(180deg,#2D2A26 0%,#3A3632 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;color:#fff;text-align:center;overflow:hidden}
+.celebrate::before{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.25),transparent 60%);top:-100px;left:-100px}
+.celebrate::after{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.18),transparent 60%);bottom:-50px;right:-100px}
+.confetti{position:absolute;width:10px;height:14px;animation:fall 3s linear infinite}
+@keyframes fall{
+  0%{transform:translateY(-100px) rotate(0)}
+  100%{transform:translateY(900px) rotate(540deg)}
+}
+.celebrate-emoji{font-size:64px;margin-bottom:14px;position:relative;animation:pop .8s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.celebrate-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#FFB7A6;position:relative}
+.celebrate-num{font-family:'Lora',serif;font-size:62px;font-weight:600;letter-spacing:-1.5px;line-height:1;margin:8px 0 12px;position:relative}
+.celebrate-h{font-size:18px;font-weight:600;line-height:1.35;position:relative;margin-bottom:8px}
+.celebrate-sub{font-size:14px;color:#D8D2CB;line-height:1.5;position:relative;margin-bottom:32px;max-width:280px}
+.celebrate-cta{padding:14px 28px;background:var(--accent);color:#fff;border:none;border-radius:30px;font-size:16px;font-weight:600;font-family:inherit;display:inline-flex;align-items:center;gap:8px;cursor:pointer;position:relative;box-shadow:0 8px 24px rgba(255,131,112,.35)}
+.celebrate-secondary{margin-top:14px;font-size:13px;color:#D8D2CB;background:none;border:none;font-family:inherit;cursor:pointer;position:relative}
+
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="env,react">
+const {useState,useEffect} = React;
+
+const COLORS = {accent:"#FF8370",accentDark:"#E07A5F",primary:"#2D2A26",secondary:"#6B6560"};
+
+// ---------- Status bar ----------
+const StatusBar = () => (
+  <div className="statusbar">
+    <span>9:41</span>
+    <div className="notch"></div>
+    <div className="icons">
+      <svg width="17" height="11" viewBox="0 0 17 11"><path fill="#2D2A26" d="M1 5.5a.5.5 0 011 0v5a.5.5 0 01-1 0v-5zm3-1.5a.5.5 0 011 0v6.5a.5.5 0 01-1 0V4zm3-1.5a.5.5 0 011 0v8a.5.5 0 01-1 0v-8zm3-1.5a.5.5 0 011 0v9.5a.5.5 0 01-1 0V1zm3-1a.5.5 0 011 0v10.5a.5.5 0 01-1 0V0z"/></svg>
+      <svg width="15" height="11" viewBox="0 0 15 11"><path fill="#2D2A26" d="M7.5.5C5.06.5 2.78 1.4.96 3l1.06 1.06C3.55 2.7 5.46 2 7.5 2s3.95.7 5.48 2.06L14.04 3C12.22 1.4 9.94.5 7.5.5zm0 3c-1.7 0-3.27.6-4.5 1.62L4.06 6.18C5.02 5.43 6.22 5 7.5 5s2.48.43 3.44 1.18l1.06-1.06C10.77 4.1 9.2 3.5 7.5 3.5zm0 3c-.95 0-1.83.34-2.5.92L7.5 9.92l2.5-2.5A3.45 3.45 0 007.5 6.5z"/></svg>
+      <svg width="25" height="11" viewBox="0 0 25 11"><rect x="0.5" y="0.5" width="21" height="10" rx="3" fill="none" stroke="#2D2A26" opacity=".4"/><rect x="2" y="2" width="18" height="7" rx="1.5" fill="#2D2A26"/><rect x="22" y="3.5" width="1.5" height="4" rx=".5" fill="#2D2A26" opacity=".4"/></svg>
+    </div>
+  </div>
+);
+
+// ---------- Tab bar ----------
+const TabBar = ({selected="analytics"}) => {
+  const tabs = [
+    {id:"inbox",label:"Inbox",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 13h4l2 3h6l2-3h4M5 5h14l2 8v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5l2-8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>},
+    {id:"analytics",label:"Revenue",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>},
+    {id:"contacts",label:"Contacts",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>},
+    {id:"profile",label:"Settings",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z" stroke="currentColor" strokeWidth="1.6"/></svg>},
+  ];
+  return (
+    <div className="tabbar-wrap">
+      <div className="tabbar">
+        {tabs.map(t => (
+          <div key={t.id} className={"tab"+(t.id===selected?" selected":"")}>
+            {t.icon}
+            {t.id===selected && <span className="tab-label">{t.label}</span>}
+          </div>
+        ))}
+      </div>
+      <div className="assistant">Y²</div>
+    </div>
+  );
+};
+
+// ---------- Sparkline ----------
+const Spark = () => {
+  const pts = [10,18,14,22,28,24,32,38,30,42,48,52];
+  const max = 60, min = 0;
+  const w = 320, h = 42;
+  const sx = i => (i/(pts.length-1))*w;
+  const sy = v => h - ((v-min)/(max-min))*h;
+  const path = pts.map((p,i)=>`${i===0?"M":"L"}${sx(i)},${sy(p)}`).join(" ");
+  const area = path + ` L${w},${h} L0,${h} Z`;
+  return (
+    <svg className="spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="sg" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#FF8370" stopOpacity=".5"/>
+          <stop offset="1" stopColor="#FF8370" stopOpacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d={area} fill="url(#sg)"/>
+      <path d={path} fill="none" stroke="#FFB7A6" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  );
+};
+
+// ---------- Donut ----------
+const Donut = ({captured=84}) => {
+  const r = 38, c = 2*Math.PI*r;
+  const dash = (captured/100)*c;
+  return (
+    <div className="donut">
+      <svg width="96" height="96" viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r={r} fill="none" stroke="#F0EDEA" strokeWidth="10"/>
+        <circle cx="48" cy="48" r={r} fill="none" stroke="url(#dg)" strokeWidth="10" strokeDasharray={`${dash} ${c}`} strokeLinecap="round" transform="rotate(-90 48 48)"/>
+        <defs>
+          <linearGradient id="dg" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stopColor="#FF8370"/>
+            <stop offset="1" stopColor="#E07A5F"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div className="donut-center">
+        <div className="donut-pct">{captured}%</div>
+        <div className="donut-label">Captured</div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- Analytics screen ----------
+const AnalyticsScreen = ({onShare,showBanner}) => {
+  const leads = [
+    {init:"BM",color:"#7E9CC8",rel:"Patient",when:"Today, 10:42 am",note:"Refill — Lipitor 20mg, 90-day",val:"$240"},
+    {init:"RH",color:"#C8A095",rel:"Patient",when:"Today, 9:18 am",note:"New Rx transfer — atorvastatin",val:"$310"},
+    {init:"JS",color:"#88B098",rel:"Patient",when:"Yesterday",note:"Renewal — metformin, 30-day",val:"$180"},
+    {init:"DK",color:"#D2A86A",rel:"Patient",when:"Yesterday",note:"Refill bundle (4 meds)",val:"$520"},
+  ];
+  const months = [
+    {m:"Nov",v:32,d:true},{m:"Dec",v:38,d:true},{m:"Jan",v:46,d:true},
+    {m:"Feb",v:52,d:true},{m:"Mar",v:64,d:true},{m:"Apr",v:78,d:false},
+  ];
+  const maxV = Math.max(...months.map(m=>m.v));
+  return (
+    <div className="screen">
+      <StatusBar/>
+      <div className="body">
+        <div className="header">
+          <div>
+            <div className="h-title">Revenue</div>
+          </div>
+          <button className="share-pill" onClick={onShare}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Share
+          </button>
+        </div>
+
+        {showBanner && (
+          <div className="banner">
+            <div className="banner-emoji">🎉</div>
+            <div className="banner-body">
+              <div className="banner-title">$50,000 milestone hit!</div>
+              <div className="banner-sub">Share the news with your boss</div>
+            </div>
+            <button className="banner-cta" onClick={onShare}>Share</button>
+          </div>
+        )}
+
+        {/* Hero */}
+        <div className="hero">
+          <div className="hero-eyebrow">Lead value handled by your AI</div>
+          <div className="hero-num serif">$47,320</div>
+          <div className="hero-sub">Last 30 days · 142 calls converted</div>
+          <Spark/>
+          <div className="hero-trend">
+            <span className="delta">↑ 23%</span>
+            <span>vs previous 30 days</span>
+          </div>
+        </div>
+
+        {/* Milestone progress */}
+        <div className="section">
+          <div className="section-title">Next milestone</div>
+          <div className="card">
+            <div className="milestone-row">
+              <div className="milestone-now serif">$47.3k <span style={{fontSize:13,color:"var(--secondary-text)",fontWeight:500,fontFamily:"Inter"}}>/ $50k</span></div>
+              <div className="milestone-target">$2,680 to go</div>
+            </div>
+            <div className="milestone-bar">
+              <div className="milestone-fill" style={{width:"94%"}}></div>
+            </div>
+            <div className="milestone-tiers">
+              <div className="tier passed"><div className="dot"></div>$1k</div>
+              <div className="tier passed"><div className="dot"></div>$10k</div>
+              <div className="tier next"><div className="dot"></div>$50k</div>
+              <div className="tier"><div className="dot"></div>$100k</div>
+              <div className="tier"><div className="dot"></div>$500k</div>
+              <div className="tier"><div className="dot"></div>$1M</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Funnel */}
+        <div className="section">
+          <div className="section-title">Refill reminder funnel <span className="more">This month</span></div>
+          <div className="card">
+            {[
+              {l:"Scheduled",w:"100%",v:"372",muted:false},
+              {l:"Activated",w:"86%",v:"320",muted:false},
+              {l:"Patient opened",w:"71%",v:"264",muted:false},
+              {l:"Completed",w:"58%",v:"216",muted:false},
+              {l:"SMS sent",w:"49%",v:"182",muted:false},
+              {l:"Revenue",w:"44%",v:"$47.3k",muted:true},
+            ].map((r,i)=>(
+              <div className="funnel-row" key={i}>
+                <div className="funnel-label">{r.l}</div>
+                <div className="funnel-bar">
+                  <div className={"funnel-fill"+(r.muted?" muted":"")} style={{width:r.w}}>{r.v}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Captured / Missed */}
+        <div className="section">
+          <div className="section-title">Captured vs missed</div>
+          <div className="card split">
+            <Donut captured={84}/>
+            <div className="split-stats">
+              <div className="split-stat"><span className="split-dot" style={{background:"var(--accent)"}}></span><span>Captured leads</span><span className="v">119</span></div>
+              <div className="split-stat"><span className="split-dot" style={{background:"#F0EDEA"}}></span><span>Missed</span><span className="v">23</span></div>
+              <div className="split-stat" style={{borderTop:"0.5px solid var(--border)",paddingTop:8,marginTop:2}}><span style={{fontSize:11,color:"var(--secondary-text)"}}>Recovered</span><span className="v" style={{color:"var(--accent-dark)"}}>$8,420</span></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Leads */}
+        <div className="section">
+          <div className="section-title">Recent qualified leads <span className="more">See all</span></div>
+          {leads.map((l,i)=>(
+            <div className="lead-row" key={i}>
+              <div className="avatar" style={{background:l.color}}>{l.init}</div>
+              <div className="lead-info">
+                <div className="lead-name">Patient {l.init} <span className="lead-badge">Lead</span></div>
+                <div className="lead-sub">{l.note} · {l.when}</div>
+              </div>
+              <div className="lead-value">{l.val}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Trend */}
+        <div className="section">
+          <div className="section-title">Last 6 months</div>
+          <div className="card">
+            <div className="trend-grid">
+              {months.map((m,i)=>(
+                <div className="trend-col" key={i}>
+                  <div className={"trend-bar"+(m.d?"":" dim")} style={{height:`${(m.v/maxV)*100}%`}}></div>
+                  <div className="trend-month">{m.m}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <TabBar selected="analytics"/>
+    </div>
+  );
+};
+
+// ---------- Inbox screen ----------
+const InboxScreen = () => {
+  const rows = [
+    {init:"BM",color:"#7E9CC8",name:"Patient BM",date:"10:42 am",preview:"Hi, calling to refill my Lipitor prescription. The 20mg dose, 90-day supply please.",lead:true,val:"$240"},
+    {init:"RH",color:"#C8A095",name:"Patient RH",date:"9:18 am",preview:"I'd like to transfer my atorvastatin prescription from CVS to your pharmacy.",lead:true,val:"$310",todo:true},
+    {init:"AD",color:"#88B098",name:"Dr. office",date:"Yesterday",preview:"New Rx for the patient we discussed — sending over the e-prescription now.",todo:true},
+    {init:"JS",color:"#D2A86A",name:"Patient JS",date:"Yesterday",preview:"Quick question about my metformin renewal — when does it expire?",lead:true,val:"$180"},
+    {init:"MK",color:"#A88BC4",name:"Insurance co.",date:"Mon",preview:"Calling about prior authorization for one of your patients."},
+    {init:"DK",color:"#7E9CC8",name:"Patient DK",date:"Mon",preview:"Bundle refill for my four meds — same as last time, 30-day supply each.",lead:true,val:"$520"},
+  ];
+  return (
+    <div className="screen">
+      <StatusBar/>
+      <div className="body">
+        <div className="header">
+          <div className="h-title">Inbox</div>
+          <div style={{display:"flex",gap:8}}>
+            <div style={{width:40,height:40,borderRadius:"50%",background:"var(--surface-darken)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#2D2A26" strokeWidth="2"/><path d="M21 21l-4.3-4.3" stroke="#2D2A26" strokeWidth="2" strokeLinecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div className="push">
+          <div className="push-icon">Y²</div>
+          <div className="push-body">
+            <div className="push-title-row">
+              <span className="push-app">YOUSQUARED</span>
+              <span className="push-time">now</span>
+            </div>
+            <div className="push-headline">
+              <span className="lead-pill">★ Lead · $240</span>
+            </div>
+            <div className="push-text">Patient BM called — refill request for Lipitor 20mg, 90-day supply.</div>
+          </div>
+        </div>
+
+        {rows.map((r,i)=>(
+          <div className="inbox-row" key={i}>
+            <div className="inbox-icon" style={{background:r.color}}>{r.init}</div>
+            <div className="inbox-body">
+              <div className="inbox-title-row">
+                <span className="inbox-name">{r.name}</span>
+                {r.lead && <span className="lead-pill">★ Lead · {r.val}</span>}
+                {r.todo && <span className="todo-pill">To-Do</span>}
+                <span className="inbox-date">{r.date}</span>
+              </div>
+              <div className="inbox-preview">{r.preview}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <TabBar selected="inbox"/>
+    </div>
+  );
+};
+
+// ---------- Share sheet (over Analytics) ----------
+const ShareScreen = ({onClose}) => {
+  const bosses = [
+    {init:"JS",color:"#7E9CC8",name:"Boss JS",role:"Pharmacy owner"},
+    {init:"MR",color:"#C8A095",name:"Boss MR",role:"Regional manager"},
+    {init:"PT",color:"#88B098",name:"Boss PT",role:"District lead"},
+  ];
+  return (
+    <div className="screen">
+      <StatusBar/>
+      <div className="body" style={{filter:"brightness(.7)",pointerEvents:"none"}}>
+        <div className="header">
+          <div className="h-title">Revenue</div>
+          <button className="share-pill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>Share</button>
+        </div>
+        <div className="hero">
+          <div className="hero-eyebrow">Lead value handled by your AI</div>
+          <div className="hero-num serif">$47,320</div>
+          <div className="hero-sub">Last 30 days · 142 calls converted</div>
+        </div>
+      </div>
+
+      <div className="share-overlay">
+        <div className="share-sheet">
+          <div className="handle"></div>
+          <div className="share-header">
+            <div>
+              <div className="share-h-title">Share with your boss</div>
+              <div className="share-h-sub">Send your revenue report via text</div>
+            </div>
+            <button className="share-close" onClick={onClose}>✕</button>
+          </div>
+
+          <div className="share-section-h">Bosses in your contacts</div>
+          {bosses.map((b,i)=>(
+            <div className="boss-row" key={i}>
+              <div className="avatar" style={{background:b.color}}>{b.init}</div>
+              <div className="boss-info">
+                <div className="boss-name">{b.name}</div>
+                <div className="boss-role">{b.role}</div>
+              </div>
+              <button className="boss-cta">Text</button>
+            </div>
+          ))}
+
+          <div className="share-section-h">Message preview</div>
+          <div className="preview-card">
+            <div className="preview-msg">Hey — quick update: my AI secretary just hit <b>$47,320</b> in lead value handled this month, with 119 captured leads. Thought you'd want to see 👇</div>
+            <div className="preview-img">$47,320 handled</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- Milestone celebration ----------
+const CelebrateScreen = () => {
+  const confetti = Array.from({length:30}).map((_,i)=>{
+    const colors=["#FF8370","#FFB7A6","#FFD4C4","#43A047","#FFB300","#42A5F5"];
+    return {
+      left:Math.random()*100,
+      delay:Math.random()*3,
+      dur:2+Math.random()*2,
+      color:colors[i%colors.length],
+      rot:Math.random()*360,
+    };
+  });
+  return (
+    <div className="screen">
+      <StatusBar/>
+      <div className="celebrate">
+        {confetti.map((c,i)=>(
+          <div key={i} className="confetti" style={{left:`${c.left}%`,background:c.color,animationDelay:`${c.delay}s`,animationDuration:`${c.dur}s`,transform:`rotate(${c.rot}deg)`}}></div>
+        ))}
+        <div className="celebrate-emoji">🎉</div>
+        <div className="celebrate-eyebrow">Milestone unlocked</div>
+        <div className="celebrate-num serif">$50k</div>
+        <div className="celebrate-h">You've handled $50,000 in leads!</div>
+        <div className="celebrate-sub">Your AI secretary just crossed a major milestone. Time to share the news with your boss?</div>
+        <button className="celebrate-cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          Share with your boss
+        </button>
+        <button className="celebrate-secondary">Maybe later</button>
+      </div>
+    </div>
+  );
+};
+
+// ---------- Push notif lock-screen preview ----------
+const PushScreen = () => (
+  <div className="screen" style={{background:"linear-gradient(180deg,#3a3530 0%,#1a1815 100%)"}}>
+    <StatusBar/>
+    <div style={{padding:"60px 16px 0",color:"#fff",textAlign:"center"}}>
+      <div style={{fontSize:64,fontWeight:300,fontFamily:"-apple-system",letterSpacing:-2}}>9:41</div>
+      <div style={{fontSize:18,fontWeight:500,marginTop:-4,opacity:.9}}>Tuesday, April 6</div>
+    </div>
+    <div style={{padding:"40px 12px 0"}}>
+      <div className="push" style={{margin:"0 0 10px"}}>
+        <div className="push-icon">Y²</div>
+        <div className="push-body">
+          <div className="push-title-row">
+            <span className="push-app">YOUSQUARED</span>
+            <span className="push-time">now</span>
+          </div>
+          <div className="push-headline" style={{marginTop:2}}>
+            <span className="lead-pill">★ Lead · $240</span>
+          </div>
+          <div className="push-text">Patient BM called — refill for Lipitor 20mg. AI handled it.</div>
+        </div>
+      </div>
+
+      <div className="push" style={{margin:"0 0 10px",background:"linear-gradient(135deg,rgba(255,232,224,.95),rgba(255,212,196,.95))"}}>
+        <div className="push-icon" style={{background:"linear-gradient(135deg,#FFD86A,#FFB300)"}}>🎉</div>
+        <div className="push-body">
+          <div className="push-title-row">
+            <span className="push-app">YOUSQUARED</span>
+            <span className="push-time">2m ago</span>
+          </div>
+          <div className="push-headline">$50,000 milestone reached!</div>
+          <div className="push-text">Your AI secretary just crossed $50k in lead value handled. Tap to celebrate.</div>
+        </div>
+      </div>
+
+      <div className="push" style={{margin:"0"}}>
+        <div className="push-icon">Y²</div>
+        <div className="push-body">
+          <div className="push-title-row">
+            <span className="push-app">YOUSQUARED</span>
+            <span className="push-time">8m ago</span>
+          </div>
+          <div className="push-headline">
+            <span className="lead-pill">★ Lead · $520</span>
+          </div>
+          <div className="push-text">Patient DK called — bundle refill for 4 medications.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ---------- App shell ----------
+const SCREENS = [
+  {id:"analytics",label:"Analytics tab"},
+  {id:"analytics-banner",label:"Analytics + milestone banner"},
+  {id:"inbox",label:"Inbox (with Lead badge)"},
+  {id:"celebrate",label:"Milestone celebration"},
+  {id:"share",label:"Share with boss"},
+  {id:"push",label:"Push notif preview"},
+];
+
+function App(){
+  const [screen,setScreen] = useState("analytics");
+  const render = () => {
+    switch(screen){
+      case "analytics": return <AnalyticsScreen onShare={()=>setScreen("share")} showBanner={false}/>;
+      case "analytics-banner": return <AnalyticsScreen onShare={()=>setScreen("share")} showBanner={true}/>;
+      case "inbox": return <InboxScreen/>;
+      case "celebrate": return <CelebrateScreen/>;
+      case "share": return <ShareScreen onClose={()=>setScreen("analytics")}/>;
+      case "push": return <PushScreen/>;
+      default: return null;
+    }
+  };
+  return (
+    <>
+      <div className="nav">
+        {SCREENS.map(s => (
+          <button key={s.id} className={screen===s.id?"active":""} onClick={()=>setScreen(s.id)}>{s.label}</button>
+        ))}
+      </div>
+      <div className="label">YouSquared iOS — Revenue Analytics tab mockup · Safer Pharmacy sample data · 393×852 phone frame</div>
+      <div className="phone">{render()}</div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
