@@ -14,7 +14,6 @@
 :root{
   --accent:#FF8370;
   --accent-dark:#E07A5F;
-  --accent-surface:#FF8370;
   --primary-text:#2D2A26;
   --secondary-text:#6B6560;
   --tertiary-text:#9E9893;
@@ -25,31 +24,22 @@
   --surface-darken:#F0EDEA;
   --surface-black:#2D2A26;
   --border:#E8E4E0;
-  --input-bg:#F5F2EF;
-  --input-stroke:#D8D4D0;
   --error:#E53935;
   --success:#43A047;
   --warning:#F57C00;
   --warning-soft:#FFF4E6;
   --info:#42A5F5;
-  --gold:#FFB300;
 }
 *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{margin:0;padding:0;background:#1a1a1a;font-family:'Inter',-apple-system,system-ui,sans-serif;color:#eee;min-height:100vh}
 body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60px}
 .serif{font-family:'Lora',Georgia,serif}
 
-/* Two-level navigator */
-.nav-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;max-width:960px;width:100%}
-.nav-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.nav-label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1.2px;font-weight:600;margin-right:4px;align-self:center}
-.nav-wrap button{font:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:30px;border:1px solid #333;background:#222;color:#ccc;cursor:pointer;transition:all .18s}
-.nav-wrap button:hover{border-color:var(--accent);color:#fff}
-.nav-wrap button.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.nav-wrap button.persona{font-size:14px;font-weight:600;padding:10px 18px}
-.nav-wrap button.persona.active{background:linear-gradient(135deg,#FFB7A6,#FF8370);box-shadow:0 4px 14px rgba(255,131,112,.35)}
-.label{font-size:12px;color:#888;text-align:center;max-width:640px;line-height:1.5;margin-bottom:14px}
-.label a{color:#FFB7A6}
+/* Persona navigator — single row */
+.nav-row{display:flex;gap:10px;margin-bottom:22px;justify-content:center;flex-wrap:wrap}
+.nav-row button{font:inherit;font-size:14px;font-weight:600;padding:10px 18px;border-radius:30px;border:1px solid #333;background:#222;color:#ccc;cursor:pointer;transition:all .2s}
+.nav-row button:hover{border-color:var(--accent);color:#fff}
+.nav-row button.active{background:linear-gradient(135deg,#FFB7A6,#FF8370);border-color:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(255,131,112,.35)}
 
 /* Phone frame */
 .phone{
@@ -66,111 +56,110 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .statusbar .icons{display:flex;gap:5px;align-items:center}
 .statusbar .icons svg{display:block}
 
-/* Screen */
+/* Screen layout */
 .screen{position:absolute;inset:0;display:flex;flex-direction:column}
-.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 130px}
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 130px;scroll-behavior:smooth}
 .body::-webkit-scrollbar{width:0}
 
-/* Header */
-.header{display:flex;align-items:center;justify-content:space-between;padding:8px 20px 14px}
-.h-title{font-size:28px;font-weight:600;color:var(--primary-text);font-family:'Lora',serif}
-.share-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 14px 7px 11px;border-radius:30px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:inherit;box-shadow:0 2px 8px rgba(255,131,112,.25)}
-.share-pill svg{display:block}
-.back-btn{width:36px;height:36px;border-radius:50%;background:var(--surface-darken);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:var(--primary-text);flex-shrink:0}
+/* Header: title + 1-liner subtitle */
+.page-head{padding:8px 20px 8px}
+.page-title{font-size:26px;font-weight:600;color:var(--primary-text);font-family:'Lora',serif;letter-spacing:-.3px;line-height:1.15}
+.page-sub{font-size:13px;color:var(--secondary-text);margin-top:4px;line-height:1.4;font-weight:500}
 
-/* Hero card */
+/* Section */
+.section{margin:16px 16px}
+.section-title{font-size:11px;font-weight:600;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.9px;margin:0 4px 10px;display:flex;justify-content:space-between;align-items:center}
+.section-title .more{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:0;text-transform:none;cursor:pointer}
+.card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:18px;padding:18px}
+
+/* ============================================================
+ *  HERO CARD — the only dark gradient on the page
+ * ============================================================ */
+.hero-wrap{margin:6px 16px 20px;position:relative}
 .hero{
-  margin:6px 16px 18px;
   background:linear-gradient(145deg,#2D2A26 0%,#433F3A 55%,#3A3632 100%);
   border-radius:22px;
-  padding:22px 22px 20px;
+  padding:20px 22px 18px;
   color:#fff;
   position:relative;overflow:hidden;
+  cursor:pointer;
 }
 .hero::before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.35) 0%,rgba(255,131,112,0) 70%);top:-90px;right:-90px;pointer-events:none}
 .hero::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.18) 0%,rgba(255,131,112,0) 70%);bottom:-70px;left:-50px;pointer-events:none}
-.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#FFB7A6;position:relative}
-.hero-num{font-family:'Lora',serif;font-size:46px;font-weight:600;line-height:1.05;margin:6px 0 4px;letter-spacing:-1px;position:relative}
-.hero-sub{font-size:12px;color:#D8D2CB;position:relative;margin-bottom:12px;font-weight:500}
-.cum-chart{position:relative;width:100%;height:56px;margin:6px 0 10px}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;position:relative;gap:12px}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:#FFB7A6}
+.hero-share{display:inline-flex;align-items:center;gap:5px;padding:6px 11px 6px 9px;border-radius:30px;background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.22);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;backdrop-filter:blur(4px)}
+.hero-num{font-family:'Lora',serif;font-size:46px;font-weight:600;line-height:1.05;margin:4px 0 4px;letter-spacing:-1px;position:relative}
+.hero-sub{font-size:12px;color:#D8D2CB;position:relative;margin-bottom:10px;font-weight:500}
+.cum-chart{position:relative;width:100%;height:56px;margin:4px 0 10px;display:block}
 .hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;flex-wrap:wrap}
-.hero-delta{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:30px;font-weight:600;font-size:11px;cursor:pointer;border:none;font-family:inherit}
-.hero-delta.up{background:rgba(67,160,71,.2);color:#7BD789}
-.hero-delta.down{background:rgba(245,124,0,.28);color:#FFB968}
-.hero-delta-label{font-size:11px;color:#BFB8B0;font-weight:500}
-.hero-cta-inline{font-size:12px;color:#FFB7A6;font-weight:600;cursor:pointer;border:none;background:none;font-family:inherit;display:inline-flex;align-items:center;gap:4px}
+.hero-delta{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:30px;font-weight:600;font-size:11px;font-family:inherit;border:none}
+.hero-delta.up{background:rgba(67,160,71,.22);color:#7BD789}
+.hero-delta.down{background:rgba(245,124,0,.3);color:#FFB968}
+.hero-tap{font-size:11px;color:#FFB7A6;font-weight:600;display:inline-flex;align-items:center;gap:3px}
 
-/* Activation stepper (cold start hero) */
-.cold-stepper{position:relative;margin-top:12px}
-.cold-step{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:0.5px solid rgba(255,255,255,.12);cursor:pointer}
-.cold-step:last-child{border-bottom:0.5px solid rgba(255,255,255,.12)}
+/* Activation stepper (cold start hero internals) */
+.cold-stepper{position:relative;margin-top:10px}
+.cold-title{font-family:'Lora',serif;font-size:22px;line-height:1.25;font-weight:600;margin:8px 0 10px;position:relative;color:#fff;letter-spacing:-.3px}
+.cold-step{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:0.5px solid rgba(255,255,255,.14)}
+.cold-step:last-child{border-bottom:0.5px solid rgba(255,255,255,.14)}
 .cold-num{width:26px;height:26px;border-radius:50%;background:rgba(255,131,112,.22);border:1px solid rgba(255,131,112,.55);color:#FFB7A6;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Lora',serif}
 .cold-step-label{flex:1;font-size:13px;color:#fff;font-weight:500}
 .cold-step-chev{color:#B8B0A6;flex-shrink:0}
 
-/* Section */
-.section{margin:0 16px 18px}
-.section-title{font-size:11px;font-weight:600;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.9px;margin:6px 4px 10px;display:flex;justify-content:space-between;align-items:center}
-.section-title .more{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:0;text-transform:none;cursor:pointer}
-
-.card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:18px;padding:18px}
-
-/* 3-card KPI grid */
+/* ============================================================
+ *  KPI CARDS — with icons, scroll-to on tap
+ * ============================================================ */
 .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.kpi-card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:16px;padding:14px 12px 13px;cursor:pointer;position:relative;transition:transform .12s}
+.kpi-card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:16px;padding:13px 12px 12px;cursor:pointer;position:relative;transition:transform .12s}
 .kpi-card:hover{transform:translateY(-1px)}
 .kpi-card.orange{background:var(--warning-soft);border-color:rgba(245,124,0,.35)}
-.kpi-label{font-size:9px;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.6px;font-weight:600;line-height:1.3;min-height:24px;margin-bottom:3px;display:flex;align-items:flex-start;gap:4px}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.kpi-icon{width:24px;height:24px;border-radius:7px;background:rgba(255,131,112,.14);color:var(--accent-dark);display:flex;align-items:center;justify-content:center}
+.kpi-card.orange .kpi-icon{background:rgba(245,124,0,.18);color:var(--warning)}
+.kpi-dot{width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(67,160,71,.18)}
+.kpi-card.orange .kpi-dot{background:var(--warning);box-shadow:0 0 0 3px rgba(245,124,0,.2)}
+.kpi-label{font-size:9px;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin:4px 0 2px}
 .kpi-card.orange .kpi-label{color:#8A4A0A}
-.kpi-num{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--primary-text);line-height:1.05;margin-bottom:3px;letter-spacing:-.3px}
+.kpi-num{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--primary-text);line-height:1.05;margin-bottom:2px;letter-spacing:-.3px}
 .kpi-card.orange .kpi-num{color:var(--warning)}
 .kpi-sub{font-size:10px;color:var(--tertiary-text);font-weight:500;line-height:1.3}
 .kpi-card.orange .kpi-sub{color:#8A4A0A}
-.kpi-dot{position:absolute;top:12px;right:12px;width:7px;height:7px;border-radius:50%;background:var(--warning);box-shadow:0 0 0 3px rgba(245,124,0,.18)}
-.kpi-card.green-dot .kpi-dot{background:var(--success);box-shadow:0 0 0 3px rgba(67,160,71,.18)}
 
-/* Highlight call cards (2-up) */
-.highlight-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.hl-card{background:linear-gradient(145deg,#2D2A26 0%,#3A3632 100%);border-radius:16px;padding:14px;color:#fff;position:relative;overflow:hidden;cursor:pointer;min-height:148px;display:flex;flex-direction:column;gap:8px}
-.hl-card::before{content:"";position:absolute;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.3) 0%,rgba(255,131,112,0) 70%);top:-50px;right:-50px;pointer-events:none}
-.hl-eyebrow{font-size:9px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:#FFB7A6;position:relative;display:flex;align-items:center;gap:5px}
-.hl-name{font-size:13px;font-weight:600;color:#fff;position:relative;line-height:1.3}
-.hl-summary{font-size:11px;color:#C4BDB5;position:relative;line-height:1.4;flex:1}
-.hl-foot{display:flex;align-items:center;justify-content:space-between;position:relative;margin-top:auto}
-.hl-duration{font-size:10px;color:#BFB8B0;display:flex;align-items:center;gap:4px;font-weight:500}
-.hl-play{width:28px;height:28px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff}
+/* ============================================================
+ *  HIGHLIGHT (Delight / Lead) — light bg, waveform, triangle play
+ * ============================================================ */
+.hl-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hl-card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:16px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-height:150px;transition:transform .12s}
+.hl-card:hover{transform:translateY(-1px)}
+.hl-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hl-eye{font-size:9px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--accent-dark);display:flex;align-items:center;gap:4px}
+.hl-name{font-size:13px;font-weight:600;color:var(--primary-text);line-height:1.25}
+.hl-sum{font-size:11px;color:var(--secondary-text);line-height:1.4;flex:1}
+.hl-foot{display:flex;align-items:center;gap:10px;margin-top:auto}
+.hl-play{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 2px 8px rgba(255,131,112,.35)}
+.hl-play svg{margin-left:2px}
+.wave{flex:1;display:flex;align-items:center;gap:1.5px;height:22px}
+.wave .bar{width:2px;background:var(--accent);border-radius:1px;opacity:.55}
+.wave .bar.played{opacity:1}
+.hl-meta{font-size:10px;color:var(--tertiary-text);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
 
-/* Empty highlight — cold start */
-.hl-empty{background:var(--surface-dark);border:0.5px dashed var(--border);border-radius:16px;padding:18px;text-align:center;cursor:pointer}
+/* Empty highlight (cold start) */
+.hl-empty{background:var(--surface-dark);border:0.5px dashed var(--border);border-radius:16px;padding:20px;text-align:center;cursor:pointer}
 .hl-empty-title{font-size:13px;font-weight:600;color:var(--primary-text);margin-bottom:4px}
 .hl-empty-sub{font-size:12px;color:var(--secondary-text);line-height:1.4}
 
-/* Milestone */
-.milestone-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px}
-.milestone-now{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--primary-text);letter-spacing:-.3px}
-.milestone-now .frac{font-size:13px;color:var(--secondary-text);font-weight:500;font-family:'Inter'}
-.milestone-target{font-size:11px;color:var(--secondary-text);font-weight:500}
-.milestone-bar{height:9px;background:var(--surface-darken);border-radius:30px;overflow:hidden;position:relative}
-.milestone-fill{height:100%;background:linear-gradient(90deg,#FFB7A6 0%,var(--accent) 100%);border-radius:30px;position:relative}
-.milestone-fill::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(255,131,112,.25)}
-.milestone-tiers{display:flex;justify-content:space-between;margin-top:12px;gap:6px}
-.tier{flex:1;text-align:center;font-size:9px;color:var(--tertiary-text);font-weight:500}
-.tier .dot{width:7px;height:7px;border-radius:50%;background:var(--surface-darken);margin:0 auto 4px}
-.tier.passed .dot{background:var(--accent)}
-.tier.passed{color:var(--secondary-text)}
-.tier.next .dot{background:var(--accent);box-shadow:0 0 0 3px rgba(255,131,112,.2)}
+/* ============================================================
+ *  DIAGNOSIS banner (orange-mid only, sits where you scroll to)
+ * ============================================================ */
+.diagnosis{background:var(--warning-soft);border:0.5px solid rgba(245,124,0,.35);border-radius:16px;padding:14px 16px}
+.diagnosis-title{font-size:13px;font-weight:700;color:#8A4A0A;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.diagnosis-body{font-size:12px;color:#8A4A0A;line-height:1.5;margin-bottom:10px}
+.diagnosis-cta{font-size:12px;font-weight:600;color:#fff;background:var(--warning);padding:8px 14px;border-radius:30px;border:none;font-family:inherit;cursor:pointer}
 
-/* Banner — celebration/diagnosis */
-.banner{margin:0 16px 16px;border-radius:18px;padding:13px 15px;display:flex;align-items:center;gap:11px;border:0.5px solid}
-.banner.celebrate{background:linear-gradient(135deg,#FFE8E0 0%,#FFD4C4 100%);border-color:#FFC2AE}
-.banner.warn{background:var(--warning-soft);border-color:rgba(245,124,0,.35)}
-.banner-emoji{font-size:22px}
-.banner-body{flex:1}
-.banner-title{font-size:13px;font-weight:700;color:var(--primary-text);line-height:1.25}
-.banner-sub{font-size:11px;color:var(--secondary-text);margin-top:2px}
-.banner-cta{font-size:11px;font-weight:600;color:#fff;background:var(--accent);padding:7px 12px;border-radius:30px;border:none;font-family:inherit;cursor:pointer;white-space:nowrap}
-
-/* Communication handled stacked bars */
+/* ============================================================
+ *  COMMUNICATION stacked bars + missed dashed line
+ * ============================================================ */
 .comm-grid{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;height:150px;padding:8px 0 0;position:relative}
 .comm-col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;gap:6px;min-width:0;position:relative;z-index:1}
 .comm-stack{width:100%;max-width:34px;display:flex;flex-direction:column-reverse;border-radius:4px 4px 2px 2px;overflow:hidden;min-height:6px;position:relative}
@@ -181,15 +170,17 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .comm-col.past .comm-seg.calls{background:linear-gradient(180deg,rgba(255,131,112,.45),rgba(224,122,95,.5))}
 .comm-col.past .comm-seg.voicemails{background:linear-gradient(180deg,rgba(255,183,166,.45),rgba(255,150,128,.5))}
 .comm-col.past .comm-seg.texts{background:linear-gradient(180deg,rgba(255,212,196,.4),rgba(255,192,168,.45))}
-.comm-label{font-size:9px;color:var(--tertiary-text);font-weight:500;text-align:center;line-height:1.2;white-space:nowrap}
+.comm-label{font-size:9px;color:var(--tertiary-text);font-weight:500;text-align:center;white-space:nowrap}
 .comm-val{font-size:11px;color:var(--secondary-text);font-weight:600}
-.comm-legend{display:flex;gap:14px;font-size:10px;color:var(--secondary-text);margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border);flex-wrap:wrap}
+.comm-legend{display:flex;gap:13px;font-size:10px;color:var(--secondary-text);margin-top:14px;padding-top:12px;border-top:0.5px solid var(--border);flex-wrap:wrap}
 .comm-leg{display:flex;align-items:center;gap:5px}
 .comm-leg .dot{width:8px;height:8px;border-radius:2px}
 .missed-line-label{display:flex;align-items:center;gap:5px}
-.missed-line-label::before{content:"";width:12px;height:2px;background:var(--error);border-radius:1px}
+.missed-line-label::before{content:"";width:12px;height:0;border-top:1.5px dashed #E53935;border-radius:1px}
 
-/* Captured/Missed donut */
+/* ============================================================
+ *  Donut (captured vs missed)
+ * ============================================================ */
 .split{display:flex;gap:12px;align-items:center}
 .donut{position:relative;width:96px;height:96px;flex-shrink:0}
 .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
@@ -199,150 +190,87 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .split-stat{display:flex;align-items:center;gap:8px;font-size:12px}
 .split-dot{width:10px;height:10px;border-radius:3px}
 .split-stat .v{margin-left:auto;font-weight:600;color:var(--primary-text);font-family:'Lora',serif;font-size:14px}
-.card-footnote{font-size:10px;color:var(--tertiary-text);margin-top:12px;padding-top:10px;border-top:0.5px solid var(--border);cursor:pointer}
-.card-footnote a{color:var(--accent);font-weight:600;text-decoration:none}
 
-/* Call row (fascination/leads — full summary visible) */
-.call-row{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;margin-bottom:8px;cursor:pointer}
-.call-row.highlight-source{border-left:3px solid var(--accent)}
-.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;flex-shrink:0}
-.call-info{flex:1;min-width:0}
-.call-name{font-size:14px;font-weight:600;color:var(--primary-text);display:flex;align-items:center;gap:6px;margin-bottom:2px;flex-wrap:wrap}
-.call-meta{font-size:11px;color:var(--tertiary-text);margin-bottom:5px}
-.call-summary{font-size:12px;color:var(--secondary-text);line-height:1.45}
-.call-value{font-family:'Lora',serif;font-size:16px;font-weight:600;color:var(--accent-dark);flex-shrink:0;align-self:center}
-.call-play{width:32px;height:32px;border-radius:50%;background:rgba(255,131,112,.12);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);flex-shrink:0;align-self:center}
-.lead-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-.fascination-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;background:rgba(255,131,112,.14);color:var(--accent-dark);font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-
-/* Diagnosis card (orange-mid) */
-.diagnosis{background:var(--warning-soft);border:0.5px solid rgba(245,124,0,.35);border-radius:16px;padding:14px 16px}
-.diagnosis-title{font-size:13px;font-weight:700;color:#8A4A0A;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.diagnosis-body{font-size:12px;color:#8A4A0A;line-height:1.5;margin-bottom:10px}
-.diagnosis-cta{font-size:12px;font-weight:600;color:#fff;background:var(--warning);padding:8px 14px;border-radius:30px;border:none;font-family:inherit;cursor:pointer}
-
-/* Satisfaction */
+/* ============================================================
+ *  Satisfaction — distribution + expandable categories
+ * ============================================================ */
 .sat-bar{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px;margin-bottom:14px;background:var(--surface-darken)}
 .sat-seg{height:100%}
 .sat-seg:first-child{border-radius:7px 0 0 7px}
 .sat-seg:last-child{border-radius:0 7px 7px 0}
-.sat-legend{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
-.sat-item{display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer}
-.sat-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
-.sat-name{flex:1;color:var(--secondary-text)}
-.sat-val{font-weight:600;color:var(--primary-text);font-variant-numeric:tabular-nums}
-
-/* Satisfaction drill-down */
-.sat-cat{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;padding:13px 14px;margin-bottom:8px;cursor:pointer}
-.sat-cat-head{display:flex;align-items:center;gap:10px}
+.sat-cat{padding:11px 0;border-top:0.5px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:10px}
+.sat-cat:last-of-type{border-bottom:0.5px solid var(--border)}
 .sat-cat-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .sat-cat-name{flex:1;font-size:13px;font-weight:600;color:var(--primary-text)}
-.sat-cat-val{font-family:'Lora',serif;font-size:16px;font-weight:600;color:var(--primary-text);font-variant-numeric:tabular-nums}
-.sat-cat-chev{color:var(--tertiary-text)}
-.sat-reason{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:12px;margin-bottom:6px;margin-left:12px}
+.sat-cat-val{font-family:'Lora',serif;font-size:15px;font-weight:600;color:var(--primary-text);font-variant-numeric:tabular-nums}
+.sat-cat-chev{color:var(--tertiary-text);transition:transform .2s;flex-shrink:0}
+.sat-cat-chev.open{transform:rotate(90deg)}
+.sat-reason{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg-warm);border-radius:10px;margin:6px 0 6px 20px}
 .sat-reason-label{flex:1;font-size:12px;color:var(--primary-text)}
-.sat-reason-count{font-size:11px;color:var(--secondary-text);font-weight:600}
-.sat-note{background:rgba(126,156,200,.1);border-left:3px solid #7E9CC8;padding:11px 13px;border-radius:0 10px 10px 0;font-size:11px;color:var(--secondary-text);line-height:1.5;margin-bottom:14px}
-.sat-fix-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.sat-fix{display:flex;align-items:center;gap:11px;padding:12px 14px;background:var(--warning-soft);border:0.5px solid rgba(245,124,0,.3);border-radius:12px;cursor:pointer}
+.sat-reason-count{font-size:10px;color:var(--secondary-text);font-weight:600}
+.sat-note{background:rgba(126,156,200,.1);border-left:3px solid #7E9CC8;padding:10px 12px;border-radius:0 10px 10px 0;font-size:11px;color:var(--secondary-text);line-height:1.5;margin-bottom:14px}
+.sat-fix{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--warning-soft);border:0.5px solid rgba(245,124,0,.3);border-radius:12px;margin-bottom:8px;cursor:pointer}
 .sat-fix-body{flex:1}
 .sat-fix-title{font-size:12px;font-weight:600;color:#8A4A0A}
 .sat-fix-sub{font-size:11px;color:#8A4A0A;margin-top:1px;opacity:.85}
 
-/* Team */
-.team-explain{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.team-explain-card{display:flex;gap:12px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;padding:14px}
-.team-explain-icon{width:40px;height:40px;border-radius:12px;background:rgba(255,131,112,.12);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);flex-shrink:0}
-.team-explain-t{font-size:13px;font-weight:600;color:var(--primary-text);margin-bottom:3px}
-.team-explain-b{font-size:11px;color:var(--secondary-text);line-height:1.5}
-.team-primary{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(255,131,112,.3);display:flex;align-items:center;justify-content:center;gap:8px}
-.team-row{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;margin-bottom:8px}
+/* ============================================================
+ *  Team rows
+ * ============================================================ */
+.team-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:0.5px solid var(--border)}
+.team-row:last-of-type{border-bottom:0.5px solid var(--border)}
 .team-info{flex:1;min-width:0}
 .team-name{font-size:14px;font-weight:600;color:var(--primary-text)}
 .team-meta{font-size:11px;color:var(--secondary-text);margin-top:2px}
-.team-status{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.team-status{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-right:4px}
 .team-status.invited{background:rgba(150,150,150,.15);color:var(--secondary-text)}
 .team-status.account{background:rgba(66,165,245,.14);color:#1E6BB8}
 .team-status.subscribed{background:rgba(67,160,71,.14);color:#2C7A2F}
 .team-status.contributed{background:rgba(255,131,112,.14);color:var(--accent-dark)}
 .team-action{font-size:11px;font-weight:600;color:var(--accent-dark);background:rgba(255,131,112,.12);border:none;padding:7px 11px;border-radius:30px;cursor:pointer;font-family:inherit;white-space:nowrap}
+.team-empty{text-align:center;padding:6px 0 12px}
+.team-cta-primary{margin-top:14px;width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:30px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(255,131,112,.3);display:flex;align-items:center;justify-content:center;gap:6px}
+.avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0}
 
-/* Channels */
-.channel-card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:16px;padding:15px 16px;margin-bottom:10px}
-.channel-card.orange{background:var(--warning-soft);border-color:rgba(245,124,0,.35)}
-.channel-card.coming{opacity:.55}
-.channel-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.channel-icon{width:34px;height:34px;border-radius:10px;background:rgba(255,131,112,.12);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);flex-shrink:0}
-.channel-name{flex:1;font-size:14px;font-weight:600;color:var(--primary-text)}
-.channel-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.channel-dot.active{background:var(--success)}
-.channel-dot.orange{background:var(--warning)}
-.channel-dot.off{background:var(--tertiary-text)}
-.channel-body{font-size:11px;color:var(--secondary-text);line-height:1.45;margin-bottom:10px;margin-left:44px}
-.channel-body strong{color:var(--primary-text);font-weight:600}
-.channel-cta{margin-left:44px;font-size:12px;font-weight:600;color:var(--accent-dark);background:rgba(255,131,112,.12);border:none;padding:8px 14px;border-radius:30px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:5px}
-.channel-card.orange .channel-cta{background:var(--warning);color:#fff}
+/* ============================================================
+ *  Channels rows
+ * ============================================================ */
+.ch-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:0.5px solid var(--border);cursor:pointer}
+.ch-row:last-of-type{border-bottom:0.5px solid var(--border)}
+.ch-row.coming{opacity:.55}
+.ch-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,131,112,.12);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ch-row.orange .ch-icon{background:rgba(245,124,0,.16);color:var(--warning)}
+.ch-info{flex:1;min-width:0}
+.ch-name{font-size:13px;font-weight:600;color:var(--primary-text)}
+.ch-body{font-size:11px;color:var(--secondary-text);margin-top:2px;line-height:1.4}
+.ch-body strong{color:var(--primary-text);font-weight:600}
+.ch-row.orange .ch-body strong{color:#8A4A0A}
+.ch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ch-dot.active{background:var(--success)}
+.ch-dot.orange{background:var(--warning)}
+.ch-dot.off{background:var(--tertiary-text)}
 
-/* Highlight player */
-.player-hero{
-  margin:6px 16px 18px;
-  background:linear-gradient(145deg,#2D2A26 0%,#433F3A 55%,#3A3632 100%);
-  border-radius:22px;
-  padding:30px 22px 24px;
-  color:#fff;
-  position:relative;overflow:hidden;
-  text-align:center;
-}
-.player-hero::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.35) 0%,rgba(255,131,112,0) 70%);top:-100px;right:-80px}
-.player-hero::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.18) 0%,rgba(255,131,112,0) 70%);bottom:-80px;left:-60px}
-.player-eye{font-size:10px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#FFB7A6;position:relative}
-.player-name{font-size:18px;font-weight:600;color:#fff;margin:8px 0 4px;position:relative}
-.player-meta{font-size:12px;color:#C4BDB5;position:relative;margin-bottom:20px}
-.player-big{width:78px;height:78px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto 18px;position:relative;box-shadow:0 8px 24px rgba(255,131,112,.4);cursor:pointer}
-.player-transcript{position:relative;text-align:left;background:rgba(255,255,255,.05);border-radius:12px;padding:14px;font-size:12px;line-height:1.55;color:#D8D2CB;margin-bottom:4px;max-height:80px;overflow:hidden}
-.player-transcript::after{content:"";position:absolute;bottom:0;left:0;right:0;height:32px;background:linear-gradient(180deg,transparent,#3A3632);border-radius:0 0 12px 12px}
-
-.player-actions{display:flex;gap:8px;margin:0 16px 18px}
-.player-action{flex:1;padding:12px 8px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:12px;font-size:11px;font-weight:600;color:var(--primary-text);cursor:pointer;border:0.5px solid var(--border);font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:5px}
-.player-action svg{color:var(--accent-dark)}
+/* ============================================================
+ *  Call rows (Delight / Leads with full summaries)
+ * ============================================================ */
+.call-row{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;margin-bottom:8px;cursor:pointer}
+.call-info{flex:1;min-width:0}
+.call-name{font-size:14px;font-weight:600;color:var(--primary-text);display:flex;align-items:center;gap:6px;margin-bottom:2px;flex-wrap:wrap}
+.call-meta{font-size:11px;color:var(--tertiary-text);margin-bottom:5px}
+.call-summary{font-size:12px;color:var(--secondary-text);line-height:1.45}
+.call-value{font-family:'Lora',serif;font-size:16px;font-weight:600;color:var(--accent-dark);flex-shrink:0;align-self:center}
+.call-play{width:30px;height:30px;border-radius:50%;background:rgba(255,131,112,.12);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);flex-shrink:0;align-self:center}
+.call-play svg{margin-left:2px}
+.lead-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.delight-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;background:rgba(255,131,112,.14);color:var(--accent-dark);font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
 
 /* Floating tab bar */
 .tabbar-wrap{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;align-items:center;padding:0 16px;gap:14px;z-index:10}
 .tabbar{display:flex;align-items:center;height:56px;background:var(--surface-darken);border-radius:30px;padding:0 4px;flex:1;max-width:268px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-.tab{flex:0 0 auto;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:30px;color:var(--primary-text);cursor:pointer}
+.tab{flex:0 0 auto;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:30px;color:var(--primary-text)}
 .tab.selected{background:var(--surface-black);color:#fff;padding:0 16px 0 14px;width:auto;gap:8px;height:48px}
 .tab.selected .tab-label{font-size:14px;font-weight:600}
-.tab svg{display:block}
 .assistant{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FFB7A6,#FF8370 60%,#E07A5F);box-shadow:0 6px 20px rgba(255,131,112,.4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-family:'Lora',serif;font-size:22px;flex-shrink:0}
-
-/* Inbox */
-.inbox-row{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:0.5px solid var(--border)}
-.inbox-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-weight:600;font-size:13px}
-.inbox-body{flex:1;min-width:0}
-.inbox-title-row{display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap}
-.inbox-name{font-size:15px;font-weight:600;color:var(--primary-text)}
-.inbox-date{font-size:12px;color:var(--tertiary-text);margin-left:auto;flex-shrink:0;font-weight:500}
-.inbox-preview{font-size:13px;color:var(--secondary-text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.lead-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:5px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;box-shadow:0 1px 3px rgba(255,131,112,.4)}
-
-/* Push / lock screen */
-.push{
-  margin:0 12px 10px;
-  background:rgba(245,242,239,.92);
-  backdrop-filter:blur(10px);
-  border-radius:18px;
-  padding:12px 14px;
-  display:flex;align-items:flex-start;gap:11px;
-  border:0.5px solid rgba(0,0,0,.06);
-  box-shadow:0 6px 20px rgba(0,0,0,.06);
-}
-.push-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#FFB7A6,#FF8370);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;font-family:'Lora',serif;flex-shrink:0}
-.push-body{flex:1;min-width:0}
-.push-title-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.push-app{font-size:12px;font-weight:700;color:var(--primary-text)}
-.push-time{font-size:11px;color:var(--tertiary-text)}
-.push-headline{font-size:13px;font-weight:600;color:var(--primary-text);margin:2px 0 1px;display:flex;align-items:center;gap:6px}
-.push-text{font-size:13px;color:var(--secondary-text);line-height:1.3}
 
 </style>
 </head>
@@ -351,48 +279,78 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 <div id="root"></div>
 
 <script type="text/babel" data-presets="env,react">
-const {useState,useMemo} = React;
+const {useState,useRef} = React;
+const COLOR_ORANGE="#F57C00", COLOR_ACCENT="#FF8370";
 
 /* ============================================================
- *  PERSONA DATA MODEL — mirrors SPEC.md data shape
+ *  PERSONA DATA
  * ============================================================ */
 const PERSONAS = {
   mature_accelerating: {
-    label:"Mature • accelerating",
-    shortLabel:"Mature accelerating",
+    label:"Mature accelerating",
+    headline:"You're on fire",
+    subhead:"Up 34% this month — tell your boss about it",
     hero:{
       kind:"number",
       value:"$342,180",
       durationLabel:"Last 2 years 3 months",
-      delta:{dir:"up",pct:34,color:"coral",cta:"share"},
-      series: makeCumSeries(342180, 27, "up"),
+      delta:{dir:"up",pct:34},
+      series: makeCumSeries(27,"up"),
     },
     kpis:{
-      channels:{state:"green",label:"Channels",value:"3 of 3",sub:"active"},
-      seats:{state:"green",label:"Seats",value:"4 of 8",sub:"team active"},
-      satisfaction:{state:"green",label:"Caller sat.",value:"94%",sub:"112 rated great"},
+      channels:{state:"green",value:"3 of 3",sub:"all active"},
+      seats:{state:"green",value:"4 of 8",sub:"team active"},
+      satisfaction:{state:"green",value:"94%",sub:"112 rated great"},
     },
     highlights:{
-      fascination:{name:"Patient DK",summary:"Asked if the AI was a real person. Got a delightful 2-min reply.",duration:"2:14",avatar:"DK",color:"#7E9CC8"},
-      lead:{name:"Patient BM",summary:"Refill bundle: 4 meds, 90-day supply.",duration:"3:02",avatar:"BM",color:"#C8A095",value:"$520"},
+      delight:{name:"Patient DK",summary:"Asked if the AI was real. Got a charming 2-min reply.",duration:"2:14"},
+      lead:{name:"Patient BM",summary:"Refill bundle: 4 meds, 90-day.",duration:"3:02",value:"$520"},
     },
-    milestone:{current:"$342k",target:"$500k",fillPct:68,gap:"$157,820 to go",passed:["$1k","$10k","$100k"],next:"$500k",later:["$1M"]},
-    banner:{kind:"celebrate",emoji:"🎉",title:"You're on fire — up 34% this month",sub:"Share the news with your boss"},
     diagnosis:null,
-    commCycles:[
-      {label:"Nov 8", calls:68, voicemails:11, texts:0, missed:5, past:true},
-      {label:"Nov 22",calls:82, voicemails:14, texts:0, missed:7, past:true},
-      {label:"Dec 6", calls:94, voicemails:13, texts:0, missed:6, past:true},
-      {label:"Dec 20",calls:88, voicemails:15, texts:0, missed:4, past:true},
-      {label:"Jan 3", calls:108,voicemails:18, texts:0, missed:3, past:true},
-      {label:"Jan 17",calls:124,voicemails:16, texts:0, missed:2, past:false},
-    ],
-    commProblem:null,
+    comm:{
+      cycles:[
+        {label:"Nov 8", calls:68, voicemails:11, texts:0, missed:5, past:true},
+        {label:"Nov 22",calls:82, voicemails:14, texts:0, missed:7, past:true},
+        {label:"Dec 6", calls:94, voicemails:13, texts:0, missed:6, past:true},
+        {label:"Dec 20",calls:88, voicemails:15, texts:0, missed:4, past:true},
+        {label:"Jan 3", calls:108,voicemails:18, texts:0, missed:3, past:true},
+        {label:"Jan 17",calls:124,voicemails:16, texts:0, missed:2, past:false},
+      ],
+      problem:null,
+    },
     captured:{pct:84,captured:119,missed:23,recovered:"$8,420"},
-    fascinationCalls:[
-      {name:"Patient DK",date:"Today, 2:14 pm",summary:"Asked if the AI was real. Got a charming deflection that pivoted smoothly back to their refill. Caller laughed.",avatar:"DK",color:"#7E9CC8",duration:"2:14"},
-      {name:"Dr. office",date:"Yesterday",summary:"Physician tried to outwit the AI with medical jargon. AI held its ground and transferred appropriately.",avatar:"DR",color:"#88B098",duration:"3:41"},
-      {name:"Patient JS",date:"Mon",summary:"Confused AI for a grandchild. AI gracefully corrected and helped with the refill.",avatar:"JS",color:"#D2A86A",duration:"1:58"},
+    satisfaction:{
+      segments:[
+        {label:"Great",v:112,pct:79,color:"#43A047"},
+        {label:"OK",v:22,pct:15,color:"#D8B497"},
+        {label:"Needs work",v:6,pct:4,color:"#F57C00"},
+        {label:"Unhappy",v:2,pct:2,color:"#E53935"},
+      ],
+      orangeReasons:[],
+      unhappyReasons:[
+        {label:"Transfer failed",count:1},
+        {label:"Caller frustrated with hold time",count:1},
+      ],
+    },
+    team:{
+      kind:"list",
+      members:[
+        {name:"Sarah M.",meta:"Contributed 148 contacts",status:"contributed",statusLabel:"148 contacts",avatar:"SM",color:"#C8A095"},
+        {name:"Jamie L.",meta:"Contributed 87 contacts",status:"contributed",statusLabel:"87 contacts",avatar:"JL",color:"#88B098"},
+        {name:"Ray T.",meta:"Subscribed yesterday",status:"subscribed",statusLabel:"Subscribed",avatar:"RT",color:"#A88BC4"},
+        {name:"Pat K.",meta:"Account created 2 days ago",status:"account",statusLabel:"Account created",avatar:"PK",color:"#D2A86A",action:"Fund plan"},
+      ],
+    },
+    channels:[
+      {name:"Inbound calls",icon:"phone",state:"active",body:"Call forwarding enabled. <strong>142 calls handled</strong> this month, ↑ 31%."},
+      {name:"Voicemail",icon:"mail",state:"active",body:"<strong>16 voicemails</strong> handled this month."},
+      {name:"Scheduled outbound",icon:"send",state:"active",body:"5 scenarios active · <strong>38 outbound</strong> this month · 0 backlog."},
+      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress."},
+    ],
+    delightCalls:[
+      {name:"Patient DK",date:"Today, 2:14 pm · 2:14",summary:"Asked if the AI was real. Got a charming deflection that pivoted smoothly back to their refill. Caller laughed.",avatar:"DK",color:"#7E9CC8"},
+      {name:"Dr. office",date:"Yesterday · 3:41",summary:"Physician tried to outwit the AI with medical jargon. AI held its ground and transferred appropriately.",avatar:"DR",color:"#88B098"},
+      {name:"Patient JS",date:"Mon · 1:58",summary:"Confused AI for a grandchild. AI gracefully corrected and helped with the refill.",avatar:"JS",color:"#D2A86A"},
     ],
     leads:[
       {name:"Patient BM",date:"Today, 10:42 am",summary:"Refill bundle — 4 meds, 90-day supply each. Confirmed delivery address and co-pay.",avatar:"BM",color:"#C8A095",value:"$520"},
@@ -400,100 +358,86 @@ const PERSONAS = {
       {name:"Patient JS",date:"Yesterday",summary:"Renewal — metformin 30-day. Also scheduled a quick pharmacist consult for next visit.",avatar:"JS",color:"#D2A86A",value:"$180"},
       {name:"Patient BM",date:"Yesterday",summary:"Lipitor 20mg 90-day. 2nd call this week — upgraded to auto-refill.",avatar:"BM",color:"#C8A095",value:"$240"},
     ],
-    satisfaction:[
-      {label:"Great",v:112,pct:79,color:"#43A047"},
-      {label:"OK",v:22,pct:15,color:"#D8B497"},
-      {label:"Needs work",v:6,pct:4,color:"#F57C00"},
-      {label:"Unhappy",v:2,pct:2,color:"#E53935"},
-    ],
-    satisfactionOrangeReasons:[],
-    team:[
-      {name:"Sarah M.",meta:"Contributed 148 contacts",status:"contributed",statusLabel:"148 contacts",avatar:"SM",color:"#C8A095"},
-      {name:"Jamie L.",meta:"Contributed 87 contacts",status:"contributed",statusLabel:"87 contacts",avatar:"JL",color:"#88B098"},
-      {name:"Ray T.",meta:"Subscribed yesterday",status:"subscribed",statusLabel:"Subscribed",avatar:"RT",color:"#A88BC4",action:null},
-      {name:"Pat K.",meta:"Account created 2 days ago",status:"account",statusLabel:"Account created",avatar:"PK",color:"#D2A86A",action:"Fund their plan"},
-    ],
-    channels:[
-      {name:"Inbound calls",icon:"phone",state:"active",body:"Call forwarding enabled. <strong>142 calls handled</strong> this month, ↑ 31% vs last month.",cta:"View call handling settings"},
-      {name:"Voicemail",icon:"mail",state:"active",body:"AI-handled voicemails active. <strong>16 voicemails</strong> handled this month.",cta:"View settings"},
-      {name:"Scheduled outbound",icon:"send",state:"active",body:"5 scenarios active, 0 drafts in backlog. <strong>38 outbound</strong> this month.",cta:"View scenarios"},
-      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress.",cta:null},
-    ],
   },
 
   orange_mid: {
-    label:"Mature • slowing",
-    shortLabel:"Orange-mid",
+    label:"Orange-mid",
+    headline:"Growth is slowing",
+    subhead:"Lead value down 8% — 14 outbound drafts need your review",
     hero:{
       kind:"number",
       value:"$142,800",
       durationLabel:"Last 1 year 4 months",
-      delta:{dir:"down",pct:8,color:"orange",cta:"diagnose"},
-      series: makeCumSeries(142800, 16, "slowing"),
+      delta:{dir:"down",pct:8},
+      series: makeCumSeries(16,"slowing"),
     },
     kpis:{
-      channels:{state:"green",label:"Channels",value:"3 of 3",sub:"active"},
-      seats:{state:"green",label:"Seats",value:"4 of 8",sub:"team active"},
-      satisfaction:{state:"orange",label:"Caller sat.",value:"88%",sub:"confirm VIPs"},
+      channels:{state:"green",value:"3 of 3",sub:"all active"},
+      seats:{state:"green",value:"4 of 8",sub:"team active"},
+      satisfaction:{state:"orange",value:"88%",sub:"Confirm VIPs"},
     },
     highlights:{
-      fascination:{name:"Client GR",summary:"Tried to book an appointment on a holiday. AI negotiated and rescheduled gracefully.",duration:"1:47",avatar:"GR",color:"#A8B88F"},
-      lead:{name:"Client TW",summary:"Large equipment rental quote for 3 weeks.",duration:"4:23",avatar:"TW",color:"#7E9CC8",value:"$3,100"},
+      delight:{name:"Client GR",summary:"Tried to book on a holiday. AI negotiated and rescheduled gracefully.",duration:"1:47"},
+      lead:{name:"Client TW",summary:"Equipment rental quote for 3 weeks.",duration:"4:23",value:"$3,100"},
     },
-    milestone:{current:"$142k",target:"$200k",fillPct:71,gap:"$57,200 to go",passed:["$1k","$10k","$100k"],next:"$200k",later:["$500k"]},
-    banner:null,
     diagnosis:{title:"Why growth is slowing",body:"Outbound volume is down 22% this month. You have <strong>14 drafts waiting</strong> in your To-Do tab that haven't been reviewed.",ctaLabel:"Review drafts"},
-    commCycles:[
-      {label:"Nov 8", calls:98, voicemails:14, texts:0, missed:6, past:true},
-      {label:"Nov 22",calls:104,voicemails:16, texts:0, missed:5, past:true},
-      {label:"Dec 6", calls:112,voicemails:17, texts:0, missed:4, past:true},
-      {label:"Dec 20",calls:108,voicemails:15, texts:0, missed:5, past:true},
-      {label:"Jan 3", calls:96, voicemails:14, texts:0, missed:7, past:true},
-      {label:"Jan 17",calls:82, voicemails:12, texts:0, missed:9, past:false},
-    ],
-    commProblem:{kind:"warn",text:"Outbound volume down 22% — 14 drafts waiting in To-Do"},
+    comm:{
+      cycles:[
+        {label:"Nov 8", calls:98, voicemails:14, texts:0, missed:6, past:true},
+        {label:"Nov 22",calls:104,voicemails:16, texts:0, missed:5, past:true},
+        {label:"Dec 6", calls:112,voicemails:17, texts:0, missed:4, past:true},
+        {label:"Dec 20",calls:108,voicemails:15, texts:0, missed:5, past:true},
+        {label:"Jan 3", calls:96, voicemails:14, texts:0, missed:7, past:true},
+        {label:"Jan 17",calls:82, voicemails:12, texts:0, missed:9, past:false},
+      ],
+      problem:{text:"Outbound volume down 22% — 14 drafts waiting"},
+    },
     captured:{pct:76,captured:74,missed:23,recovered:"$4,680"},
-    fascinationCalls:[
-      {name:"Client GR",date:"Yesterday",summary:"Tried to book an appointment on a holiday. AI negotiated and rescheduled gracefully.",avatar:"GR",color:"#A8B88F",duration:"1:47"},
-      {name:"Client MH",date:"Mon",summary:"Asked the AI 20 questions in a row. AI answered patiently without losing context.",avatar:"MH",color:"#B89EB2",duration:"4:12"},
+    satisfaction:{
+      segments:[
+        {label:"Great",v:58,pct:69,color:"#43A047"},
+        {label:"OK",v:16,pct:19,color:"#D8B497"},
+        {label:"Needs work",v:8,pct:9,color:"#F57C00"},
+        {label:"Unhappy",v:2,pct:3,color:"#E53935"},
+      ],
+      orangeReasons:[
+        {title:"Confirm your VIPs",sub:"Satisfaction uses VIP weighting. Until you confirm, it's approximate."},
+      ],
+      unhappyReasons:[
+        {label:"Transfer failed",count:1},
+        {label:"Wrong info given",count:1},
+      ],
+    },
+    team:{
+      kind:"list",
+      members:[
+        {name:"Alex D.",meta:"Contributed 96 contacts",status:"contributed",statusLabel:"96 contacts",avatar:"AD",color:"#7E9CC8"},
+        {name:"Morgan T.",meta:"Subscribed 2 weeks ago",status:"subscribed",statusLabel:"Subscribed",avatar:"MT",color:"#D2A86A"},
+        {name:"Casey R.",meta:"Account created 5 days ago",status:"account",statusLabel:"Account created",avatar:"CR",color:"#88B098",action:"Fund plan"},
+        {name:"Drew P.",meta:"Invited 9 days ago",status:"invited",statusLabel:"Invited",avatar:"DP",color:"#A88BC4",action:"Resend"},
+      ],
+    },
+    channels:[
+      {name:"Inbound calls",icon:"phone",state:"active",body:"Call forwarding enabled. <strong>82 calls handled</strong> this cycle."},
+      {name:"Voicemail",icon:"mail",state:"active",body:"<strong>12 voicemails</strong> handled."},
+      {name:"Scheduled outbound",icon:"send",state:"orange",body:"5 scenarios active but <strong>14 drafts waiting</strong>. Volume down 22%."},
+      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress."},
+    ],
+    delightCalls:[
+      {name:"Client GR",date:"Yesterday · 1:47",summary:"Tried to book an appointment on a holiday. AI negotiated and rescheduled gracefully.",avatar:"GR",color:"#A8B88F"},
+      {name:"Client MH",date:"Mon · 4:12",summary:"Asked the AI 20 questions in a row. AI answered patiently without losing context.",avatar:"MH",color:"#B89EB2"},
     ],
     leads:[
       {name:"Client TW",date:"Today",summary:"Boom lift rental, 60-135ft, 3 weeks. Gave full pricing and confirmed delivery window.",avatar:"TW",color:"#7E9CC8",value:"$3,100"},
       {name:"Client RP",date:"Today",summary:"Telehandler for 1 week. Verified insurance and discussed attachments.",avatar:"RP",color:"#C89075",value:"$1,400"},
       {name:"Client JM",date:"Yesterday",summary:"Scissor lift 32-40ft, 2-day emergency job. Priced and confirmed same-day.",avatar:"JM",color:"#88B098",value:"$700"},
     ],
-    satisfaction:[
-      {label:"Great",v:58,pct:69,color:"#43A047"},
-      {label:"OK",v:16,pct:19,color:"#D8B497"},
-      {label:"Needs work",v:8,pct:9,color:"#F57C00"},
-      {label:"Unhappy",v:2,pct:3,color:"#E53935"},
-    ],
-    satisfactionOrangeReasons:[
-      {title:"Confirm your VIPs",sub:"Satisfaction uses VIP weighting. Until you confirm VIPs, it's approximate."},
-    ],
-    unhappyDetails:{
-      reasons:[
-        {label:"Transfer failed",count:1},
-        {label:"Wrong info given",count:1},
-      ],
-    },
-    team:[
-      {name:"Alex D.",meta:"Contributed 96 contacts",status:"contributed",statusLabel:"96 contacts",avatar:"AD",color:"#7E9CC8"},
-      {name:"Morgan T.",meta:"Subscribed 2 weeks ago",status:"subscribed",statusLabel:"Subscribed",avatar:"MT",color:"#D2A86A"},
-      {name:"Casey R.",meta:"Account created 5 days ago",status:"account",statusLabel:"Account created",avatar:"CR",color:"#88B098",action:"Fund their plan"},
-      {name:"Drew P.",meta:"Invited 9 days ago",status:"invited",statusLabel:"Invited",avatar:"DP",color:"#A88BC4",action:"Resend"},
-    ],
-    channels:[
-      {name:"Inbound calls",icon:"phone",state:"active",body:"Call forwarding enabled. <strong>82 calls handled</strong> this cycle.",cta:"View call handling"},
-      {name:"Voicemail",icon:"mail",state:"active",body:"AI-handled voicemails active. 12 handled this cycle.",cta:"View settings"},
-      {name:"Scheduled outbound",icon:"send",state:"orange",body:"5 scenarios active but <strong>14 drafts waiting</strong> in your To-Do. Outbound volume down 22% this cycle.",cta:"Review drafts →"},
-      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress.",cta:null},
-    ],
   },
 
   solo_cold_start: {
-    label:"Solo • cold start",
-    shortLabel:"Solo cold start",
+    label:"Solo cold start",
+    headline:"Let's get you started",
+    subhead:"3 steps from your first AI-handled call",
     hero:{
       kind:"activation",
       eyebrow:"GET YOUR AI HANDLING CALLS",
@@ -505,47 +449,48 @@ const PERSONAS = {
       ],
     },
     kpis:{
-      channels:{state:"orange",label:"Channels",value:"0 of 3",sub:"Activate forwarding"},
-      seats:{state:"orange",label:"Team",value:"0",sub:"Invite a teammate"},
-      satisfaction:{state:"orange",label:"Caller sat.",value:"—",sub:"Confirm VIPs first"},
+      channels:{state:"orange",value:"0 of 3",sub:"Activate forwarding"},
+      seats:{state:"orange",value:"0",sub:"Invite a teammate"},
+      satisfaction:{state:"orange",value:"—",sub:"Confirm VIPs first"},
     },
     highlights:null,
-    coldActivation:{
-      title:"Your AI hasn't made waves yet",
-      sub:"Once your first call is handled, we'll highlight the best ones here — you can share them with your team.",
-    },
-    milestone:null,
-    banner:null,
+    coldActivation:{title:"Your AI hasn't made waves yet",sub:"Once your first call is handled, we'll highlight the best ones here."},
     diagnosis:null,
-    commCycles:null,
-    commEmpty:"We'll populate this once your AI handles its first call.",
+    comm:{cycles:null,empty:"We'll populate this once your AI handles its first call."},
     captured:null,
-    fascinationCalls:[],
-    leads:[],
     satisfaction:null,
+    team:{kind:"invite"},
+    channels:[
+      {name:"Inbound calls",icon:"phone",state:"off",body:"Forward your number to your Y² line so the AI can answer."},
+      {name:"Voicemail",icon:"mail",state:"off",body:"Activates once inbound calls are enabled."},
+      {name:"Scheduled outbound",icon:"send",state:"off",body:"Share contacts, pick sub-industry, subscribe to start."},
+      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress."},
+    ],
+    delightCalls:[],
+    leads:[],
   },
 };
 
-/* Utility: make a cumulative series for the hero curve */
-function makeCumSeries(final, count, shape){
+function makeCumSeries(count, shape){
+  const final = 100;
   const pts=[];
   for(let i=0;i<count;i++){
     const t = i/(count-1);
     let v;
     if(shape==="up"){ v = final * Math.pow(t,1.6); }
     else if(shape==="slowing"){
-      // steep early, flatten near the end
       const ease = 1 - Math.pow(1-t,1.8);
       const flat = i>=count-3 ? 0.97 : 1;
       v = final * ease * flat;
     } else { v = final * t; }
-    pts.push(Math.round(v));
+    pts.push(v);
   }
   return pts;
 }
 
-const COLOR_ORANGE = "#F57C00";
-const COLOR_ACCENT = "#FF8370";
+/* Waveform data — different pattern per type for variety */
+const WAVE_DELIGHT = [14,22,10,18,28,20,32,26,16,34,22,30,14,38,26,20,30,16,24,36,18,28,22,14,30,20,26,16,32,18];
+const WAVE_LEAD    = [18,26,14,22,32,20,28,16,34,22,26,14,30,20,36,24,18,28,14,32,20,26,16,22,30,14,28,20,24,16];
 
 /* ============================================================
  *  Shared UI
@@ -562,30 +507,20 @@ const StatusBar = () => (
   </div>
 );
 
-const TabBar = ({selected="analytics"}) => {
-  const tabs = [
-    {id:"inbox",label:"Inbox",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 13h4l2 3h6l2-3h4M5 5h14l2 8v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5l2-8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>},
-    {id:"analytics",label:"Stats",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>},
-    {id:"contacts",label:"Contacts",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>},
-    {id:"profile",label:"Settings",icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z" stroke="currentColor" strokeWidth="1.6"/></svg>},
-  ];
-  return (
-    <div className="tabbar-wrap">
-      <div className="tabbar">
-        {tabs.map(t => (
-          <div key={t.id} className={"tab"+(t.id===selected?" selected":"")}>
-            {t.icon}
-            {t.id===selected && <span className="tab-label">{t.label}</span>}
-          </div>
-        ))}
-      </div>
-      <div className="assistant">Y²</div>
+const TabBar = () => (
+  <div className="tabbar-wrap">
+    <div className="tabbar">
+      <div className="tab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 13h4l2 3h6l2-3h4M5 5h14l2 8v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5l2-8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></div>
+      <div className="tab selected"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg><span className="tab-label">Stats</span></div>
+      <div className="tab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg></div>
+      <div className="tab"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z" stroke="currentColor" strokeWidth="1.6"/></svg></div>
     </div>
-  );
-};
+    <div className="assistant">Y²</div>
+  </div>
+);
 
-/* Cumulative hero chart — line + area fill */
-const CumChart = ({series, orange=false}) => {
+/* Cumulative area chart inside hero */
+const CumChart = ({series, down=false}) => {
   if(!series || !series.length) return null;
   const w=340, h=56, pad=2;
   const max = Math.max(...series,1);
@@ -593,7 +528,7 @@ const CumChart = ({series, orange=false}) => {
   const sy = v => h - pad - (v/max)*(h-pad*2);
   const path = series.map((v,i)=>`${i===0?"M":"L"}${sx(i).toFixed(1)},${sy(v).toFixed(1)}`).join(" ");
   const area = path + ` L${sx(series.length-1).toFixed(1)},${h} L${sx(0).toFixed(1)},${h} Z`;
-  const stroke = orange ? "#FFB968" : "#FFB7A6";
+  const stroke = down ? "#FFB968" : "#FFB7A6";
   return (
     <svg className="cum-chart" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
       <defs>
@@ -608,7 +543,6 @@ const CumChart = ({series, orange=false}) => {
   );
 };
 
-/* Donut for captured vs missed */
 const Donut = ({pct=84}) => {
   const r=38, c=2*Math.PI*r;
   const dash = (pct/100)*c;
@@ -624,27 +558,22 @@ const Donut = ({pct=84}) => {
           </linearGradient>
         </defs>
       </svg>
-      <div className="donut-center">
-        <div className="donut-pct">{pct}%</div>
-        <div className="donut-label">Captured</div>
-      </div>
+      <div className="donut-center"><div className="donut-pct">{pct}%</div><div className="donut-label">Captured</div></div>
     </div>
   );
 };
 
-/* Communication stacked bars + missed overlay line */
+/* Stacked comm chart with missed line overlay */
 const CommChart = ({cycles}) => {
   if(!cycles) return null;
   const max = Math.max(...cycles.map(c=>c.calls+c.voicemails+c.texts));
-  const maxMissed = Math.max(...cycles.map(c=>c.missed),1);
-  // Render bars as absolute DOM; overlay missed as SVG polyline.
-  const w=340, h=150, padY=8;
-  const cx = i => 18 + (i/(cycles.length-1))*(w-36);
-  const cy = m => h - padY - (m/max)*(h-padY*2);
+  const w=340, h=134;
+  const cx = i => 20 + (i/(cycles.length-1))*(w-40);
+  const cy = m => h - (m/max)*h;
   const missedPath = cycles.map((c,i)=>`${i===0?"M":"L"}${cx(i).toFixed(1)},${cy(c.missed).toFixed(1)}`).join(" ");
   return (
     <div>
-      <div className="comm-grid" style={{position:"relative"}}>
+      <div className="comm-grid">
         {cycles.map((c,i)=>{
           const total = c.calls+c.voicemails+c.texts;
           const stackH = (total/max)*100;
@@ -660,8 +589,8 @@ const CommChart = ({cycles}) => {
             </div>
           );
         })}
-        <svg style={{position:"absolute",inset:"8px 0 28px 0",pointerEvents:"none",width:"100%",height:"calc(100% - 36px)"}} viewBox={`0 0 ${w} ${h-padY*2}`} preserveAspectRatio="none">
-          <path d={missedPath.replace(/cy\((\d+)\)/g,(m,p)=>(parseFloat(p)-padY).toFixed(1))} fill="none" stroke="#E53935" strokeWidth="1.5" strokeDasharray="3 3" opacity=".7"/>
+        <svg style={{position:"absolute",left:0,right:0,top:22,height:134,width:"100%",pointerEvents:"none"}} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
+          <path d={missedPath} fill="none" stroke="#E53935" strokeWidth="1.6" strokeDasharray="3 3" opacity=".7"/>
         </svg>
       </div>
       <div className="comm-legend">
@@ -674,123 +603,132 @@ const CommChart = ({cycles}) => {
   );
 };
 
+/* Waveform (inline SVG via divs for crisp rendering) */
+const Waveform = ({pattern, played=0.35}) => (
+  <div className="wave">
+    {pattern.map((h,i)=>(
+      <div key={i} className={"bar"+(i/pattern.length<played?" played":"")} style={{height:`${h}px`}}></div>
+    ))}
+  </div>
+);
+
+/* Icons */
+const IconPhone = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const IconPeople = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75M9 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const IconSmile = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const IconMail = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12.5V19a2 2 0 01-2 2H5a2 2 0 01-2-2v-6.5M3 9l9 6 9-6M3 9a2 2 0 012-2h14a2 2 0 012 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const IconSend = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const IconChat = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const ChIcon = ({type}) => type==="phone"?<IconPhone/>:type==="mail"?<IconMail/>:type==="send"?<IconSend/>:<IconChat/>;
+
 /* ============================================================
- *  STATS SCREEN (main)
+ *  STATS SCREEN (single scrolling page)
  * ============================================================ */
-const StatsScreen = ({persona, onNav}) => {
+const StatsScreen = ({persona}) => {
   const p = PERSONAS[persona];
-  const isAccelerating = p.hero.kind==="number" && p.hero.delta.dir==="up";
-  const isOrangeMid    = p.hero.kind==="number" && p.hero.delta.dir==="down";
-  const isColdStart    = p.hero.kind==="activation";
+  const bodyRef = useRef(null);
+  const refs = {
+    hero: useRef(null),
+    comm: useRef(null),
+    captured: useRef(null),
+    satisfaction: useRef(null),
+    team: useRef(null),
+    channels: useRef(null),
+    delight: useRef(null),
+    leads: useRef(null),
+    diagnosis: useRef(null),
+  };
+  const [unhappyOpen, setUnhappyOpen] = useState(false);
+
+  const scrollTo = (name) => {
+    const el = refs[name]?.current;
+    if(el && bodyRef.current){
+      const offset = el.offsetTop - 12;
+      bodyRef.current.scrollTo({top: offset, behavior:"smooth"});
+    }
+  };
+
+  const isUp = p.hero.kind==="number" && p.hero.delta.dir==="up";
+  const isDown = p.hero.kind==="number" && p.hero.delta.dir==="down";
+  const isCold = p.hero.kind==="activation";
 
   return (
     <div className="screen">
       <StatusBar/>
-      <div className="body">
-        <div className="header">
-          <div className="h-title">Stats</div>
-          <button className="share-pill" onClick={()=>onNav("share")}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            Share
-          </button>
+      <div className="body" ref={bodyRef}>
+        {/* PAGE HEAD: 1-liner title + subtitle */}
+        <div className="page-head">
+          <div className="page-title">{p.headline}</div>
+          <div className="page-sub">{p.subhead}</div>
         </div>
 
-        {p.banner && (
-          <div className={"banner "+p.banner.kind}>
-            <div className="banner-emoji">{p.banner.emoji}</div>
-            <div className="banner-body">
-              <div className="banner-title">{p.banner.title}</div>
-              <div className="banner-sub">{p.banner.sub}</div>
+        {/* HERO — the only dark asset on the page */}
+        <div className="hero-wrap" ref={refs.hero}>
+          <div className="hero" onClick={()=>scrollTo(isDown?"diagnosis":isUp?"comm":"channels")}>
+            <div className="hero-top">
+              <div className="hero-eyebrow">{isCold ? p.hero.eyebrow : "Lead value handled by your AI"}</div>
+              <button className="hero-share" onClick={e=>{e.stopPropagation();}}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Share this
+              </button>
             </div>
-            <button className="banner-cta" onClick={()=>onNav("share")}>Share</button>
-          </div>
-        )}
-
-        {/* HERO */}
-        <div className="hero">
-          {p.hero.kind==="number" ? (
-            <>
-              <div className="hero-eyebrow">Lead value handled by your AI</div>
-              <div className="hero-num serif">{p.hero.value}</div>
-              <div className="hero-sub">{p.hero.durationLabel}</div>
-              <CumChart series={p.hero.series} orange={isOrangeMid}/>
-              <div className="hero-bottom">
-                <button className={"hero-delta "+(isAccelerating?"up":"down")}>
-                  {isAccelerating?"↑":"↓"} {p.hero.delta.pct}%
-                  <span style={{fontWeight:400,opacity:.8,marginLeft:2}}>vs prev 30d</span>
-                </button>
-                {isAccelerating ? (
-                  <button className="hero-cta-inline" onClick={()=>onNav("share")}>Share with your boss →</button>
-                ) : (
-                  <button className="hero-cta-inline" onClick={()=>onNav("diagnose")}>Tap to see why →</button>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="hero-eyebrow">{p.hero.eyebrow}</div>
-              <div style={{fontFamily:"'Lora',serif",fontSize:22,lineHeight:1.3,fontWeight:600,margin:"10px 0 4px",position:"relative",color:"#fff"}}>{p.hero.title}</div>
-              <div className="cold-stepper">
-                {p.hero.steps.map((s,i)=>(
-                  <div className="cold-step" key={i}>
-                    <div className="cold-num">{i+1}</div>
-                    <div className="cold-step-label">{s}</div>
-                    <svg className="cold-step-chev" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            {isCold ? (
+              <>
+                <div className="cold-title">{p.hero.title}</div>
+                <div className="cold-stepper">
+                  {p.hero.steps.map((s,i)=>(
+                    <div className="cold-step" key={i}>
+                      <div className="cold-num">{i+1}</div>
+                      <div className="cold-step-label">{s}</div>
+                      <svg className="cold-step-chev" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="hero-num serif">{p.hero.value}</div>
+                <div className="hero-sub">{p.hero.durationLabel}</div>
+                <CumChart series={p.hero.series} down={isDown}/>
+                <div className="hero-bottom">
+                  <div className={"hero-delta "+(isUp?"up":"down")}>
+                    {isUp?"↑":"↓"} {p.hero.delta.pct}%
+                    <span style={{fontWeight:400,opacity:.8,marginLeft:2}}>vs prev 30d</span>
                   </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* 3 KPI CARDS */}
-        <div className="section">
-          <div className="kpi-grid">
-            <KPICard k={p.kpis.channels} onTap={()=>onNav("channels")}/>
-            <KPICard k={p.kpis.seats}    onTap={()=>onNav("team")}/>
-            <KPICard k={p.kpis.satisfaction} onTap={()=>onNav("satisfaction")}/>
+                  <span className="hero-tap">Tap to see why →</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        {/* HIGHLIGHTS */}
-        <div className="section">
+        {/* 3 KPI CARDS with icons, scroll to section */}
+        <div className="section" style={{margin:"0 16px 16px"}}>
+          <div className="kpi-grid">
+            <KPICard kpi={p.kpis.channels} label="Channels" icon={<IconPhone/>} onTap={()=>scrollTo("channels")}/>
+            <KPICard kpi={p.kpis.seats}    label="Seats"    icon={<IconPeople/>} onTap={()=>scrollTo("team")}/>
+            <KPICard kpi={p.kpis.satisfaction} label="Satisfaction" icon={<IconSmile/>} onTap={()=>scrollTo("satisfaction")}/>
+          </div>
+        </div>
+
+        {/* HIGHLIGHTS — waveform style, light bg */}
+        <div className="section" style={{margin:"0 16px 18px"}}>
           {p.highlights ? (
-            <div className="highlight-row">
-              <HighlightCard type="fascination" call={p.highlights.fascination} onTap={()=>onNav("player-fascination")}/>
-              <HighlightCard type="lead" call={p.highlights.lead} onTap={()=>onNav("player-lead")}/>
+            <div className="hl-row">
+              <HighlightCard type="delight" call={p.highlights.delight} onTap={()=>scrollTo("delight")}/>
+              <HighlightCard type="lead"    call={p.highlights.lead}    onTap={()=>scrollTo("leads")}/>
             </div>
           ) : p.coldActivation ? (
-            <div className="hl-empty" onClick={()=>onNav("channels")}>
+            <div className="hl-empty">
               <div className="hl-empty-title">{p.coldActivation.title}</div>
               <div className="hl-empty-sub">{p.coldActivation.sub}</div>
             </div>
           ) : null}
         </div>
 
-        {/* MILESTONE */}
-        {p.milestone && (
-          <div className="section">
-            <div className="section-title">Next milestone <span className="more">Edit target</span></div>
-            <div className="card">
-              <div className="milestone-row">
-                <div className="milestone-now serif">{p.milestone.current} <span className="frac">/ {p.milestone.target}</span></div>
-                <div className="milestone-target">{p.milestone.gap}</div>
-              </div>
-              <div className="milestone-bar">
-                <div className="milestone-fill" style={{width:`${p.milestone.fillPct}%`}}></div>
-              </div>
-              <div className="milestone-tiers">
-                {p.milestone.passed.map((t,i)=>(<div key={"p"+i} className="tier passed"><div className="dot"></div>{t}</div>))}
-                <div className="tier next"><div className="dot"></div>{p.milestone.next}</div>
-                {p.milestone.later.map((t,i)=>(<div key={"l"+i} className="tier"><div className="dot"></div>{t}</div>))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* DIAGNOSIS (orange-mid only) */}
+        {/* DIAGNOSIS (orange-mid) */}
         {p.diagnosis && (
-          <div className="section" id="diagnosis">
+          <div className="section" ref={refs.diagnosis}>
             <div className="section-title">Diagnosis</div>
             <div className="diagnosis">
               <div className="diagnosis-title">
@@ -803,62 +741,143 @@ const StatsScreen = ({persona, onNav}) => {
           </div>
         )}
 
-        {/* COMMUNICATION HANDLED */}
-        <div className="section">
+        {/* COMMUNICATION */}
+        <div className="section" ref={refs.comm}>
           <div className="section-title">Communication handled by your AI <span className="more">Last 6 cycles</span></div>
-          {p.commProblem && (
-            <div className="banner warn" style={{margin:"0 0 10px"}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{color:COLOR_ORANGE,flexShrink:0}}><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              <div className="banner-body"><div className="banner-title">{p.commProblem.text}</div></div>
-              <button className="banner-cta" style={{background:COLOR_ORANGE}}>Go</button>
+          {p.comm.problem && (
+            <div className="diagnosis" style={{marginBottom:10}}>
+              <div className="diagnosis-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                {p.comm.problem.text}
+              </div>
             </div>
           )}
           <div className="card">
-            {p.commCycles ? <CommChart cycles={p.commCycles}/> : (
-              <div style={{padding:"36px 10px",textAlign:"center",fontSize:12,color:"var(--tertiary-text)"}}>{p.commEmpty}</div>
+            {p.comm.cycles ? <CommChart cycles={p.comm.cycles}/> : (
+              <div style={{padding:"36px 10px",textAlign:"center",fontSize:12,color:"var(--tertiary-text)"}}>{p.comm.empty}</div>
             )}
           </div>
         </div>
 
-        {/* CAPTURED VS MISSED */}
+        {/* CAPTURED vs MISSED */}
         {p.captured && (
-          <div className="section">
+          <div className="section" ref={refs.captured}>
             <div className="section-title">Captured vs missed</div>
-            <div className="card split" style={{flexDirection:"column",alignItems:"stretch"}}>
-              <div style={{display:"flex",gap:12,alignItems:"center"}}>
-                <Donut pct={p.captured.pct}/>
-                <div className="split-stats">
-                  <div className="split-stat"><span className="split-dot" style={{background:"var(--accent)"}}></span><span>Captured</span><span className="v">{p.captured.captured}</span></div>
-                  <div className="split-stat"><span className="split-dot" style={{background:"#F0EDEA"}}></span><span>Missed</span><span className="v">{p.captured.missed}</span></div>
-                  <div className="split-stat" style={{borderTop:"0.5px solid var(--border)",paddingTop:8,marginTop:2}}>
-                    <span style={{fontSize:11,color:"var(--secondary-text)"}}>Recovered</span>
-                    <span className="v" style={{color:"var(--accent-dark)"}}>{p.captured.recovered}</span>
-                  </div>
-                </div>
+            <div className="card split">
+              <Donut pct={p.captured.pct}/>
+              <div className="split-stats">
+                <div className="split-stat"><span className="split-dot" style={{background:"var(--accent)"}}></span><span>Captured</span><span className="v">{p.captured.captured}</span></div>
+                <div className="split-stat"><span className="split-dot" style={{background:"#F0EDEA"}}></span><span>Missed</span><span className="v">{p.captured.missed}</span></div>
+                <div className="split-stat" style={{borderTop:"0.5px solid var(--border)",paddingTop:8,marginTop:2}}><span style={{fontSize:11,color:"var(--secondary-text)"}}>Recovered</span><span className="v" style={{color:"var(--accent-dark)"}}>{p.captured.recovered}</span></div>
               </div>
-              <div className="card-footnote">Connect your CRM or payment processor to confirm lead conversion <a>→</a></div>
             </div>
           </div>
         )}
 
-        {/* RECENT AI FASCINATION */}
-        {p.fascinationCalls && p.fascinationCalls.length>0 && (
-          <div className="section">
-            <div className="section-title">Recent AI fascination <span className="more">See all</span></div>
-            {p.fascinationCalls.map((c,i)=>(
-              <div className="call-row" key={i} onClick={()=>onNav("player-fascination")}>
+        {/* SATISFACTION (incl. expand) */}
+        {p.satisfaction && (
+          <div className="section" ref={refs.satisfaction}>
+            <div className="section-title">Satisfaction</div>
+            <div className="card">
+              <div className="sat-bar">
+                {p.satisfaction.segments.map((s,i)=>(<div key={i} className="sat-seg" style={{width:`${s.pct}%`,background:s.color}}></div>))}
+              </div>
+              <div className="sat-note"><strong>Weighted by VIP contacts</strong> and their all-time lead value. One unhappy VIP weighs more than 10 happy one-offs.</div>
+              {p.satisfaction.orangeReasons && p.satisfaction.orangeReasons.length>0 && p.satisfaction.orangeReasons.map((r,i)=>(
+                <div className="sat-fix" key={i}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{color:COLOR_ORANGE,flexShrink:0}}><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <div className="sat-fix-body"><div className="sat-fix-title">{r.title}</div><div className="sat-fix-sub">{r.sub}</div></div>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{color:"#8A4A0A",flexShrink:0}}><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+              ))}
+              {p.satisfaction.segments.map((s,i)=>(
+                <div key={i}>
+                  <div className="sat-cat" onClick={()=>{ if(s.label==="Unhappy") setUnhappyOpen(!unhappyOpen); }}>
+                    <div className="sat-cat-dot" style={{background:s.color}}></div>
+                    <div className="sat-cat-name">{s.label}</div>
+                    <div className="sat-cat-val">{s.v}</div>
+                    {s.label==="Unhappy" && (
+                      <svg className={"sat-cat-chev"+(unhappyOpen?" open":"")} width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    )}
+                  </div>
+                  {s.label==="Unhappy" && unhappyOpen && p.satisfaction.unhappyReasons && p.satisfaction.unhappyReasons.map((r,j)=>(
+                    <div className="sat-reason" key={j}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{color:"#E53935"}}><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+                      <span className="sat-reason-label">{r.label}</span>
+                      <span className="sat-reason-count">{r.count} call{r.count!==1?"s":""}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* TEAM */}
+        <div className="section" ref={refs.team}>
+          <div className="section-title">Team</div>
+          <div className="card" style={{padding:"2px 16px 16px"}}>
+            {p.team.kind==="list" ? (
+              <>
+                {p.team.members.map((m,i)=>(
+                  <div className="team-row" key={i}>
+                    <div className="avatar" style={{background:m.color}}>{m.avatar}</div>
+                    <div className="team-info">
+                      <div className="team-name">{m.name}</div>
+                      <div className="team-meta"><span className={"team-status "+m.status}>{m.statusLabel}</span>· {m.meta}</div>
+                    </div>
+                    {m.action && <button className="team-action">{m.action}</button>}
+                  </div>
+                ))}
+                <button className="team-cta-primary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg>
+                  Invite another teammate
+                </button>
+              </>
+            ) : (
+              <div className="team-empty">
+                <div style={{fontSize:13,color:"var(--secondary-text)",lineHeight:1.55,margin:"16px 0 14px",padding:"0 4px"}}>
+                  Add a teammate to jump in faster on hot leads and expand your AI's contact reach.
+                </div>
+                <button className="team-cta-primary" style={{marginTop:0}}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg>
+                  Invite your first teammate
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* CHANNELS */}
+        <div className="section" ref={refs.channels}>
+          <div className="section-title">Channels</div>
+          <div className="card" style={{padding:"2px 16px 12px"}}>
+            {p.channels.map((c,i)=>(
+              <div className={"ch-row"+(c.state==="orange"?" orange":"")+(c.coming?" coming":"")} key={i}>
+                <div className="ch-icon"><ChIcon type={c.icon}/></div>
+                <div className="ch-info">
+                  <div className="ch-name">{c.name}</div>
+                  <div className="ch-body" dangerouslySetInnerHTML={{__html:c.body}}></div>
+                </div>
+                <div className={"ch-dot "+c.state}></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* RECENT AI DELIGHT */}
+        {p.delightCalls && p.delightCalls.length>0 && (
+          <div className="section" ref={refs.delight}>
+            <div className="section-title">Recent AI delight <span className="more">See all</span></div>
+            {p.delightCalls.map((c,i)=>(
+              <div className="call-row" key={i}>
                 <div className="avatar" style={{background:c.color}}>{c.avatar}</div>
                 <div className="call-info">
-                  <div className="call-name">
-                    {c.name}
-                    <span className="fascination-badge">✨ Fascination</span>
-                  </div>
-                  <div className="call-meta">{c.date} · {c.duration}</div>
+                  <div className="call-name">{c.name} <span className="delight-badge">✨ Delight</span></div>
+                  <div className="call-meta">{c.date}</div>
                   <div className="call-summary">{c.summary}</div>
                 </div>
-                <div className="call-play">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                </div>
+                <div className="call-play"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
               </div>
             ))}
           </div>
@@ -866,16 +885,13 @@ const StatsScreen = ({persona, onNav}) => {
 
         {/* RECENT QUALIFIED LEADS */}
         {p.leads && p.leads.length>0 && (
-          <div className="section">
+          <div className="section" ref={refs.leads}>
             <div className="section-title">Recent qualified leads <span className="more">See all</span></div>
             {p.leads.map((l,i)=>(
-              <div className="call-row" key={i} onClick={()=>onNav("player-lead")}>
+              <div className="call-row" key={i}>
                 <div className="avatar" style={{background:l.color}}>{l.avatar}</div>
                 <div className="call-info">
-                  <div className="call-name">
-                    {l.name}
-                    <span className="lead-badge">Lead</span>
-                  </div>
+                  <div className="call-name">{l.name} <span className="lead-badge">Lead</span></div>
                   <div className="call-meta">{l.date}</div>
                   <div className="call-summary">{l.summary}</div>
                 </div>
@@ -884,510 +900,61 @@ const StatsScreen = ({persona, onNav}) => {
             ))}
           </div>
         )}
-
-        {/* SATISFACTION DISTRIBUTION */}
-        {p.satisfaction && (
-          <div className="section">
-            <div className="section-title">Satisfaction distribution <span className="more" onClick={()=>onNav("satisfaction")}>Expand →</span></div>
-            <div className="card">
-              <div className="sat-bar">
-                {p.satisfaction.map((s,i)=>(<div key={i} className="sat-seg" style={{width:`${s.pct}%`,background:s.color}}></div>))}
-              </div>
-              <div className="sat-legend">
-                {p.satisfaction.map((s,i)=>(
-                  <div className="sat-item" key={i}>
-                    <span className="sat-dot" style={{background:s.color}}></span>
-                    <span className="sat-name">{s.label}</span>
-                    <span className="sat-val">{s.v}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-      <TabBar selected="analytics"/>
+      <TabBar/>
     </div>
   );
 };
 
-/* KPI Card sub-component */
-const KPICard = ({k, onTap}) => (
-  <div className={"kpi-card "+(k.state==="orange"?"orange":"green-dot")} onClick={onTap}>
-    <div className="kpi-dot"></div>
-    <div className="kpi-label">{k.label}</div>
-    <div className="kpi-num">{k.value}</div>
-    <div className="kpi-sub">{k.sub}</div>
+/* KPI sub-component */
+const KPICard = ({kpi, label, icon, onTap}) => (
+  <div className={"kpi-card "+(kpi.state==="orange"?"orange":"")} onClick={onTap}>
+    <div className="kpi-top">
+      <div className="kpi-icon">{icon}</div>
+      <div className="kpi-dot"></div>
+    </div>
+    <div className="kpi-label">{label}</div>
+    <div className="kpi-num">{kpi.value}</div>
+    <div className="kpi-sub">{kpi.sub}</div>
   </div>
 );
 
 /* Highlight card sub-component */
 const HighlightCard = ({type, call, onTap}) => (
   <div className="hl-card" onClick={onTap}>
-    <div className="hl-eyebrow">
-      {type==="fascination" ? "✨ AI Fascination" : "★ High-$ lead"}
+    <div className="hl-head">
+      <div className="hl-eye">
+        {type==="delight" ? "✨ AI DELIGHT" : "★ HIGH-$ LEAD"}
+      </div>
+      <div className="hl-meta">{call.duration}{call.value?" · "+call.value:""}</div>
     </div>
     <div className="hl-name">{call.name}</div>
-    <div className="hl-summary">{call.summary}</div>
+    <div className="hl-sum">{call.summary}</div>
     <div className="hl-foot">
-      <div className="hl-duration">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/><path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-        {call.duration}{call.value ? " · "+call.value : ""}
-      </div>
       <div className="hl-play">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       </div>
+      <Waveform pattern={type==="delight"?WAVE_DELIGHT:WAVE_LEAD} played={type==="delight"?0.3:0.22}/>
     </div>
   </div>
 );
 
 /* ============================================================
- *  SUB-SCREEN HEADER (back button + title)
+ *  APP SHELL — persona tabs only
  * ============================================================ */
-const SubHeader = ({title, onBack}) => (
-  <div className="header">
-    <button className="back-btn" onClick={onBack}>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-    </button>
-    <div className="h-title" style={{fontSize:20,margin:"0 auto",paddingRight:36}}>{title}</div>
-  </div>
-);
-
-/* ============================================================
- *  DRILL-DOWN: SATISFACTION
- * ============================================================ */
-const SatisfactionScreen = ({persona, onBack}) => {
-  const p = PERSONAS[persona];
-  const [expanded,setExpanded] = useState("Unhappy");
-  return (
-    <div className="screen">
-      <StatusBar/>
-      <div className="body">
-        <SubHeader title="Caller satisfaction" onBack={onBack}/>
-        <div className="section">
-          <div className="card">
-            <div className="sat-bar" style={{height:18,marginBottom:18}}>
-              {p.satisfaction.map((s,i)=>(<div key={i} className="sat-seg" style={{width:`${s.pct}%`,background:s.color}}></div>))}
-            </div>
-            <div className="sat-note">
-              <strong>Weighted by VIP contacts</strong> and their all-time lead value. One unhappy call from a high-value VIP weighs more than ten happy calls from one-offs.
-            </div>
-            {p.satisfactionOrangeReasons && p.satisfactionOrangeReasons.length>0 && (
-              <div className="sat-fix-list">
-                {p.satisfactionOrangeReasons.map((r,i)=>(
-                  <div className="sat-fix" key={i}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{color:COLOR_ORANGE,flexShrink:0}}><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    <div className="sat-fix-body">
-                      <div className="sat-fix-title">{r.title}</div>
-                      <div className="sat-fix-sub">{r.sub}</div>
-                    </div>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{color:"#8A4A0A",flexShrink:0}}><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="section">
-          <div className="section-title">By category</div>
-          {p.satisfaction.map((s,i)=>(
-            <div key={i}>
-              <div className="sat-cat" onClick={()=>setExpanded(expanded===s.label?null:s.label)}>
-                <div className="sat-cat-head">
-                  <span className="sat-cat-dot" style={{background:s.color}}></span>
-                  <span className="sat-cat-name">{s.label}</span>
-                  <span className="sat-cat-val">{s.v}</span>
-                  <svg className="sat-cat-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" style={{transform:expanded===s.label?"rotate(90deg)":"none",transition:"transform .2s"}}>
-                    <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-              {expanded===s.label && s.label==="Unhappy" && p.unhappyDetails && p.unhappyDetails.reasons.map((r,j)=>(
-                <div className="sat-reason" key={j}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{color:"#E53935",flexShrink:0}}><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-                  <span className="sat-reason-label">{r.label}</span>
-                  <span className="sat-reason-count">{r.count} call{r.count!==1?"s":""}</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{color:"var(--tertiary-text)"}}><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-      <TabBar selected="analytics"/>
-    </div>
-  );
-};
-
-/* ============================================================
- *  DRILL-DOWN: TEAM
- * ============================================================ */
-const TeamScreen = ({persona, onBack}) => {
-  const p = PERSONAS[persona];
-  const isSolo = persona==="solo_cold_start";
-  return (
-    <div className="screen">
-      <StatusBar/>
-      <div className="body">
-        <SubHeader title="Team" onBack={onBack}/>
-
-        {isSolo ? (
-          <>
-            <div className="hero" style={{padding:"24px 22px 22px"}}>
-              <div className="hero-eyebrow">Bring your team in</div>
-              <div style={{fontFamily:"'Lora',serif",fontSize:26,lineHeight:1.15,fontWeight:600,margin:"8px 0 8px",position:"relative",color:"#fff",letterSpacing:"-.5px"}}>
-                Invite a teammate
-              </div>
-              <div style={{fontSize:13,color:"#D8D2CB",position:"relative",marginBottom:18,lineHeight:1.5}}>
-                Your AI gets faster, smarter, and more helpful with every teammate who joins.
-              </div>
-              <button style={{position:"relative",width:"100%",padding:"13px",background:"#fff",color:"#2D2A26",border:"none",borderRadius:30,fontSize:15,fontWeight:600,fontFamily:"inherit",cursor:"pointer"}}>+ Invite your first teammate</button>
-            </div>
-            <div className="section">
-              <div className="section-title">Why add your team</div>
-              <div className="team-explain">
-                <div className="team-explain-card">
-                  <div className="team-explain-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                  <div>
-                    <div className="team-explain-t">Faster on hot leads</div>
-                    <div className="team-explain-b">Team members get instant alerts for high-value calls and can jump in live.</div>
-                  </div>
-                </div>
-                <div className="team-explain-card">
-                  <div className="team-explain-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                  <div>
-                    <div className="team-explain-t">Richer contact intelligence</div>
-                    <div className="team-explain-b">Every teammate contributes their contacts — your AI's reach grows with the team.</div>
-                  </div>
-                </div>
-                <div className="team-explain-card">
-                  <div className="team-explain-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                  <div>
-                    <div className="team-explain-t">Live call transfer</div>
-                    <div className="team-explain-b">Route complex calls to the right person with one tap.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="section">
-              <div className="section-title">{p.team.length} team members</div>
-              {p.team.map((m,i)=>(
-                <div className="team-row" key={i}>
-                  <div className="avatar" style={{background:m.color}}>{m.avatar}</div>
-                  <div className="team-info">
-                    <div className="team-name">{m.name}</div>
-                    <div className="team-meta">
-                      <span className={"team-status "+m.status}>{m.statusLabel}</span>
-                      {" · "+m.meta}
-                    </div>
-                  </div>
-                  {m.action && <button className="team-action">{m.action}</button>}
-                </div>
-              ))}
-            </div>
-            <div className="section">
-              <button className="team-primary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-                Invite another teammate
-              </button>
-            </div>
-          </>
-        )}
-      </div>
-      <TabBar selected="analytics"/>
-    </div>
-  );
-};
-
-/* ============================================================
- *  DRILL-DOWN: CHANNELS
- * ============================================================ */
-const CHANNEL_ICONS = {
-  phone: <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-  mail: <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M21 12.5V19a2 2 0 01-2 2H5a2 2 0 01-2-2v-6.5M3 9l9 6 9-6M3 9a2 2 0 012-2h14a2 2 0 012 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-  send: <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-  chat: <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-};
-
-const ChannelsScreen = ({persona, onBack}) => {
-  const p = PERSONAS[persona];
-  const isCold = persona==="solo_cold_start";
-  const channels = isCold ? [
-    {name:"Inbound calls",icon:"phone",state:"off",body:"Not activated yet. Forward your business number to your Y² number so the AI can answer calls.",cta:"Activate call forwarding →"},
-    {name:"Voicemail",icon:"mail",state:"off",body:"Activates automatically once inbound calls are enabled.",cta:null},
-    {name:"Scheduled outbound",icon:"send",state:"off",body:"Share your contacts, select your sub-industry, and subscribe to start sending scheduled follow-ups.",cta:"Get started →"},
-    {name:"Inbound SMS",icon:"chat",state:"off",body:"Text forwarding research in progress.",cta:null,coming:true},
-  ] : p.channels;
-
-  return (
-    <div className="screen">
-      <StatusBar/>
-      <div className="body">
-        <SubHeader title="Channels" onBack={onBack}/>
-        <div className="section" style={{marginTop:0}}>
-          {channels.map((c,i)=>(
-            <div className={"channel-card"+(c.state==="orange"?" orange":"")+(c.coming?" coming":"")} key={i}>
-              <div className="channel-head">
-                <div className="channel-icon">{CHANNEL_ICONS[c.icon]}</div>
-                <div className="channel-name">{c.name}</div>
-                <div className={"channel-dot "+c.state}></div>
-              </div>
-              <div className="channel-body" dangerouslySetInnerHTML={{__html:c.body}}></div>
-              {c.cta && <button className="channel-cta">{c.cta}</button>}
-            </div>
-          ))}
-        </div>
-      </div>
-      <TabBar selected="analytics"/>
-    </div>
-  );
-};
-
-/* ============================================================
- *  DRILL-DOWN: HIGHLIGHT CALL PLAYER
- * ============================================================ */
-const PlayerScreen = ({persona, type, onBack}) => {
-  const p = PERSONAS[persona];
-  const call = type==="fascination" ? p.highlights.fascination : p.highlights.lead;
-  const transcript = type==="fascination"
-    ? `"Hi, I need to refill my Lipitor."\n"Absolutely — I've got your account pulled up. Looks like you're due for the 90-day supply of the 20mg dose. Is that what you wanted?"\n"Wait — are you a real person?"\n"I'm the AI secretary here at the pharmacy. I'm here to get your refill sorted quickly, but if you'd like to speak to a pharmacist I can transfer you in about 10 seconds."`
-    : `"Hi, I'd like to rent a boom lift for a construction job."\n"Great — what height range are you working in?"\n"Around 90 feet."\n"Got it. I'd recommend our 60-135ft category at $3,000 per week. How long do you need it?"\n"Three weeks."\n"Perfect — that comes to $9,000. I can get it delivered to your site tomorrow morning. Shall I lock that in?"`;
-
-  return (
-    <div className="screen">
-      <StatusBar/>
-      <div className="body">
-        <SubHeader title="" onBack={onBack}/>
-        <div className="player-hero">
-          <div className="player-eye">{type==="fascination" ? "✨ AI FASCINATION" : "★ HIGH-$ LEAD"}</div>
-          <div className="player-name">{call.name}</div>
-          <div className="player-meta">{call.duration}{call.value ? " · "+call.value : ""}</div>
-          <div className="player-big">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <div className="player-transcript" style={{whiteSpace:"pre-line"}}>{transcript}</div>
-        </div>
-        <div className="player-actions">
-          <button className="player-action">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            Download
-          </button>
-          <button className="player-action">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            Share
-          </button>
-          <button className="player-action">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" strokeWidth="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" strokeWidth="1.8"/><circle cx="18" cy="19" r="3" stroke="currentColor" strokeWidth="1.8"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
-            Post
-          </button>
-        </div>
-        <div className="section">
-          <div className="section-title">Next up</div>
-          {p.fascinationCalls.slice(0,2).map((c,i)=>(
-            <div className="call-row" key={i}>
-              <div className="avatar" style={{background:c.color}}>{c.avatar}</div>
-              <div className="call-info">
-                <div className="call-name">{c.name}</div>
-                <div className="call-meta">{c.date} · {c.duration}</div>
-                <div className="call-summary">{c.summary}</div>
-              </div>
-              <div className="call-play">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <TabBar selected="analytics"/>
-    </div>
-  );
-};
-
-/* ============================================================
- *  INBOX (with Lead badges)
- * ============================================================ */
-const InboxScreen = ({persona, onBack}) => {
-  const p = PERSONAS[persona];
-  const rows = [
-    {avatar:"BM",color:"#C8A095",name:"Patient BM",date:"10:42 am",preview:"Refill bundle — 4 meds, 90-day supply each.",lead:true,val:"$520"},
-    {avatar:"DK",color:"#7E9CC8",name:"Patient DK",date:"9:18 am",preview:"Asked if the AI was real. Got a charming deflection.",lead:false},
-    {avatar:"RH",color:"#A88BC4",name:"Patient RH",date:"Yesterday",preview:"New Rx transfer — atorvastatin from CVS.",lead:true,val:"$310"},
-    {avatar:"JS",color:"#D2A86A",name:"Patient JS",date:"Yesterday",preview:"Metformin 30-day renewal + pharmacist consult booked.",lead:true,val:"$180"},
-    {avatar:"DR",color:"#88B098",name:"Dr. office",date:"Mon",preview:"New Rx e-prescription for the patient we discussed.",lead:false},
-    {avatar:"MK",color:"#A8B88F",name:"Insurance co.",date:"Mon",preview:"Prior authorization for one of your patients.",lead:false},
-  ];
-  return (
-    <div className="screen">
-      <StatusBar/>
-      <div className="body">
-        <div className="header">
-          <button className="back-btn" onClick={onBack}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          </button>
-          <div className="h-title">Inbox</div>
-          <div style={{width:36}}></div>
-        </div>
-        {rows.map((r,i)=>(
-          <div className="inbox-row" key={i}>
-            <div className="inbox-icon" style={{background:r.color}}>{r.avatar}</div>
-            <div className="inbox-body">
-              <div className="inbox-title-row">
-                <span className="inbox-name">{r.name}</span>
-                {r.lead && <span className="lead-pill">★ Lead · {r.val}</span>}
-                <span className="inbox-date">{r.date}</span>
-              </div>
-              <div className="inbox-preview">{r.preview}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <TabBar selected="inbox"/>
-    </div>
-  );
-};
-
-/* ============================================================
- *  LOCK SCREEN / PUSH NOTIFS
- * ============================================================ */
-const LockScreen = ({persona, onBack}) => (
-  <div className="screen" style={{background:"linear-gradient(180deg,#3a3530 0%,#1a1815 100%)"}}>
-    <StatusBar/>
-    <div style={{padding:"60px 16px 0",color:"#fff",textAlign:"center"}}>
-      <div style={{fontSize:64,fontWeight:300,fontFamily:"-apple-system",letterSpacing:-2}}>9:41</div>
-      <div style={{fontSize:18,fontWeight:500,marginTop:-4,opacity:.9}}>Tuesday, April 8</div>
-    </div>
-    <div style={{padding:"40px 0 0"}}>
-      <div className="push">
-        <div className="push-icon">Y²</div>
-        <div className="push-body">
-          <div className="push-title-row"><span className="push-app">YOUSQUARED</span><span className="push-time">now</span></div>
-          <div className="push-headline"><span className="lead-pill">★ Lead · $520</span></div>
-          <div className="push-text">Patient BM called — refill bundle for 4 meds. AI handled it.</div>
-        </div>
-      </div>
-      <div className="push" style={{background:"linear-gradient(135deg,rgba(255,232,224,.95),rgba(255,212,196,.95))"}}>
-        <div className="push-icon" style={{background:"linear-gradient(135deg,#FFD86A,#FFB300)"}}>✨</div>
-        <div className="push-body">
-          <div className="push-title-row"><span className="push-app">YOUSQUARED</span><span className="push-time">12m ago</span></div>
-          <div className="push-headline">Fascinating call just came in</div>
-          <div className="push-text">Patient DK asked if your AI was real. Tap to watch the reply.</div>
-        </div>
-      </div>
-      <div className="push">
-        <div className="push-icon">Y²</div>
-        <div className="push-body">
-          <div className="push-title-row"><span className="push-app">YOUSQUARED</span><span className="push-time">1h ago</span></div>
-          <div className="push-headline"><span className="lead-pill">★ Lead · $310</span></div>
-          <div className="push-text">Patient RH — new Rx transfer from CVS.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-/* ============================================================
- *  APP SHELL — two-level navigator
- * ============================================================ */
-const PERSONA_VIEWS = {
-  mature_accelerating: [
-    {id:"stats",label:"Stats"},
-    {id:"satisfaction",label:"Satisfaction"},
-    {id:"team",label:"Team"},
-    {id:"channels",label:"Channels"},
-    {id:"player-fascination",label:"Fascination player"},
-    {id:"player-lead",label:"Lead player"},
-    {id:"inbox",label:"Inbox"},
-    {id:"lock",label:"Lock screen"},
-  ],
-  orange_mid: [
-    {id:"stats",label:"Stats"},
-    {id:"satisfaction",label:"Satisfaction (Unhappy)"},
-    {id:"team",label:"Team"},
-    {id:"channels",label:"Channels"},
-    {id:"player-fascination",label:"Fascination player"},
-    {id:"inbox",label:"Inbox"},
-    {id:"lock",label:"Lock screen"},
-  ],
-  solo_cold_start: [
-    {id:"stats",label:"Stats"},
-    {id:"team",label:"Team (invite)"},
-    {id:"channels",label:"Channels (inactive)"},
-  ],
-};
-
 function App(){
   const [persona,setPersona] = useState("mature_accelerating");
-  const [view,setView] = useState("stats");
-
-  const onChangePersona = (id) => {
-    setPersona(id);
-    setView("stats");
-  };
-
-  const goBack = () => setView("stats");
-  const onNav = (destination) => {
-    // Map stats-screen taps to sub-views
-    const map = {
-      channels:"channels",team:"team",satisfaction:"satisfaction",
-      "player-fascination":"player-fascination","player-lead":"player-lead",
-      share:"lock",diagnose:"stats", // diagnose scrolls on same page
-    };
-    const target = map[destination] || destination;
-    if(target==="stats"){
-      // scroll to diagnosis — naive: leave on stats
-      return;
-    }
-    setView(target);
-  };
-
-  const render = () => {
-    switch(view){
-      case "stats":              return <StatsScreen persona={persona} onNav={onNav}/>;
-      case "satisfaction":       return <SatisfactionScreen persona={persona} onBack={goBack}/>;
-      case "team":               return <TeamScreen persona={persona} onBack={goBack}/>;
-      case "channels":           return <ChannelsScreen persona={persona} onBack={goBack}/>;
-      case "player-fascination": return <PlayerScreen persona={persona} type="fascination" onBack={goBack}/>;
-      case "player-lead":        return <PlayerScreen persona={persona} type="lead" onBack={goBack}/>;
-      case "inbox":              return <InboxScreen persona={persona} onBack={goBack}/>;
-      case "lock":               return <LockScreen persona={persona} onBack={goBack}/>;
-      default:                   return <StatsScreen persona={persona} onNav={onNav}/>;
-    }
-  };
-
-  const availableViews = PERSONA_VIEWS[persona];
-
   return (
     <>
-      <div className="nav-wrap">
-        <div className="nav-row">
-          <span className="nav-label">Persona</span>
-          {Object.entries(PERSONAS).map(([id,p])=>(
-            <button key={id} className={"persona"+(persona===id?" active":"")} onClick={()=>onChangePersona(id)}>{p.shortLabel}</button>
-          ))}
-        </div>
-        <div className="nav-row">
-          <span className="nav-label">View</span>
-          {availableViews.map(v=>(
-            <button key={v.id} className={view===v.id?"active":""} onClick={()=>setView(v.id)}>{v.label}</button>
-          ))}
-        </div>
+      <div className="nav-row">
+        {Object.entries(PERSONAS).map(([id,p])=>(
+          <button key={id} className={persona===id?"active":""} onClick={()=>setPersona(id)}>{p.label}</button>
+        ))}
       </div>
-      <div className="label">YouSquared iOS — Stats tab v2 · 3 personas × per-persona drill-downs · <a href="SPEC.md">Spec for Joris + AdB →</a></div>
-      <div className="phone">{render()}</div>
+      <div className="phone"><StatsScreen persona={persona}/></div>
     </>
   );
 }
-
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
 </body>
