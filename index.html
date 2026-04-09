@@ -62,13 +62,12 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .body::-webkit-scrollbar{width:0}
 
 /* Header: title only */
-.page-head{padding:10px 20px 14px}
-.page-title{font-size:28px;font-weight:600;color:var(--primary-text);font-family:'Lora',serif;letter-spacing:-.3px;line-height:1.15}
+.page-head{padding:6px 20px 10px}
+.page-title{font-size:26px;font-weight:600;color:var(--primary-text);font-family:'Lora',serif;letter-spacing:-.3px;line-height:1.15}
 
-/* Section — more breathing room */
+/* Section — generous breathing room by default, tight for above-fold */
 .section{margin:28px 16px}
-.section.tight{margin:16px 16px}
-.section.flat{margin:28px 0}
+.section.tight{margin:14px 16px}
 .section-title{font-size:11px;font-weight:600;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.9px;margin:0 4px 10px;display:flex;justify-content:space-between;align-items:center}
 .section-title .more{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:0;text-transform:none;cursor:pointer}
 .card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:18px;padding:18px}
@@ -76,11 +75,11 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 /* ============================================================
  *  HERO CARD — the only dark gradient on the page
  * ============================================================ */
-.hero-wrap{margin:6px 16px 20px;position:relative}
+.hero-wrap{margin:4px 16px 18px;position:relative}
 .hero{
   background:linear-gradient(145deg,#2D2A26 0%,#433F3A 55%,#3A3632 100%);
   border-radius:22px;
-  padding:20px 22px 18px;
+  padding:18px 22px 16px;
   color:#fff;
   position:relative;overflow:hidden;
   cursor:pointer;
@@ -90,9 +89,9 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;position:relative;gap:12px}
 .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:#FFB7A6}
 .hero-share{display:inline-flex;align-items:center;gap:5px;padding:6px 11px 6px 9px;border-radius:30px;background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.22);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;backdrop-filter:blur(4px)}
-.hero-num{font-family:'Lora',serif;font-size:46px;font-weight:600;line-height:1.05;margin:4px 0 4px;letter-spacing:-1px;position:relative}
-.hero-sub{font-size:12px;color:#D8D2CB;position:relative;margin-bottom:10px;font-weight:500}
-.cum-chart{position:relative;width:100%;height:56px;margin:4px 0 10px;display:block}
+.hero-num{font-family:'Lora',serif;font-size:42px;font-weight:600;line-height:1.05;margin:2px 0 3px;letter-spacing:-1px;position:relative}
+.hero-sub{font-size:12px;color:#D8D2CB;position:relative;margin-bottom:6px;font-weight:500}
+.cum-chart{position:relative;width:100%;height:44px;margin:2px 0 6px;display:block}
 .hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;flex-wrap:wrap}
 .hero-delta{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:30px;font-weight:600;font-size:11px;font-family:inherit;border:none}
 .hero-delta.up{background:rgba(67,160,71,.22);color:#7BD789}
@@ -109,34 +108,77 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .cold-step-chev{color:#B8B0A6;flex-shrink:0}
 
 /* ============================================================
- *  HEALTH STRIP — 3 tiny status dots w/ icons, replaces KPI grid
+ *  KPI RINGS — RAG: muted sage by default, accented amber/red on action
  * ============================================================ */
-.health-strip{display:flex;align-items:center;justify-content:center;gap:24px;padding:14px 0}
-.health-item{display:flex;align-items:center;gap:7px;cursor:pointer;padding:4px 6px;border-radius:30px;transition:background .15s}
-.health-item:hover{background:var(--surface-dark)}
-.health-icon{width:28px;height:28px;border-radius:50%;background:rgba(255,131,112,.12);color:var(--accent-dark);display:flex;align-items:center;justify-content:center}
-.health-item.orange .health-icon{background:rgba(245,124,0,.15);color:var(--warning)}
-.health-label{font-size:11px;color:var(--primary-text);font-weight:600}
-.health-item.orange .health-label{color:var(--warning)}
-.health-dot{width:7px;height:7px;border-radius:50%;background:var(--success)}
-.health-item.orange .health-dot{background:var(--warning);box-shadow:0 0 0 3px rgba(245,124,0,.18)}
+.rings-row{display:flex;justify-content:space-around;align-items:flex-start;padding:10px 8px 14px;gap:6px;border-bottom:0.5px solid var(--border)}
+.ring-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:8px 6px;border-radius:14px;flex:1;transition:background .15s}
+.ring-item:hover{background:var(--surface-dark)}
+.ring-outer{position:relative;width:84px;height:84px;display:flex;align-items:center;justify-content:center}
+.ring-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#7A6F62}
+.ring-item.warn .ring-icon{color:var(--warning)}
+.ring-item.urgent .ring-icon{color:var(--error)}
+.ring-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--secondary-text);font-weight:600;margin-top:8px}
+.ring-item.warn .ring-label{color:var(--warning)}
+.ring-item.urgent .ring-label{color:var(--error)}
+.ring-value{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--primary-text);line-height:1;margin-top:3px;letter-spacing:-.2px}
+.ring-item.warn .ring-value{color:var(--warning)}
+.ring-item.urgent .ring-value{color:var(--error)}
+.ring-sub{font-size:10px;color:var(--tertiary-text);margin-top:2px;font-weight:500}
+.ring-item.warn .ring-sub{color:#8A4A0A}
+.ring-item.urgent .ring-sub{color:#8A2020}
+
+/* Communication toggle */
+.comm-toggle{display:flex;gap:4px;background:var(--surface-darken);border-radius:30px;padding:3px;font-size:11px;font-weight:600}
+.comm-toggle button{border:none;background:none;padding:5px 12px;border-radius:30px;color:var(--secondary-text);cursor:pointer;font:inherit}
+.comm-toggle button.active{background:#fff;color:var(--primary-text);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+
+/* Unhappy expand → reason + calls */
+.sat-unhappy-wrap{padding:8px 0 0 20px}
+.sat-reason-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--secondary-text);margin:8px 0 6px;display:flex;align-items:center;gap:6px}
+.sat-reason-head::before{content:"";width:6px;height:6px;border-radius:50%;background:#E53935}
+.sat-unhappy-call{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-warm);border-radius:10px;margin-bottom:6px;cursor:pointer}
+.sat-unhappy-call .avatar{width:30px;height:30px;font-size:11px}
+.sat-unhappy-info{flex:1;min-width:0}
+.sat-unhappy-name{font-size:12px;font-weight:600;color:var(--primary-text)}
+.sat-unhappy-sum{font-size:11px;color:var(--secondary-text);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sat-unhappy-arrow{color:var(--tertiary-text);flex-shrink:0}
+
+/* Contact thread modal */
+.thread-overlay{position:absolute;inset:0;background:rgba(0,0,0,.48);z-index:30;display:flex;flex-direction:column;justify-content:flex-end;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.thread-sheet{background:var(--bg);border-radius:28px 28px 0 0;padding:12px 0 28px;max-height:82%;overflow-y:auto;animation:slideUp .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.thread-handle{width:36px;height:5px;background:#D8D4D0;border-radius:30px;margin:0 auto 14px}
+.thread-head{padding:2px 22px 14px;display:flex;align-items:center;gap:12px;border-bottom:0.5px solid var(--border)}
+.thread-head .avatar{width:44px;height:44px;font-size:14px}
+.thread-head-info{flex:1;min-width:0}
+.thread-head-name{font-size:17px;font-weight:700;color:var(--primary-text)}
+.thread-head-sub{font-size:12px;color:var(--secondary-text);margin-top:2px}
+.thread-close{width:32px;height:32px;border-radius:50%;background:var(--surface-darken);display:flex;align-items:center;justify-content:center;color:var(--secondary-text);cursor:pointer;border:none;font-size:16px;flex-shrink:0}
+.thread-body{padding:14px 22px}
+.thread-call-card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}
+.thread-call-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.thread-call-icon{width:32px;height:32px;border-radius:50%;background:rgba(229,57,53,.12);color:#E53935;display:flex;align-items:center;justify-content:center}
+.thread-call-title{flex:1;font-size:13px;font-weight:600;color:var(--primary-text)}
+.thread-call-time{font-size:11px;color:var(--tertiary-text)}
+.thread-transcript{background:var(--bg-warm);border-radius:10px;padding:12px;font-size:12px;line-height:1.55;color:var(--secondary-text);white-space:pre-line}
+.thread-actions{display:flex;gap:8px;margin-top:12px}
+.thread-action{flex:1;padding:10px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:10px;font-size:11px;font-weight:600;color:var(--primary-text);cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:5px}
 
 /* ============================================================
- *  HIGHLIGHT — single full-width card w/ Delight/Lead carousel
+ *  HIGHLIGHT — flat (no card), inline header with toggle
  * ============================================================ */
-.hl-card{background:var(--surface-dark);border:0.5px solid var(--border);border-radius:18px;padding:18px 20px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .12s}
-.hl-card:hover{transform:translateY(-1px)}
-.hl-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.hl-eye{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent-dark);display:flex;align-items:center;gap:4px}
-.hl-switcher{display:flex;gap:4px}
-.hl-switch-btn{width:20px;height:20px;border-radius:50%;background:var(--surface-darken);border:none;cursor:pointer;color:var(--tertiary-text);display:flex;align-items:center;justify-content:center}
-.hl-switch-btn.active{background:var(--accent);color:#fff}
-.hl-name{font-size:16px;font-weight:600;color:var(--primary-text);line-height:1.25}
-.hl-sum{font-size:13px;color:var(--secondary-text);line-height:1.5}
-.hl-foot{display:flex;align-items:center;gap:12px;margin-top:4px}
-.hl-play{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 3px 12px rgba(255,131,112,.4)}
+.hl-flat{padding:0 4px}
+.hl-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.hl-header-label{font-size:11px;font-weight:600;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.9px;margin-right:2px}
+.hl-pill{font:inherit;font-size:11px;font-weight:600;padding:5px 11px;border-radius:30px;background:var(--surface-darken);color:var(--primary-text);border:none;cursor:pointer}
+.hl-pill.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(255,131,112,.3)}
+.hl-name{font-size:16px;font-weight:600;color:var(--primary-text);line-height:1.3;margin-bottom:4px}
+.hl-sum{font-size:13px;color:var(--secondary-text);line-height:1.5;min-height:38px;margin-bottom:10px}
+.hl-foot{display:flex;align-items:center;gap:12px}
+.hl-play{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:0 3px 14px rgba(255,131,112,.4);cursor:pointer}
 .hl-play svg{margin-left:2px}
-.wave{flex:1;display:flex;align-items:center;gap:2px;height:32px}
+.wave{flex:1;display:flex;align-items:center;gap:2px;height:30px}
 .wave .bar{width:2.5px;background:var(--accent);border-radius:1.5px;opacity:.45}
 .wave .bar.played{opacity:1}
 .hl-meta{font-size:11px;color:var(--tertiary-text);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;flex-shrink:0}
@@ -307,23 +349,39 @@ const PERSONAS = {
       series: makeCumSeries(27,"up"),
     },
     kpis:{
-      channels:{state:"green",value:"3 of 3",sub:"all active"},
-      seats:{state:"green",value:"4 of 8",sub:"team active"},
-      satisfaction:{state:"green",value:"94%",sub:"112 rated great"},
+      channels:{state:"resting",value:"3 of 3",sub:"all active",pct:100},
+      seats:{state:"resting",value:"4 of 8",sub:"team active",pct:50},
+      satisfaction:{state:"resting",value:"94%",sub:"rated great",pct:94},
     },
     highlights:{
-      delight:{name:"Patient DK",summary:"Asked if the AI was real. Got a charming 2-min reply.",duration:"2:14"},
-      lead:{name:"Patient BM",summary:"Refill bundle: 4 meds, 90-day.",duration:"3:02",value:"$520"},
+      delight:{name:"Patient DK",summary:"Asked if the AI was a real person — got a charming deflection that had the caller laughing.",duration:"2:14"},
+      lead:{name:"Patient BM",summary:"Refill bundle for 4 medications on a 90-day supply — confirmed delivery address and co-pay.",duration:"3:02",value:"$520"},
     },
     diagnosis:null,
     comm:{
-      cycles:[
-        {label:"Nov 8", calls:68, voicemails:11, texts:0, missed:5, past:true},
-        {label:"Nov 22",calls:82, voicemails:14, texts:0, missed:7, past:true},
-        {label:"Dec 6", calls:94, voicemails:13, texts:0, missed:6, past:true},
-        {label:"Dec 20",calls:88, voicemails:15, texts:0, missed:4, past:true},
-        {label:"Jan 3", calls:108,voicemails:18, texts:0, missed:3, past:true},
-        {label:"Jan 17",calls:124,voicemails:16, texts:0, missed:2, past:false},
+      month:[
+        {label:"Nov",calls:142,voicemails:24,texts:0,missed:11,past:true},
+        {label:"Dec",calls:168,voicemails:28,texts:0,missed:10,past:true},
+        {label:"Jan",calls:186,voicemails:30,texts:0,missed:9,past:true},
+        {label:"Feb",calls:204,voicemails:32,texts:0,missed:7,past:true},
+        {label:"Mar",calls:232,voicemails:35,texts:0,missed:5,past:true},
+        {label:"Apr",calls:248,voicemails:34,texts:0,missed:4,past:false},
+      ],
+      week:[
+        {label:"W8",calls:52,voicemails:8,texts:0,missed:3,past:true},
+        {label:"W9",calls:58,voicemails:9,texts:0,missed:2,past:true},
+        {label:"W10",calls:61,voicemails:10,texts:0,missed:2,past:true},
+        {label:"W11",calls:65,voicemails:9,texts:0,missed:1,past:true},
+        {label:"W12",calls:72,voicemails:11,texts:0,missed:1,past:true},
+        {label:"W13",calls:76,voicemails:10,texts:0,missed:1,past:false},
+      ],
+      day:[
+        {label:"Mon",calls:11,voicemails:2,texts:0,missed:1,past:true},
+        {label:"Tue",calls:14,voicemails:2,texts:0,missed:0,past:true},
+        {label:"Wed",calls:12,voicemails:1,texts:0,missed:1,past:true},
+        {label:"Thu",calls:16,voicemails:3,texts:0,missed:0,past:true},
+        {label:"Fri",calls:13,voicemails:2,texts:0,missed:1,past:true},
+        {label:"Sat",calls:18,voicemails:2,texts:0,missed:0,past:false},
       ],
       problem:null,
     },
@@ -337,8 +395,18 @@ const PERSONAS = {
       ],
       orangeReasons:[],
       unhappyReasons:[
-        {label:"Transfer failed",count:1},
-        {label:"Caller frustrated with hold time",count:1},
+        {
+          label:"Transfer failed",
+          calls:[
+            {name:"Patient TR",date:"Apr 2, 3:14 pm",avatar:"TR",color:"#A88BC4",summary:"Caller asked for pharmacist — transfer rang out after 3 attempts",transcript:`"I need to speak to the pharmacist, please."\n"Let me transfer you right away."\n[transfer attempt 1 — rang out]\n[transfer attempt 2 — rang out]\n"I'm so sorry, the pharmacist isn't picking up. Can I take a message?"\n"Forget it."`},
+          ],
+        },
+        {
+          label:"Caller frustrated with hold time",
+          calls:[
+            {name:"Patient LS",date:"Mar 31, 11:02 am",avatar:"LS",color:"#D2A86A",summary:"Caller escalated after 4 minutes on hold waiting for a live agent",transcript:`"Hi, I've been on hold for almost 5 minutes now."\n"I apologize for the wait. Our team is with other patients. May I help you directly, or would you like a callback within 10 minutes?"\n"This is ridiculous. I'll call back later."`},
+          ],
+        },
       ],
     },
     team:{
@@ -381,23 +449,39 @@ const PERSONAS = {
       series: makeCumSeries(16,"slowing"),
     },
     kpis:{
-      channels:{state:"green",value:"3 of 3",sub:"all active"},
-      seats:{state:"green",value:"4 of 8",sub:"team active"},
-      satisfaction:{state:"orange",value:"88%",sub:"Confirm VIPs"},
+      channels:{state:"resting",value:"3 of 3",sub:"all active",pct:100},
+      seats:{state:"resting",value:"4 of 8",sub:"team active",pct:50},
+      satisfaction:{state:"warn",value:"88%",sub:"Confirm VIPs",pct:88},
     },
     highlights:{
-      delight:{name:"Client GR",summary:"Tried to book on a holiday. AI negotiated and rescheduled gracefully.",duration:"1:47"},
-      lead:{name:"Client TW",summary:"Equipment rental quote for 3 weeks.",duration:"4:23",value:"$3,100"},
+      delight:{name:"Client GR",summary:"Tried to book a boom lift on a holiday — AI negotiated the rate and rescheduled gracefully.",duration:"1:47"},
+      lead:{name:"Client TW",summary:"Boom lift rental, 60–135ft range, 3 weeks — priced and confirmed delivery window on the call.",duration:"4:23",value:"$3,100"},
     },
     diagnosis:{title:"Why growth is slowing",body:"Outbound volume is down 22% this month. You have <strong>14 drafts waiting</strong> in your To-Do tab that haven't been reviewed.",ctaLabel:"Review drafts"},
     comm:{
-      cycles:[
-        {label:"Nov 8", calls:98, voicemails:14, texts:0, missed:6, past:true},
-        {label:"Nov 22",calls:104,voicemails:16, texts:0, missed:5, past:true},
-        {label:"Dec 6", calls:112,voicemails:17, texts:0, missed:4, past:true},
-        {label:"Dec 20",calls:108,voicemails:15, texts:0, missed:5, past:true},
-        {label:"Jan 3", calls:96, voicemails:14, texts:0, missed:7, past:true},
-        {label:"Jan 17",calls:82, voicemails:12, texts:0, missed:9, past:false},
+      month:[
+        {label:"Nov",calls:186,voicemails:28,texts:0,missed:12,past:true},
+        {label:"Dec",calls:198,voicemails:30,texts:0,missed:11,past:true},
+        {label:"Jan",calls:214,voicemails:32,texts:0,missed:10,past:true},
+        {label:"Feb",calls:206,voicemails:29,texts:0,missed:13,past:true},
+        {label:"Mar",calls:188,voicemails:27,texts:0,missed:15,past:true},
+        {label:"Apr",calls:164,voicemails:24,texts:0,missed:18,past:false},
+      ],
+      week:[
+        {label:"W8",calls:58,voicemails:9,texts:0,missed:3,past:true},
+        {label:"W9",calls:54,voicemails:8,texts:0,missed:3,past:true},
+        {label:"W10",calls:52,voicemails:8,texts:0,missed:4,past:true},
+        {label:"W11",calls:48,voicemails:7,texts:0,missed:4,past:true},
+        {label:"W12",calls:44,voicemails:6,texts:0,missed:4,past:true},
+        {label:"W13",calls:41,voicemails:6,texts:0,missed:5,past:false},
+      ],
+      day:[
+        {label:"Mon",calls:7,voicemails:1,texts:0,missed:1,past:true},
+        {label:"Tue",calls:8,voicemails:2,texts:0,missed:1,past:true},
+        {label:"Wed",calls:6,voicemails:1,texts:0,missed:1,past:true},
+        {label:"Thu",calls:7,voicemails:1,texts:0,missed:0,past:true},
+        {label:"Fri",calls:5,voicemails:1,texts:0,missed:1,past:true},
+        {label:"Sat",calls:4,voicemails:1,texts:0,missed:1,past:false},
       ],
       problem:{text:"Outbound volume down 22% — 14 drafts waiting"},
     },
@@ -413,8 +497,18 @@ const PERSONAS = {
         {title:"Confirm your VIPs",sub:"Satisfaction uses VIP weighting. Until you confirm, it's approximate."},
       ],
       unhappyReasons:[
-        {label:"Transfer failed",count:1},
-        {label:"Wrong info given",count:1},
+        {
+          label:"Transfer failed",
+          calls:[
+            {name:"Client BH",date:"Apr 4, 10:28 am",avatar:"BH",color:"#7E9CC8",summary:"Transfer to equipment specialist rang out — caller hung up",transcript:`"Let me transfer you to our equipment specialist."\n[transfer attempt — rang out]\n"I'm sorry, they're not answering. Can I take your number?"\n[call ended]`},
+          ],
+        },
+        {
+          label:"Wrong info given",
+          calls:[
+            {name:"Client MR",date:"Apr 3, 2:44 pm",avatar:"MR",color:"#88B098",summary:"Quoted wrong weekly rate — caller noticed the discrepancy",transcript:`"A scissor lift for a week runs $650."\n"That's weird, your site says $800."\n"You're right, I apologize — let me re-check. [pauses] It's $800."\n"So which is it?"`},
+          ],
+        },
       ],
     },
     team:{
@@ -458,14 +552,14 @@ const PERSONAS = {
       ],
     },
     kpis:{
-      channels:{state:"orange",value:"0 of 3",sub:"Activate forwarding"},
-      seats:{state:"orange",value:"0",sub:"Invite a teammate"},
-      satisfaction:{state:"orange",value:"—",sub:"Confirm VIPs first"},
+      channels:{state:"urgent",value:"0 of 3",sub:"Activate forwarding",pct:4},
+      seats:{state:"warn",value:"0",sub:"Invite a teammate",pct:4},
+      satisfaction:{state:"warn",value:"—",sub:"Confirm VIPs first",pct:4},
     },
     highlights:null,
     coldActivation:{title:"Your AI hasn't made waves yet",sub:"Once your first call is handled, we'll highlight the best ones here."},
     diagnosis:null,
-    comm:{cycles:null,empty:"We'll populate this once your AI handles its first call."},
+    comm:{month:null,week:null,day:null,empty:"We'll populate this once your AI handles its first call."},
     captured:null,
     satisfaction:null,
     team:{kind:"invite"},
@@ -639,16 +733,15 @@ const StatsScreen = ({persona}) => {
   const refs = {
     hero: useRef(null),
     comm: useRef(null),
-    captured: useRef(null),
     satisfaction: useRef(null),
     team: useRef(null),
     channels: useRef(null),
-    calls: useRef(null),
     diagnosis: useRef(null),
   };
   const [unhappyOpen, setUnhappyOpen] = useState(false);
   const [highlightKind, setHighlightKind] = useState("delight");
-  const [callsFilter, setCallsFilter] = useState("delight");
+  const [commPeriod, setCommPeriod] = useState("month");
+  const [threadCall, setThreadCall] = useState(null);
 
   const scrollTo = (name) => {
     const el = refs[name]?.current;
@@ -673,7 +766,7 @@ const StatsScreen = ({persona}) => {
 
         {/* HERO — the only dark asset on the page */}
         <div className="hero-wrap" ref={refs.hero}>
-          <div className="hero" onClick={()=>scrollTo(isDown?"diagnosis":isCold?"channels":"comm")}>
+          <div className="hero" onClick={()=>scrollTo(isDown?"diagnosis":"comm")}>
             <div className="hero-top">
               <div className="hero-eyebrow">{isCold ? p.hero.eyebrow : "Lead value handled by your AI"}</div>
               <button className="hero-share" onClick={e=>{e.stopPropagation();}}>
@@ -711,23 +804,22 @@ const StatsScreen = ({persona}) => {
           </div>
         </div>
 
-        {/* HEALTH STRIP — tiny 3-dot row replacing KPI grid */}
-        <div className="section tight" style={{margin:"2px 16px 0"}}>
-          <div className="health-strip">
-            <HealthItem state={p.kpis.channels.state} label="Channels" icon={<IconPhone/>} onTap={()=>scrollTo("channels")}/>
-            <HealthItem state={p.kpis.seats.state} label="Seats" icon={<IconPeople/>} onTap={()=>scrollTo("team")}/>
-            <HealthItem state={p.kpis.satisfaction.state} label="Satisfaction" icon={<IconSmile/>} onTap={()=>scrollTo("satisfaction")}/>
+        {/* 3 KPI RINGS — muted taupe, scroll to section */}
+        <div className="section tight">
+          <div className="rings-row">
+            <RingKPI kpi={p.kpis.channels} label="Channels" icon={<IconPhone/>} onTap={()=>scrollTo("channels")}/>
+            <RingKPI kpi={p.kpis.seats} label="Seats" icon={<IconPeople/>} onTap={()=>scrollTo("team")}/>
+            <RingKPI kpi={p.kpis.satisfaction} label="Satisfaction" icon={<IconSmile/>} onTap={()=>scrollTo("satisfaction")}/>
           </div>
         </div>
 
-        {/* HIGHLIGHT — single full-width card with Delight/Lead carousel */}
-        <div className="section" style={{marginTop:22}}>
+        {/* HIGHLIGHT — single full-width card with Delight/Lead switcher */}
+        <div className="section tight" style={{marginTop:14}}>
           {p.highlights ? (
             <HighlightCard
               type={highlightKind}
               call={highlightKind==="delight"?p.highlights.delight:p.highlights.lead}
-              onSwitch={(k)=>{setHighlightKind(k);setCallsFilter(k);}}
-              onTap={()=>{setCallsFilter(highlightKind);scrollTo("calls");}}
+              onSwitch={(k)=>setHighlightKind(k)}
             />
           ) : p.coldActivation ? (
             <div className="hl-empty">
@@ -752,9 +844,16 @@ const StatsScreen = ({persona}) => {
           </div>
         )}
 
-        {/* COMMUNICATION */}
+        {/* COMMUNICATION VOLUME — flat, no card wrapper */}
         <div className="section" ref={refs.comm}>
-          <div className="section-title">Communication handled by your AI <span className="more">Last 6 cycles</span></div>
+          <div className="section-title">
+            <span>Communication volume</span>
+            <div className="comm-toggle">
+              <button className={commPeriod==="day"?"active":""} onClick={()=>setCommPeriod("day")}>Day</button>
+              <button className={commPeriod==="week"?"active":""} onClick={()=>setCommPeriod("week")}>Week</button>
+              <button className={commPeriod==="month"?"active":""} onClick={()=>setCommPeriod("month")}>Month</button>
+            </div>
+          </div>
           {p.comm.problem && (
             <div className="diagnosis" style={{marginBottom:10}}>
               <div className="diagnosis-title">
@@ -763,66 +862,27 @@ const StatsScreen = ({persona}) => {
               </div>
             </div>
           )}
-          <div className="card">
-            {p.comm.cycles ? <CommChart cycles={p.comm.cycles}/> : (
+          <div style={{padding:"4px 4px 0"}}>
+            {p.comm[commPeriod] ? <CommChart cycles={p.comm[commPeriod]}/> : (
               <div style={{padding:"36px 10px",textAlign:"center",fontSize:12,color:"var(--tertiary-text)"}}>{p.comm.empty}</div>
             )}
           </div>
         </div>
 
-        {/* CAPTURED vs MISSED */}
-        {p.captured && (
-          <div className="section" ref={refs.captured}>
-            <div className="section-title">Captured vs missed</div>
-            <div className="card split">
-              <Donut pct={p.captured.pct}/>
-              <div className="split-stats">
-                <div className="split-stat"><span className="split-dot" style={{background:"var(--accent)"}}></span><span>Captured</span><span className="v">{p.captured.captured}</span></div>
-                <div className="split-stat"><span className="split-dot" style={{background:"#F0EDEA"}}></span><span>Missed</span><span className="v">{p.captured.missed}</span></div>
-                <div className="split-stat" style={{borderTop:"0.5px solid var(--border)",paddingTop:8,marginTop:2}}><span style={{fontSize:11,color:"var(--secondary-text)"}}>Recovered</span><span className="v" style={{color:"var(--accent-dark)"}}>{p.captured.recovered}</span></div>
+        {/* CHANNELS — flat list, no card wrapper */}
+        <div className="section" ref={refs.channels}>
+          <div className="section-title">Channels</div>
+          {p.channels.map((c,i)=>(
+            <div className={"ch-row"+(c.state==="orange"?" orange":"")+(c.coming?" coming":"")} key={i}>
+              <div className="ch-icon"><ChIcon type={c.icon}/></div>
+              <div className="ch-info">
+                <div className="ch-name">{c.name}</div>
+                <div className="ch-body" dangerouslySetInnerHTML={{__html:c.body}}></div>
               </div>
+              <div className={"ch-dot "+c.state}></div>
             </div>
-          </div>
-        )}
-
-        {/* SATISFACTION (incl. expand) */}
-        {p.satisfaction && (
-          <div className="section" ref={refs.satisfaction}>
-            <div className="section-title">Satisfaction</div>
-            <div className="card">
-              <div className="sat-bar">
-                {p.satisfaction.segments.map((s,i)=>(<div key={i} className="sat-seg" style={{width:`${s.pct}%`,background:s.color}}></div>))}
-              </div>
-              <div className="sat-note"><strong>Weighted by VIP contacts</strong> and their all-time lead value. One unhappy VIP weighs more than 10 happy one-offs.</div>
-              {p.satisfaction.orangeReasons && p.satisfaction.orangeReasons.length>0 && p.satisfaction.orangeReasons.map((r,i)=>(
-                <div className="sat-fix" key={i}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{color:COLOR_ORANGE,flexShrink:0}}><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  <div className="sat-fix-body"><div className="sat-fix-title">{r.title}</div><div className="sat-fix-sub">{r.sub}</div></div>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{color:"#8A4A0A",flexShrink:0}}><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </div>
-              ))}
-              {p.satisfaction.segments.map((s,i)=>(
-                <div key={i}>
-                  <div className="sat-cat" onClick={()=>{ if(s.label==="Unhappy") setUnhappyOpen(!unhappyOpen); }}>
-                    <div className="sat-cat-dot" style={{background:s.color}}></div>
-                    <div className="sat-cat-name">{s.label}</div>
-                    <div className="sat-cat-val">{s.v}</div>
-                    {s.label==="Unhappy" && (
-                      <svg className={"sat-cat-chev"+(unhappyOpen?" open":"")} width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    )}
-                  </div>
-                  {s.label==="Unhappy" && unhappyOpen && p.satisfaction.unhappyReasons && p.satisfaction.unhappyReasons.map((r,j)=>(
-                    <div className="sat-reason" key={j}>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{color:"#E53935"}}><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-                      <span className="sat-reason-label">{r.label}</span>
-                      <span className="sat-reason-count">{r.count} call{r.count!==1?"s":""}</span>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+          ))}
+        </div>
 
         {/* TEAM — flat list, no card wrapper */}
         <div className="section" ref={refs.team}>
@@ -857,90 +917,70 @@ const StatsScreen = ({persona}) => {
           )}
         </div>
 
-        {/* CHANNELS — flat list, no card wrapper */}
-        <div className="section" ref={refs.channels}>
-          <div className="section-title">Channels</div>
-          {p.channels.map((c,i)=>(
-            <div className={"ch-row"+(c.state==="orange"?" orange":"")+(c.coming?" coming":"")} key={i}>
-              <div className="ch-icon"><ChIcon type={c.icon}/></div>
-              <div className="ch-info">
-                <div className="ch-name">{c.name}</div>
-                <div className="ch-body" dangerouslySetInnerHTML={{__html:c.body}}></div>
+        {/* SATISFACTION */}
+        {p.satisfaction && (
+          <div className="section" ref={refs.satisfaction}>
+            <div className="section-title">Satisfaction</div>
+            <div className="card">
+              <div className="sat-bar">
+                {p.satisfaction.segments.map((s,i)=>(<div key={i} className="sat-seg" style={{width:`${s.pct}%`,background:s.color}}></div>))}
               </div>
-              <div className={"ch-dot "+c.state}></div>
-            </div>
-          ))}
-        </div>
-
-        {/* RECENT CALLS — merged Delight + Leads with filter pills */}
-        {((p.delightCalls && p.delightCalls.length>0) || (p.leads && p.leads.length>0)) && (
-          <div className="section" ref={refs.calls}>
-            <div className="section-title">Recent calls <span className="more">See all</span></div>
-            <div className="filter-row">
-              <button className={"filter-pill"+(callsFilter==="delight"?" active":"")} onClick={()=>setCallsFilter("delight")}>✨ Delight</button>
-              <button className={"filter-pill"+(callsFilter==="lead"?" active":"")} onClick={()=>setCallsFilter("lead")}>★ Leads</button>
-            </div>
-            {callsFilter==="delight" ? (
-              p.delightCalls.map((c,i)=>(
-                <div className="call-row" key={i}>
-                  <div className="avatar" style={{background:c.color}}>{c.avatar}</div>
-                  <div className="call-info">
-                    <div className="call-name">{c.name}</div>
-                    <div className="call-meta">{c.date}</div>
-                    <div className="call-summary">{c.summary}</div>
-                  </div>
-                  <div className="call-play"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+              {p.satisfaction.orangeReasons && p.satisfaction.orangeReasons.length>0 && p.satisfaction.orangeReasons.map((r,i)=>(
+                <div className="sat-fix" key={i}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{color:COLOR_ORANGE,flexShrink:0}}><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <div className="sat-fix-body"><div className="sat-fix-title">{r.title}</div><div className="sat-fix-sub">{r.sub}</div></div>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{color:"#8A4A0A",flexShrink:0}}><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-              ))
-            ) : (
-              p.leads.map((l,i)=>(
-                <div className="call-row" key={i}>
-                  <div className="avatar" style={{background:l.color}}>{l.avatar}</div>
-                  <div className="call-info">
-                    <div className="call-name">{l.name}</div>
-                    <div className="call-meta">{l.date}</div>
-                    <div className="call-summary">{l.summary}</div>
+              ))}
+              {p.satisfaction.segments.map((s,i)=>(
+                <div key={i}>
+                  <div className="sat-cat" onClick={()=>{ if(s.label==="Unhappy") setUnhappyOpen(!unhappyOpen); }}>
+                    <div className="sat-cat-dot" style={{background:s.color}}></div>
+                    <div className="sat-cat-name">{s.label}</div>
+                    <div className="sat-cat-val">{s.v}</div>
+                    {s.label==="Unhappy" && (
+                      <svg className={"sat-cat-chev"+(unhappyOpen?" open":"")} width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    )}
                   </div>
-                  <div className="call-value">{l.value}</div>
+                  {s.label==="Unhappy" && unhappyOpen && p.satisfaction.unhappyReasons && (
+                    <div className="sat-unhappy-wrap">
+                      {p.satisfaction.unhappyReasons.map((r,j)=>(
+                        <div key={j}>
+                          <div className="sat-reason-head">{r.label}</div>
+                          {r.calls.map((c,k)=>(
+                            <div className="sat-unhappy-call" key={k} onClick={()=>setThreadCall({...c,reason:r.label})}>
+                              <div className="avatar" style={{background:c.color}}>{c.avatar}</div>
+                              <div className="sat-unhappy-info">
+                                <div className="sat-unhappy-name">{c.name}</div>
+                                <div className="sat-unhappy-sum">{c.summary}</div>
+                              </div>
+                              <svg className="sat-unhappy-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              ))
-            )}
+              ))}
+            </div>
           </div>
         )}
+
       </div>
+      {threadCall && <ContactThreadModal call={threadCall} onClose={()=>setThreadCall(null)}/>}
       <TabBar/>
     </div>
   );
 };
 
-/* KPI sub-component */
-const KPICard = ({kpi, label, icon, onTap}) => (
-  <div className={"kpi-card "+(kpi.state==="orange"?"orange":"")} onClick={onTap}>
-    <div className="kpi-top">
-      <div className="kpi-icon">{icon}</div>
-      <div className="kpi-dot"></div>
-    </div>
-    <div className="kpi-label">{label}</div>
-    <div className="kpi-num">{kpi.value}</div>
-    <div className="kpi-sub">{kpi.sub}</div>
-  </div>
-);
-
-/* Highlight card sub-component — full width, carousel between Delight and Lead */
-const HighlightCard = ({type, call, onTap, onSwitch}) => (
-  <div className="hl-card" onClick={onTap}>
-    <div className="hl-head">
-      <div className="hl-eye">
-        {type==="delight" ? "✨ AI DELIGHT" : "★ HIGH-$ LEAD"}
-      </div>
-      <div className="hl-switcher">
-        <button className={"hl-switch-btn"+(type==="delight"?" active":"")} onClick={e=>{e.stopPropagation();onSwitch && onSwitch("delight");}}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.39 7.36H22l-6.2 4.5 2.38 7.34L12 16.7l-6.18 4.5 2.38-7.34L2 9.36h7.61z"/></svg>
-        </button>
-        <button className={"hl-switch-btn"+(type==="lead"?" active":"")} onClick={e=>{e.stopPropagation();onSwitch && onSwitch("lead");}}>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.5 8.5 2 9.3l5.5 5-1.7 7.7L12 18.3l6.2 3.7-1.7-7.7L22 9.3l-7.5-.8z"/></svg>
-        </button>
-      </div>
+/* Highlight — flat (no card), inline single-line header: HIGHLIGHT: [delight] [value] */
+const HighlightCard = ({type, call, onSwitch}) => (
+  <div className="hl-flat">
+    <div className="hl-header">
+      <span className="hl-header-label">Highlight:</span>
+      <button className={"hl-pill"+(type==="delight"?" active":"")} onClick={e=>{e.stopPropagation();onSwitch && onSwitch("delight");}}>✨ delight</button>
+      <button className={"hl-pill"+(type==="lead"?" active":"")} onClick={e=>{e.stopPropagation();onSwitch && onSwitch("lead");}}>★ value</button>
     </div>
     <div className="hl-name">{call.name}{call.value ? <span style={{fontFamily:"'Lora',serif",color:"var(--accent-dark)",fontSize:17,marginLeft:10}}>{call.value}</span> : null}</div>
     <div className="hl-sum">{call.summary}</div>
@@ -954,12 +994,80 @@ const HighlightCard = ({type, call, onTap, onSwitch}) => (
   </div>
 );
 
-/* Health strip item — dot + icon + label */
-const HealthItem = ({state, label, icon, onTap}) => (
-  <div className={"health-item"+(state==="orange"?" orange":"")} onClick={onTap}>
-    <div className="health-icon">{icon}</div>
-    <div className="health-label">{label}</div>
-    <div className="health-dot"></div>
+/* RAG ring palette — muted by default, accented when action needed */
+const RING_COLORS = {
+  resting: {ring:"#8FAA8C", track:"#F0EDEA"},  // muted sage — no action
+  warn:    {ring:"#F57C00", track:"#FFE8D4"},  // accented amber — action available
+  urgent:  {ring:"#E53935", track:"#FFE0E0"},  // accented red — urgent action
+};
+
+const Ring = ({pct, state}) => {
+  const r=38, c=2*Math.PI*r;
+  const dash = (pct/100)*c;
+  const {ring, track} = RING_COLORS[state] || RING_COLORS.resting;
+  return (
+    <svg width="84" height="84" viewBox="0 0 84 84">
+      <circle cx="42" cy="42" r={r} fill="none" stroke={track} strokeWidth="9"/>
+      <circle cx="42" cy="42" r={r} fill="none" stroke={ring} strokeWidth="9" strokeDasharray={`${dash} ${c}`} strokeLinecap="round" transform="rotate(-90 42 42)"/>
+    </svg>
+  );
+};
+
+const RingKPI = ({kpi, label, icon, onTap}) => {
+  const state = kpi.state || "resting";
+  return (
+    <div className={"ring-item "+state} onClick={onTap}>
+      <div className="ring-outer">
+        <Ring pct={kpi.pct || 0} state={state}/>
+        <div className="ring-icon">{icon}</div>
+      </div>
+      <div className="ring-label">{label}</div>
+      <div className="ring-value">{kpi.value}</div>
+      <div className="ring-sub">{kpi.sub}</div>
+    </div>
+  );
+};
+
+/* Contact thread modal — shown when user taps an unhappy call */
+const ContactThreadModal = ({call, onClose}) => (
+  <div className="thread-overlay" onClick={onClose}>
+    <div className="thread-sheet" onClick={e=>e.stopPropagation()}>
+      <div className="thread-handle"></div>
+      <div className="thread-head">
+        <div className="avatar" style={{background:call.color}}>{call.avatar}</div>
+        <div className="thread-head-info">
+          <div className="thread-head-name">{call.name}</div>
+          <div className="thread-head-sub">Contact thread · 1 flagged call</div>
+        </div>
+        <button className="thread-close" onClick={onClose}>✕</button>
+      </div>
+      <div className="thread-body">
+        <div className="thread-call-card">
+          <div className="thread-call-head">
+            <div className="thread-call-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+            </div>
+            <div className="thread-call-title">{call.reason || "Unhappy call"}</div>
+            <div className="thread-call-time">{call.date}</div>
+          </div>
+          <div className="thread-transcript">{call.transcript}</div>
+          <div className="thread-actions">
+            <button className="thread-action">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              Listen
+            </button>
+            <button className="thread-action">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Call back
+            </button>
+            <button className="thread-action">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Text
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 );
 
