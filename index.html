@@ -51,6 +51,15 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
   position:relative;overflow:hidden;
   color:var(--primary-text);
 }
+/* White fade behind floating tab bar — blends scrolled content into white */
+.phone::after{
+  content:"";
+  position:absolute;left:0;right:0;bottom:0;
+  height:120px;
+  background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,.92) 50%,#fff 80%);
+  pointer-events:none;
+  z-index:5;
+}
 .statusbar{height:54px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 8px;font-size:15px;font-weight:600;color:var(--primary-text);position:relative;z-index:5;flex-shrink:0}
 .statusbar .notch{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:120px;height:34px;background:#0a0a0a;border-radius:20px}
 .statusbar .icons{display:flex;gap:5px;align-items:center}
@@ -58,7 +67,7 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 
 /* Screen layout */
 .screen{position:absolute;inset:0;display:flex;flex-direction:column}
-.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 130px;scroll-behavior:smooth}
+.body{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 0 130px}
 .body::-webkit-scrollbar{width:0}
 
 /* Header: title only */
@@ -88,7 +97,8 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .hero::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,131,112,.18) 0%,rgba(255,131,112,0) 70%);bottom:-70px;left:-50px;pointer-events:none}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;position:relative;gap:12px}
 .hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:1.3px;text-transform:uppercase;color:#FFB7A6}
-.hero-share{display:inline-flex;align-items:center;gap:5px;padding:6px 11px 6px 9px;border-radius:30px;background:rgba(255,255,255,.12);border:0.5px solid rgba(255,255,255,.22);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;backdrop-filter:blur(4px)}
+.hero-share{display:inline-flex;align-items:center;gap:5px;padding:6px 13px 6px 10px;border-radius:30px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+.hero-share svg{stroke:var(--accent)}
 .hero-num{font-family:'Lora',serif;font-size:42px;font-weight:600;line-height:1.05;margin:2px 0 3px;letter-spacing:-1px;position:relative}
 .hero-sub{font-size:12px;color:#D8D2CB;position:relative;margin-bottom:6px;font-weight:500}
 .cum-chart{position:relative;width:100%;height:44px;margin:2px 0 6px;display:block}
@@ -108,20 +118,21 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .cold-step-chev{color:#B8B0A6;flex-shrink:0}
 
 /* ============================================================
- *  KPI RINGS — taupe (<80%) → faded sage (≥80%), orange on action
+ *  KPI RINGS — faded green when full, faded orange otherwise
+ *  Track is always warm faded taupe.
  * ============================================================ */
 .rings-row{display:flex;justify-content:space-around;align-items:flex-start;padding:10px 8px 14px;gap:6px;border-bottom:0.5px solid var(--border)}
 .ring-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:8px 6px;border-radius:14px;flex:1;transition:background .15s}
 .ring-item:hover{background:var(--surface-dark)}
 .ring-outer{position:relative;width:84px;height:84px;display:flex;align-items:center;justify-content:center}
-.ring-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#7A6F62}
-.ring-item.action .ring-icon{color:var(--warning)}
+.ring-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#9E9486}
+.ring-item.low .ring-icon{color:#B08560}
 .ring-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--secondary-text);font-weight:600;margin-top:8px}
-.ring-item.action .ring-label{color:var(--warning)}
+.ring-item.low .ring-label{color:#A6795A}
 .ring-value{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--primary-text);line-height:1;margin-top:3px;letter-spacing:-.2px}
-.ring-item.action .ring-value{color:var(--warning)}
+.ring-item.low .ring-value{color:#A6795A}
 .ring-sub{font-size:10px;color:var(--tertiary-text);margin-top:2px;font-weight:500}
-.ring-item.action .ring-sub{color:#8A4A0A}
+.ring-item.low .ring-sub{color:#A6795A}
 
 /* Communication toggle */
 .comm-toggle{display:flex;gap:4px;background:var(--surface-darken);border-radius:30px;padding:3px;font-size:11px;font-weight:600}
@@ -161,14 +172,28 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .thread-actions{display:flex;gap:8px;margin-top:12px}
 .thread-action{flex:1;padding:10px;background:var(--surface-dark);border:0.5px solid var(--border);border-radius:10px;font-size:11px;font-weight:600;color:var(--primary-text);cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:5px}
 
+/* Share modal (bottom sheet) */
+.share-title{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--primary-text);padding:0 22px 6px;letter-spacing:-.3px}
+.share-sub{font-size:12px;color:var(--secondary-text);padding:0 22px 18px;line-height:1.5}
+.share-option{display:flex;align-items:center;gap:14px;padding:14px 22px;cursor:pointer;transition:background .12s}
+.share-option:hover{background:var(--surface-dark)}
+.share-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.share-icon.bosses{background:rgba(200,160,149,.18);color:#A67C6E}
+.share-icon.colleagues{background:rgba(126,156,200,.16);color:#5C7DA8}
+.share-icon.social{background:rgba(255,131,112,.14);color:var(--accent-dark)}
+.share-option-info{flex:1;min-width:0}
+.share-option-title{font-size:15px;font-weight:600;color:var(--primary-text)}
+.share-option-sub{font-size:12px;color:var(--secondary-text);margin-top:2px}
+.share-option-chev{color:var(--tertiary-text)}
+
 /* ============================================================
  *  HIGHLIGHT — flat (no card), inline header with toggle
  * ============================================================ */
 .hl-flat{padding:0 4px}
 .hl-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .hl-header-label{font-size:11px;font-weight:600;color:var(--secondary-text);text-transform:uppercase;letter-spacing:.9px;margin-right:2px}
-.hl-pill{font:inherit;font-size:11px;font-weight:600;padding:5px 11px;border-radius:30px;background:var(--surface-darken);color:var(--primary-text);border:none;cursor:pointer}
-.hl-pill.active{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(255,131,112,.3)}
+.hl-pill{font:inherit;font-size:11px;font-weight:600;padding:5px 12px;border-radius:30px;background:var(--surface-darken);color:var(--secondary-text);border:none;cursor:pointer}
+.hl-pill.active{background:#9A9088;color:#fff}
 .hl-name{font-size:16px;font-weight:600;color:var(--primary-text);line-height:1.3;margin-bottom:4px}
 .hl-sum{font-size:13px;color:var(--secondary-text);line-height:1.5;min-height:38px;margin-bottom:10px}
 .hl-foot{display:flex;align-items:center;gap:12px}
@@ -178,6 +203,8 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .wave .bar{width:2.5px;background:var(--accent);border-radius:1.5px;opacity:.45}
 .wave .bar.played{opacity:1}
 .hl-meta{font-size:11px;color:var(--tertiary-text);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;flex-shrink:0}
+.hl-share{display:inline-flex;align-items:center;gap:4px;padding:5px 11px 5px 9px;border-radius:30px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0}
+.hl-share svg{stroke:var(--accent)}
 
 /* Empty highlight (cold start) */
 .hl-empty{background:var(--surface-dark);border:0.5px dashed var(--border);border-radius:16px;padding:20px;text-align:center;cursor:pointer}
@@ -264,38 +291,32 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 /* ============================================================
  *  Team rows (flat, no card)
  * ============================================================ */
-.team-row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-top:0.5px solid var(--border)}
+.team-row{display:flex;align-items:center;gap:12px;padding:14px 4px;border-top:0.5px solid var(--border)}
 .team-row:last-of-type{border-bottom:0.5px solid var(--border)}
 .team-info{flex:1;min-width:0}
 .team-name{font-size:14px;font-weight:600;color:var(--primary-text)}
-.team-meta{font-size:11px;color:var(--secondary-text);margin-top:2px}
-.team-status{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;margin-right:4px}
-.team-status.invited{background:rgba(150,150,150,.15);color:var(--secondary-text)}
-.team-status.account{background:rgba(66,165,245,.14);color:#1E6BB8}
-.team-status.subscribed{background:rgba(67,160,71,.14);color:#2C7A2F}
-.team-status.contributed{background:rgba(255,131,112,.14);color:var(--accent-dark)}
-.team-action{font-size:11px;font-weight:600;color:var(--accent-dark);background:rgba(255,131,112,.12);border:none;padding:7px 11px;border-radius:30px;cursor:pointer;font-family:inherit;white-space:nowrap}
-.team-empty{text-align:center;padding:6px 0 12px}
-.team-cta-primary{margin-top:14px;width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:30px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;box-shadow:0 4px 14px rgba(255,131,112,.3);display:flex;align-items:center;justify-content:center;gap:6px}
+.team-meta{font-size:11px;color:var(--secondary-text);margin-top:2px;line-height:1.4}
+.team-cta{display:inline-flex;align-items:center;gap:4px;padding:5px 11px 5px 9px;border-radius:30px;background:transparent;border:1px solid var(--accent);color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0}
+.team-cta svg{stroke:var(--accent)}
 .avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:600;flex-shrink:0}
 
 /* ============================================================
- *  Channels rows
+ *  Channels rows — flat, name + dot top row, top CTA below
  * ============================================================ */
-.ch-row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-top:0.5px solid var(--border);cursor:pointer}
+.ch-row{display:flex;align-items:flex-start;gap:12px;padding:14px 4px;border-top:0.5px solid var(--border);cursor:pointer}
 .ch-row:last-of-type{border-bottom:0.5px solid var(--border)}
 .ch-row.coming{opacity:.55}
-.ch-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,131,112,.12);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ch-row.orange .ch-icon{background:rgba(245,124,0,.16);color:var(--warning)}
+.ch-icon{width:36px;height:36px;border-radius:10px;background:rgba(216,205,191,.55);color:#7A6F62;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ch-row.orange .ch-icon{background:rgba(212,165,128,.28);color:#A6795A}
 .ch-info{flex:1;min-width:0}
-.ch-name{font-size:13px;font-weight:600;color:var(--primary-text)}
-.ch-body{font-size:11px;color:var(--secondary-text);margin-top:2px;line-height:1.4}
-.ch-body strong{color:var(--primary-text);font-weight:600}
-.ch-row.orange .ch-body strong{color:#8A4A0A}
+.ch-name-row{display:flex;align-items:center;gap:8px}
+.ch-name{flex:1;font-size:14px;font-weight:600;color:var(--primary-text)}
 .ch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.ch-dot.active{background:var(--success)}
-.ch-dot.orange{background:var(--warning)}
-.ch-dot.off{background:var(--tertiary-text)}
+.ch-dot.active{background:#B0C7AD}
+.ch-dot.orange{background:#D4A580}
+.ch-dot.off{background:#D8CDBF}
+.ch-cta{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:12px;color:var(--accent);font-weight:600;cursor:pointer}
+.ch-row.coming .ch-cta{color:var(--tertiary-text)}
 
 /* ============================================================
  *  Call rows (Delight / Leads with full summaries)
@@ -335,7 +356,7 @@ const COLOR_ORANGE="#F57C00", COLOR_ACCENT="#FF8370";
 const PERSONAS = {
   mature_accelerating: {
     label:"Mature accelerating",
-    headline:"You're on fire",
+    headline:"We're on fire",
     subhead:"Up 34% this month — tell your boss about it",
     hero:{
       kind:"number",
@@ -408,17 +429,17 @@ const PERSONAS = {
     team:{
       kind:"list",
       members:[
-        {name:"Sarah M.",meta:"Contributed 148 contacts",status:"contributed",statusLabel:"148 contacts",avatar:"SM",color:"#C8A095"},
-        {name:"Jamie L.",meta:"Contributed 87 contacts",status:"contributed",statusLabel:"87 contacts",avatar:"JL",color:"#88B098"},
-        {name:"Ray T.",meta:"Subscribed yesterday",status:"subscribed",statusLabel:"Subscribed",avatar:"RT",color:"#A88BC4"},
-        {name:"Pat K.",meta:"Account created 2 days ago",status:"account",statusLabel:"Account created",avatar:"PK",color:"#D2A86A",action:"Fund plan"},
+        {name:"Sarah M.",status:"Contributed 148 contacts",avatar:"SM",color:"#C8A095"},
+        {name:"Jamie L.",status:"Contributed 87 contacts",avatar:"JL",color:"#88B098"},
+        {name:"Ray T.",status:"Subscribed · not contributing contacts yet",avatar:"RT",color:"#A88BC4",cta:"Help",msg:"Hey Ray! Quick thing — sharing your contacts in YouSquared lets my AI handle calls from them with full context. Want me to walk you through it?"},
+        {name:"Pat K.",status:"Account created 2 days ago · not subscribed",avatar:"PK",color:"#D2A86A",cta:"Help",msg:"Hey Pat, saw you signed up but haven't subscribed yet. Happy to cover the plan for you — let me know if anything's unclear about how it works."},
       ],
     },
     channels:[
-      {name:"Inbound calls",icon:"phone",state:"active",body:"Call forwarding enabled. <strong>142 calls handled</strong> this month, ↑ 31%."},
-      {name:"Voicemail",icon:"mail",state:"active",body:"<strong>16 voicemails</strong> handled this month."},
-      {name:"Scheduled outbound",icon:"send",state:"active",body:"5 scenarios active · <strong>38 outbound</strong> this month · 0 backlog."},
-      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress."},
+      {name:"Inbound calls",icon:"phone",state:"active",cta:"Optimize your greeting"},
+      {name:"Voicemail",icon:"mail",state:"active",cta:"Customize voicemail prompts"},
+      {name:"Scheduled outbound",icon:"send",state:"active",cta:"Activate more scenarios"},
+      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,cta:"Coming soon — join waitlist"},
     ],
     delightCalls:[
       {name:"Patient DK",date:"Today, 2:14 pm · 2:14",summary:"Asked if the AI was real. Got a charming deflection that pivoted smoothly back to their refill. Caller laughed.",avatar:"DK",color:"#7E9CC8"},
@@ -435,7 +456,7 @@ const PERSONAS = {
 
   orange_mid: {
     label:"Orange-mid",
-    headline:"Growth is slowing",
+    headline:"Let's bring back growth",
     subhead:"Lead value down 8% — 14 outbound drafts need your review",
     hero:{
       kind:"number",
@@ -447,7 +468,7 @@ const PERSONAS = {
     kpis:{
       channels:{state:"resting",value:"3 of 3",sub:"all active",pct:100},
       seats:{state:"resting",value:"4 of 8",sub:"team active",pct:50},
-      satisfaction:{state:"action",value:"88%",sub:"Confirm VIPs",pct:88},
+      satisfaction:{value:"88%",sub:"Confirm VIPs",pct:62},
     },
     highlights:{
       delight:{name:"Client GR",summary:"Tried to book a boom lift on a holiday — AI negotiated the rate and rescheduled gracefully.",duration:"1:47"},
@@ -510,17 +531,17 @@ const PERSONAS = {
     team:{
       kind:"list",
       members:[
-        {name:"Alex D.",meta:"Contributed 96 contacts",status:"contributed",statusLabel:"96 contacts",avatar:"AD",color:"#7E9CC8"},
-        {name:"Morgan T.",meta:"Subscribed 2 weeks ago",status:"subscribed",statusLabel:"Subscribed",avatar:"MT",color:"#D2A86A"},
-        {name:"Casey R.",meta:"Account created 5 days ago",status:"account",statusLabel:"Account created",avatar:"CR",color:"#88B098",action:"Fund plan"},
-        {name:"Drew P.",meta:"Invited 9 days ago",status:"invited",statusLabel:"Invited",avatar:"DP",color:"#A88BC4",action:"Resend"},
+        {name:"Alex D.",status:"Contributed 96 contacts",avatar:"AD",color:"#7E9CC8"},
+        {name:"Morgan T.",status:"Subscribed · not contributing yet",avatar:"MT",color:"#D2A86A",cta:"Help",msg:"Hey Morgan, my AI works best when it has your contacts too. Want me to show you how to share them in 30 seconds?"},
+        {name:"Casey R.",status:"Account created 5 days ago · not subscribed",avatar:"CR",color:"#88B098",cta:"Help",msg:"Hey Casey, you signed up but haven't subscribed yet. Happy to cover the plan for you — any blockers?"},
+        {name:"Drew P.",status:"Invited 9 days ago · no response",avatar:"DP",color:"#A88BC4",cta:"Remind",msg:"Hey Drew, following up on that YouSquared invite — would love to have you on the team. Tap the link when you get a sec?"},
       ],
     },
     channels:[
-      {name:"Inbound calls",icon:"phone",state:"active",body:"Call forwarding enabled. <strong>82 calls handled</strong> this cycle."},
-      {name:"Voicemail",icon:"mail",state:"active",body:"<strong>12 voicemails</strong> handled."},
-      {name:"Scheduled outbound",icon:"send",state:"orange",body:"5 scenarios active but <strong>14 drafts waiting</strong>. Volume down 22%."},
-      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress."},
+      {name:"Inbound calls",icon:"phone",state:"active",cta:"Optimize your greeting"},
+      {name:"Voicemail",icon:"mail",state:"active",cta:"Customize voicemail prompts"},
+      {name:"Scheduled outbound",icon:"send",state:"orange",cta:"Review 14 drafts in To-Do"},
+      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,cta:"Coming soon — join waitlist"},
     ],
     delightCalls:[
       {name:"Client GR",date:"Yesterday · 1:47",summary:"Tried to book an appointment on a holiday. AI negotiated and rescheduled gracefully.",avatar:"GR",color:"#A8B88F"},
@@ -535,7 +556,7 @@ const PERSONAS = {
 
   solo_cold_start: {
     label:"Solo cold start",
-    headline:"Let's get you started",
+    headline:"Let's get started",
     subhead:"3 steps from your first AI-handled call",
     hero:{
       kind:"activation",
@@ -560,10 +581,10 @@ const PERSONAS = {
     satisfaction:null,
     team:{kind:"invite"},
     channels:[
-      {name:"Inbound calls",icon:"phone",state:"off",body:"Forward your number to your Y² line so the AI can answer."},
-      {name:"Voicemail",icon:"mail",state:"off",body:"Activates once inbound calls are enabled."},
-      {name:"Scheduled outbound",icon:"send",state:"off",body:"Share contacts, pick sub-industry, subscribe to start."},
-      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,body:"Text forwarding research in progress."},
+      {name:"Inbound calls",icon:"phone",state:"orange",cta:"Activate call forwarding"},
+      {name:"Voicemail",icon:"mail",state:"off",cta:"Activates with call forwarding"},
+      {name:"Scheduled outbound",icon:"send",state:"orange",cta:"Select your industry to begin"},
+      {name:"Inbound SMS",icon:"chat",state:"off",coming:true,cta:"Coming soon — join waitlist"},
     ],
     delightCalls:[],
     leads:[],
@@ -738,13 +759,17 @@ const StatsScreen = ({persona}) => {
   const [highlightKind, setHighlightKind] = useState("delight");
   const [commPeriod, setCommPeriod] = useState("month");
   const [threadCall, setThreadCall] = useState(null);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [textComposer, setTextComposer] = useState(null);
 
   const scrollTo = (name) => {
     const el = refs[name]?.current;
-    if(el && bodyRef.current){
-      const offset = el.offsetTop - 12;
-      bodyRef.current.scrollTo({top: offset, behavior:"smooth"});
-    }
+    const body = bodyRef.current;
+    if(!el || !body) return;
+    // CSS .body has scroll-behavior:smooth so a plain assignment animates
+    // in real browsers. Also set via scrollTop directly so it lands even
+    // when rAF/smooth is paused (e.g. headless preview).
+    body.scrollTop = Math.max(0, el.offsetTop - 4);
   };
 
   const isUp = p.hero.kind==="number" && p.hero.delta.dir==="up";
@@ -765,9 +790,12 @@ const StatsScreen = ({persona}) => {
           <div className="hero" onClick={()=>scrollTo(isDown?"diagnosis":"comm")}>
             <div className="hero-top">
               <div className="hero-eyebrow">{isCold ? p.hero.eyebrow : "Lead value handled by your AI"}</div>
-              <button className="hero-share" onClick={e=>{e.stopPropagation();}}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                Share this
+              <button className="hero-share" onClick={e=>{e.stopPropagation();setShareOpen(true);}}>
+                {isCold ? (
+                  <><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2.2"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>Get help</>
+                ) : (
+                  <><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>Share</>
+                )}
               </button>
             </div>
             {isCold ? (
@@ -801,21 +829,24 @@ const StatsScreen = ({persona}) => {
         </div>
 
         {/* 3 KPI RINGS — muted taupe, scroll to section */}
-        <div className="section tight">
-          <div className="rings-row">
-            <RingKPI kpi={p.kpis.channels} label="Channels" icon={<IconPhone/>} onTap={()=>scrollTo("channels")}/>
-            <RingKPI kpi={p.kpis.seats} label="Seats" icon={<IconPeople/>} onTap={()=>scrollTo("team")}/>
-            <RingKPI kpi={p.kpis.satisfaction} label="Satisfaction" icon={<IconSmile/>} onTap={()=>scrollTo("satisfaction")}/>
+        {!isCold && (
+          <div className="section tight">
+            <div className="rings-row">
+              <RingKPI kpi={p.kpis.channels} label="Channels" icon={<IconPhone/>} onTap={()=>scrollTo("channels")}/>
+              <RingKPI kpi={p.kpis.seats} label="Seats" icon={<IconPeople/>} onTap={()=>scrollTo("team")}/>
+              <RingKPI kpi={p.kpis.satisfaction} label="Satisfaction" icon={<IconSmile/>} onTap={()=>scrollTo("satisfaction")}/>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* HIGHLIGHT — single full-width card with Delight/Lead switcher */}
-        <div className="section tight" style={{marginTop:14}}>
+        <div className="section tight" style={{marginTop:14,marginBottom:70}}>
           {p.highlights ? (
             <HighlightCard
               type={highlightKind}
               call={highlightKind==="delight"?p.highlights.delight:p.highlights.lead}
               onSwitch={(k)=>setHighlightKind(k)}
+              onShare={()=>setShareOpen(true)}
             />
           ) : p.coldActivation ? (
             <div className="hl-empty">
@@ -840,6 +871,7 @@ const StatsScreen = ({persona}) => {
           </div>
         )}
 
+        {!isCold && (<>
         {/* COMMUNICATION VOLUME — flat, no card wrapper */}
         <div className="section" ref={refs.comm}>
           <div className="section-title">
@@ -865,52 +897,52 @@ const StatsScreen = ({persona}) => {
           </div>
         </div>
 
-        {/* CHANNELS — flat list, no card wrapper */}
+        {/* CHANNELS — flat list, each row has top CTA to improve */}
         <div className="section" ref={refs.channels}>
           <div className="section-title">Channels</div>
           {p.channels.map((c,i)=>(
             <div className={"ch-row"+(c.state==="orange"?" orange":"")+(c.coming?" coming":"")} key={i}>
               <div className="ch-icon"><ChIcon type={c.icon}/></div>
               <div className="ch-info">
-                <div className="ch-name">{c.name}</div>
-                <div className="ch-body" dangerouslySetInnerHTML={{__html:c.body}}></div>
+                <div className="ch-name-row">
+                  <div className="ch-name">{c.name}</div>
+                  <div className={"ch-dot "+c.state}></div>
+                </div>
+                <div className="ch-cta">{c.cta} →</div>
               </div>
-              <div className={"ch-dot "+c.state}></div>
             </div>
           ))}
         </div>
 
-        {/* TEAM — flat list, no card wrapper */}
+        {/* TEAM — flat list, each row has status + CTA (Invite/Remind/Help) */}
         <div className="section" ref={refs.team}>
           <div className="section-title">Team</div>
-          {p.team.kind==="list" ? (
-            <>
-              {p.team.members.map((m,i)=>(
-                <div className="team-row" key={i}>
-                  <div className="avatar" style={{background:m.color}}>{m.avatar}</div>
-                  <div className="team-info">
-                    <div className="team-name">{m.name}</div>
-                    <div className="team-meta"><span className={"team-status "+m.status}>{m.statusLabel}</span>· {m.meta}</div>
-                  </div>
-                  {m.action && <button className="team-action">{m.action}</button>}
-                </div>
-              ))}
-              <button className="team-cta-primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg>
-                Invite another teammate
-              </button>
-            </>
-          ) : (
-            <div className="team-empty">
-              <div style={{fontSize:13,color:"var(--secondary-text)",lineHeight:1.55,margin:"6px 0 14px",padding:"0 4px"}}>
-                Add a teammate to jump in faster on hot leads and expand your AI's contact reach.
+          {p.team.members.map((m,i)=>(
+            <div className="team-row" key={i}>
+              <div className="avatar" style={{background:m.color}}>{m.avatar}</div>
+              <div className="team-info">
+                <div className="team-name">{m.name}</div>
+                <div className="team-meta">{m.status}</div>
               </div>
-              <button className="team-cta-primary" style={{marginTop:0}}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg>
-                Invite your first teammate
-              </button>
+              {m.cta && (
+                <button className="team-cta" onClick={()=>setTextComposer({name:m.name,msg:m.msg})}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  {m.cta}
+                </button>
+              )}
             </div>
-          )}
+          ))}
+          <div className="team-row" style={{cursor:"pointer"}} onClick={()=>setTextComposer({name:"New teammate",msg:"Hey! I'd love to have you on my YouSquared team — it'll make my AI secretary better at handling calls from your contacts. Tap this link to join: [invite link]"})}>
+            <div className="avatar" style={{background:"var(--surface-darken)",color:"var(--secondary-text)"}}>+</div>
+            <div className="team-info">
+              <div className="team-name" style={{color:"var(--secondary-text)"}}>Invite another teammate</div>
+              <div className="team-meta">Expand your AI's contact reach</div>
+            </div>
+            <button className="team-cta">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/></svg>
+              Invite
+            </button>
+          </div>
         </div>
 
         {/* SATISFACTION */}
@@ -962,16 +994,19 @@ const StatsScreen = ({persona}) => {
             </div>
           </div>
         )}
+        </>)}
 
       </div>
+      {shareOpen && <ShareModal onClose={()=>setShareOpen(false)}/>}
       {threadCall && <ContactThreadModal call={threadCall} onClose={()=>setThreadCall(null)}/>}
+      {textComposer && <TextComposerModal recipient={textComposer.name} message={textComposer.msg} onClose={()=>setTextComposer(null)}/>}
       <TabBar/>
     </div>
   );
 };
 
 /* Highlight — flat (no card), inline single-line header: HIGHLIGHT: [delight] [value] */
-const HighlightCard = ({type, call, onSwitch}) => (
+const HighlightCard = ({type, call, onSwitch, onShare}) => (
   <div className="hl-flat">
     <div className="hl-header">
       <span className="hl-header-label">Highlight:</span>
@@ -986,35 +1021,38 @@ const HighlightCard = ({type, call, onSwitch}) => (
       </div>
       <Waveform pattern={type==="delight"?WAVE_DELIGHT:WAVE_LEAD} played={type==="delight"?0.3:0.22}/>
       <div className="hl-meta">{call.duration}</div>
+      <button className="hl-share" onClick={e=>{e.stopPropagation();onShare && onShare();}}>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5M5 20h14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        Share
+      </button>
     </div>
   </div>
 );
 
-/* Ring palette — taupe <80%, faded sage ≥80%, orange when action needed */
-const getRingColors = (state, pct) => {
-  if(state === "action") return {ring:"#F57C00", track:"#FFE8D4"};
-  if(pct >= 80)          return {ring:"#8FAA8C", track:"#F0EDEA"};  // faded sage
-  return                        {ring:"#B8A99A", track:"#F0EDEA"};  // taupe
-};
+/* Ring palette — faded green when full, faded orange otherwise, taupe track always */
+const TRACK_COLOR = "#D8CDBF";   // warm faded taupe
+const FULL_COLOR  = "#B0C7AD";   // faded muted sage
+const LOW_COLOR   = "#D4A580";   // faded dusty terracotta
+const FULL_THRESHOLD = 80;
 
-const Ring = ({pct, state}) => {
+const Ring = ({pct, low}) => {
   const r=38, c=2*Math.PI*r;
   const dash = (pct/100)*c;
-  const {ring, track} = getRingColors(state, pct);
+  const ring = low ? LOW_COLOR : FULL_COLOR;
   return (
     <svg width="84" height="84" viewBox="0 0 84 84">
-      <circle cx="42" cy="42" r={r} fill="none" stroke={track} strokeWidth="9"/>
+      <circle cx="42" cy="42" r={r} fill="none" stroke={TRACK_COLOR} strokeWidth="9"/>
       <circle cx="42" cy="42" r={r} fill="none" stroke={ring} strokeWidth="9" strokeDasharray={`${dash} ${c}`} strokeLinecap="round" transform="rotate(-90 42 42)"/>
     </svg>
   );
 };
 
 const RingKPI = ({kpi, label, icon, onTap}) => {
-  const state = kpi.state || "resting";
+  const low = (kpi.pct || 0) < FULL_THRESHOLD;
   return (
-    <div className={"ring-item "+state} onClick={onTap}>
+    <div className={"ring-item"+(low?" low":"")} onClick={onTap}>
       <div className="ring-outer">
-        <Ring pct={kpi.pct || 0} state={state}/>
+        <Ring pct={kpi.pct || 0} low={low}/>
         <div className="ring-icon">{icon}</div>
       </div>
       <div className="ring-label">{label}</div>
@@ -1023,6 +1061,71 @@ const RingKPI = ({kpi, label, icon, onTap}) => {
     </div>
   );
 };
+
+/* Share modal — opened from hero Share button or Highlight Share button */
+const ShareModal = ({onClose}) => (
+  <div className="thread-overlay" onClick={onClose}>
+    <div className="thread-sheet" onClick={e=>e.stopPropagation()}>
+      <div className="thread-handle"></div>
+      <div className="share-title">Share your progress</div>
+      <div className="share-sub">Who do you want to show this to?</div>
+
+      <div className="share-option">
+        <div className="share-icon bosses">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </div>
+        <div className="share-option-info">
+          <div className="share-option-title">Bosses</div>
+          <div className="share-option-sub">Send via text to contacts tagged as Boss</div>
+        </div>
+        <svg className="share-option-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      </div>
+
+      <div className="share-option">
+        <div className="share-icon colleagues">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75M9 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </div>
+        <div className="share-option-info">
+          <div className="share-option-title">Colleagues</div>
+          <div className="share-option-sub">Share with your team members and partners</div>
+        </div>
+        <svg className="share-option-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      </div>
+
+      <div className="share-option">
+        <div className="share-icon social">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" strokeWidth="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" strokeWidth="1.8"/><circle cx="18" cy="19" r="3" stroke="currentColor" strokeWidth="1.8"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+        </div>
+        <div className="share-option-info">
+          <div className="share-option-title">Social</div>
+          <div className="share-option-sub">Post to LinkedIn, X, Instagram, TikTok</div>
+        </div>
+        <svg className="share-option-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+);
+
+/* Text composer — shown when user taps a team CTA (Invite/Remind/Help) */
+const TextComposerModal = ({recipient, message, onClose}) => (
+  <div className="thread-overlay" onClick={onClose}>
+    <div className="thread-sheet" onClick={e=>e.stopPropagation()}>
+      <div className="thread-handle"></div>
+      <div className="share-title">New message</div>
+      <div className="share-sub">To: {recipient}</div>
+      <div style={{padding:"0 22px 18px"}}>
+        <div style={{background:"var(--bg-warm)",borderRadius:"16px 16px 16px 4px",padding:"14px 16px",fontSize:13,lineHeight:1.55,color:"var(--primary-text)"}}>{message}</div>
+        <div style={{display:"flex",justifyContent:"flex-end",marginTop:14,gap:8}}>
+          <button onClick={onClose} style={{padding:"10px 16px",background:"var(--surface-darken)",border:"none",borderRadius:30,fontSize:13,fontWeight:600,color:"var(--primary-text)",fontFamily:"inherit",cursor:"pointer"}}>Cancel</button>
+          <button onClick={onClose} style={{padding:"10px 18px",background:"var(--accent)",border:"none",borderRadius:30,fontSize:13,fontWeight:600,color:"#fff",fontFamily:"inherit",cursor:"pointer",display:"inline-flex",alignItems:"center",gap:5}}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 /* Contact thread modal — shown when user taps an unhappy call */
 const ContactThreadModal = ({call, onClose}) => (
