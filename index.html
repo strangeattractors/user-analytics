@@ -108,24 +108,20 @@ body{display:flex;flex-direction:column;align-items:center;padding:24px 16px 60p
 .cold-step-chev{color:#B8B0A6;flex-shrink:0}
 
 /* ============================================================
- *  KPI RINGS — RAG: muted sage by default, accented amber/red on action
+ *  KPI RINGS — taupe (<80%) → faded sage (≥80%), orange on action
  * ============================================================ */
 .rings-row{display:flex;justify-content:space-around;align-items:flex-start;padding:10px 8px 14px;gap:6px;border-bottom:0.5px solid var(--border)}
 .ring-item{display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:8px 6px;border-radius:14px;flex:1;transition:background .15s}
 .ring-item:hover{background:var(--surface-dark)}
 .ring-outer{position:relative;width:84px;height:84px;display:flex;align-items:center;justify-content:center}
 .ring-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#7A6F62}
-.ring-item.warn .ring-icon{color:var(--warning)}
-.ring-item.urgent .ring-icon{color:var(--error)}
+.ring-item.action .ring-icon{color:var(--warning)}
 .ring-label{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--secondary-text);font-weight:600;margin-top:8px}
-.ring-item.warn .ring-label{color:var(--warning)}
-.ring-item.urgent .ring-label{color:var(--error)}
+.ring-item.action .ring-label{color:var(--warning)}
 .ring-value{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--primary-text);line-height:1;margin-top:3px;letter-spacing:-.2px}
-.ring-item.warn .ring-value{color:var(--warning)}
-.ring-item.urgent .ring-value{color:var(--error)}
+.ring-item.action .ring-value{color:var(--warning)}
 .ring-sub{font-size:10px;color:var(--tertiary-text);margin-top:2px;font-weight:500}
-.ring-item.warn .ring-sub{color:#8A4A0A}
-.ring-item.urgent .ring-sub{color:#8A2020}
+.ring-item.action .ring-sub{color:#8A4A0A}
 
 /* Communication toggle */
 .comm-toggle{display:flex;gap:4px;background:var(--surface-darken);border-radius:30px;padding:3px;font-size:11px;font-weight:600}
@@ -451,7 +447,7 @@ const PERSONAS = {
     kpis:{
       channels:{state:"resting",value:"3 of 3",sub:"all active",pct:100},
       seats:{state:"resting",value:"4 of 8",sub:"team active",pct:50},
-      satisfaction:{state:"warn",value:"88%",sub:"Confirm VIPs",pct:88},
+      satisfaction:{state:"action",value:"88%",sub:"Confirm VIPs",pct:88},
     },
     highlights:{
       delight:{name:"Client GR",summary:"Tried to book a boom lift on a holiday — AI negotiated the rate and rescheduled gracefully.",duration:"1:47"},
@@ -552,9 +548,9 @@ const PERSONAS = {
       ],
     },
     kpis:{
-      channels:{state:"urgent",value:"0 of 3",sub:"Activate forwarding",pct:4},
-      seats:{state:"warn",value:"0",sub:"Invite a teammate",pct:4},
-      satisfaction:{state:"warn",value:"—",sub:"Confirm VIPs first",pct:4},
+      channels:{state:"action",value:"0 of 3",sub:"Activate forwarding",pct:4},
+      seats:{state:"action",value:"0",sub:"Invite a teammate",pct:4},
+      satisfaction:{state:"action",value:"—",sub:"Confirm VIPs first",pct:4},
     },
     highlights:null,
     coldActivation:{title:"Your AI hasn't made waves yet",sub:"Once your first call is handled, we'll highlight the best ones here."},
@@ -994,17 +990,17 @@ const HighlightCard = ({type, call, onSwitch}) => (
   </div>
 );
 
-/* RAG ring palette — muted by default, accented when action needed */
-const RING_COLORS = {
-  resting: {ring:"#8FAA8C", track:"#F0EDEA"},  // muted sage — no action
-  warn:    {ring:"#F57C00", track:"#FFE8D4"},  // accented amber — action available
-  urgent:  {ring:"#E53935", track:"#FFE0E0"},  // accented red — urgent action
+/* Ring palette — taupe <80%, faded sage ≥80%, orange when action needed */
+const getRingColors = (state, pct) => {
+  if(state === "action") return {ring:"#F57C00", track:"#FFE8D4"};
+  if(pct >= 80)          return {ring:"#8FAA8C", track:"#F0EDEA"};  // faded sage
+  return                        {ring:"#B8A99A", track:"#F0EDEA"};  // taupe
 };
 
 const Ring = ({pct, state}) => {
   const r=38, c=2*Math.PI*r;
   const dash = (pct/100)*c;
-  const {ring, track} = RING_COLORS[state] || RING_COLORS.resting;
+  const {ring, track} = getRingColors(state, pct);
   return (
     <svg width="84" height="84" viewBox="0 0 84 84">
       <circle cx="42" cy="42" r={r} fill="none" stroke={track} strokeWidth="9"/>
